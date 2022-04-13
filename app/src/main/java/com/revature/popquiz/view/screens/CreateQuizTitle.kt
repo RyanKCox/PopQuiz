@@ -76,11 +76,11 @@ fun CreateQuizTitleBody(){
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth(.8f)
-                        .height(200.dp),
+                        .height(100.dp),
                     value = sLongDesc,
                     onValueChange = {sLongDesc = it},
                     label = {Text("Full Description")},
-                    maxLines = 4
+                    maxLines = 3
                 )
                 
                 Spacer(Modifier.size(40.dp))
