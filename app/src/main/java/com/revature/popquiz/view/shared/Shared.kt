@@ -1,21 +1,16 @@
 package com.revature.popquiz.view.shared
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import java.time.format.TextStyle
 
 /**
  * Shared Composables
@@ -76,16 +71,11 @@ fun QuizCardForLazyColumn()
     {
         Column(
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.absolutePadding(top = 10.dp)
         )
         {
-            Text(
-                text = "Quiz Title",
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp,
-                modifier = Modifier.absolutePadding(top = 10.dp)
-            )
+            quizTitle(quizTitleText = "Quiz Title")
         }
 
         Column(
@@ -93,10 +83,7 @@ fun QuizCardForLazyColumn()
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            Text(
-                text = "Short quiz description",
-                textAlign = TextAlign.Center
-            )
+            shortQuizDescription(shortQuizDescriptionText = "Short quiz description")
         }
 
         Row(
@@ -105,25 +92,53 @@ fun QuizCardForLazyColumn()
             modifier = Modifier.absolutePadding(bottom = 10.dp)
         )
         {
-            Text(
-                text = "Tags: ",
-                textAlign = TextAlign.Center
-            )
-            // Insert tags here
-
-            val tags: Set<String>
-            tags = setOf("Language", " Topic", " Quiz type")
-
-            Text(
-                text = tags.toString(),
-                textAlign = TextAlign.Center
-            )
+            quizTags()
         }
 
     }
 }
 
 
+@Composable
+fun quizTitle(
+    quizTitleText: String
+)
+{
+    Text(
+        text = quizTitleText,
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold
+    )
+}
+
+@Composable
+fun shortQuizDescription(
+    shortQuizDescriptionText: String
+)
+{
+    Text(
+        text = shortQuizDescriptionText,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+fun quizTags()
+{
+    Text(
+        text = "Tags: ",
+        textAlign = TextAlign.Center
+    )
+    // Insert tags here
+
+    val tags: Set<String>
+    tags = setOf("Language", " Topic", " Quiz type")
+
+    Text(
+        text = tags.toString(),
+        textAlign = TextAlign.Center
+    )
+}
 
 
 @Preview

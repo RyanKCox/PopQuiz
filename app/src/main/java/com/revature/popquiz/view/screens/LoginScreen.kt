@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -44,11 +45,28 @@ fun LoginScreen(navController: NavController)
                 onClick =
                 {
                     //dummy navigation
-                    navController.navigate(NavScreens.CreateQuizTitle.route)
+                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
                 }
+
             )
             {
-                Text(text = "Login")
+                Text(
+                    text = "Login",
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            // Extra dummy button to navigate
+            Button(
+                onClick =
+                {
+                    //dummy navigation
+                    navController.navigate(NavScreens.CreateQuizTitle.route)
+                }
+
+            )
+            {
+                Text(text = "Login (Create Quiz)")
             }
 
         }

@@ -3,6 +3,8 @@ package com.revature.popquiz.view.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -52,7 +54,7 @@ fun SearchQuizzesBody()
     val lazyState = rememberLazyListState()
 
     Surface(
-        // Border (shape + colors/gradient)
+        // Border for screen (shape + colors/gradient)
     )
     {
         Surface(
