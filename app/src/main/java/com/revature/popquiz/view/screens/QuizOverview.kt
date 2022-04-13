@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import android.widget.ToggleButton
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
@@ -124,6 +125,27 @@ fun quizOverView() {
                                    }
                                }
                                Spacer(modifier = Modifier.height(20.dp))
+//Subsribe
+                               Card(
+                                   modifier = Modifier.padding(10.dp),
+                                   elevation = 50.dp,
+                                   shape = RoundedCornerShape(25.dp),
+                                   backgroundColor = revLightOrange
+                               ) {
+                                   Row(modifier = Modifier.padding(10.dp)) {
+                                       Text(
+                                           text = "Subscribe", fontSize = 20.sp,
+                                           fontWeight = FontWeight.Medium, modifier = Modifier
+                                               .fillMaxWidth(0.95F)
+                                               .padding(horizontal = 5.dp)
+                                       )
+                                       IconToggleButton(checked = false, onCheckedChange ={} ) {
+
+                                       }
+                                   }
+                               }
+
+                               Spacer(modifier = Modifier.height(20.dp))
 
 
                                Row(
@@ -133,7 +155,8 @@ fun quizOverView() {
                                    Button(
                                        onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
                                            backgroundColor = revOrange
-                                       ), modifier = Modifier.fillParentMaxWidth(0.2F)
+                                       ), modifier = Modifier
+                                           .fillParentMaxWidth(0.2F)
                                            .height(50.dp)
                                    ) {
                                        Text(text = "Edit")
@@ -141,7 +164,8 @@ fun quizOverView() {
                                    Button(
                                        onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
                                            backgroundColor = revOrange
-                                       ), modifier = Modifier.fillParentMaxWidth(0.2F)
+                                       ), modifier = Modifier
+                                           .fillParentMaxWidth(0.2F)
                                            .height(50.dp)
                                    ) {
                                        Text(text = "Start")
@@ -149,8 +173,9 @@ fun quizOverView() {
                                    Button(
                                        onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
                                            backgroundColor = revOrange
-                                       ), modifier = Modifier.fillParentMaxWidth(0.2F)
-                                           .height(50.dp)
+                                       ), modifier = Modifier
+                                           .fillParentMaxWidth(0.2F)
+                                           .height(50.dp), elevation = ButtonDefaults.elevation(20.dp)
                                    ) {
                                        Text(text = "Cards")
                                    }
