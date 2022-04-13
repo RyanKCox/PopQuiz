@@ -16,10 +16,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revBlue
+
 
 @Composable
 fun quizOverView() {
+    val quiz = Quiz()
+    quiz.title="Arrays"
+    quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
+            " This includes properties of arrays and their usage"
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
 
@@ -56,10 +62,14 @@ fun quizOverView() {
                            )
                            {
                                Text(
-                                   text = "Quiz Name", fontSize = 30.sp,
+                                   text = "${quiz.title} Quiz", fontSize = 30.sp,
                                    fontWeight = FontWeight.Medium, modifier = Modifier.padding(20.dp)
                                )
                                Spacer(modifier = Modifier.height(50.dp))
+                               Text(
+                                   text = quiz.longDescription, fontSize = 20.sp,
+                                   fontWeight = FontWeight.Medium, modifier = Modifier.padding(20.dp)
+                               )
 
                            }
                        }
