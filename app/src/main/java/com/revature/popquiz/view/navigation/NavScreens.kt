@@ -10,9 +10,9 @@ sealed class NavScreens(val route:String)
     //Create Quiz Screens
     object CreateQuizTitle:NavScreens("CreateQuizTitle")
 
-    // Search Quizzes Screen
-    object SearchQuizzesScreen: NavScreens("SearchQuizzesScreen")
-
     // Saved Quizzes Screeen
     object SavedQuizzesScreen: NavScreens("SavedQuizzesScreen")
+
+    // Search Quizzes Screen
+    object SearchQuizzesScreen: NavScreens("SearchQuizzesScreen")
 }

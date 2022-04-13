@@ -68,9 +68,6 @@ fun LoginScreen(navController: NavController)
             {
                 Text(text = "Login (Create Quiz)")
             }
-
         }
-
     }
-
 }

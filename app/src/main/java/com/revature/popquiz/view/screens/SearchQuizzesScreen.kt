@@ -3,24 +3,21 @@ package com.revature.popquiz.view.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.revature.popquiz.ui.theme.revBlue
-import com.revature.popquiz.view.shared.QuizCardForLazyColumn
-import android.content.Context as Context
-
+import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
 
 @Composable
 fun SearchQuizzesScreen(navController: NavController)
@@ -29,21 +26,20 @@ fun SearchQuizzesScreen(navController: NavController)
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
 
-    Scaffold (
-//        backgroundColor = revBlue,
-        topBar= {/*header*/},
-        scaffoldState = scaffoldState,
-        content =
-        {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            )
-            {
-                SearchQuizzesBody()
-            }
-        }
+    QuizScaffold(
+        sTitle = "Search Quizzes",
+        navController = navController
     )
+    {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            SearchQuizzesBody()
+        }
+
+    }
 }
 
 
@@ -77,7 +73,69 @@ fun SearchQuizzesBody()
             )
             {
 
+                item{
+                    QuizCardForLazyColumn(
+                        quizTitleText = "Java Basics",
+                        shortQuizDescriptionText = "Short quiz description"
+                    )
+                }
+
+                item{
+                    QuizCardForLazyColumn(
+                        quizTitleText = "Kotlin Fundamentals",
+                        shortQuizDescriptionText = "Short quiz description"
+                    )
+                }
+
+                item{
+                    QuizCardForLazyColumn(
+                        quizTitleText = "Intro to Databases",
+                        shortQuizDescriptionText = "Short quiz description"
+                    )
+                }
+
+                item{
+                    QuizCardForLazyColumn(
+                        quizTitleText = "MVVM Design Pattern",
+                        shortQuizDescriptionText = "Short quiz description"
+                    )
+                }
+
+
+                item{
+                    QuizCardForLazyColumn(
+                        quizTitleText = "Quiz Title",
+                        shortQuizDescriptionText = "Short quiz description"
+                    )
+                }
+
+
+                item{
+                    QuizCardForLazyColumn(
+                        quizTitleText = "Quiz Title",
+                        shortQuizDescriptionText = "Short quiz description"
+                    )
+                }
             }
         }
     }
+}
+
+
+@Composable
+fun quizTags()
+{
+    Text(
+        text = "Tags: ",
+        textAlign = TextAlign.Center
+    )
+    // Insert tags here
+
+    val tags: Set<String>
+    tags = setOf("Language", " Topic", " Quiz type")
+
+    Text(
+        text = tags.toString(),
+        textAlign = TextAlign.Center
+    )
 }

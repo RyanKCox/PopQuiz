@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.shared
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.revature.popquiz.view.screens.quizTags
 
 /**
  * Shared Composables
@@ -24,7 +26,8 @@ import androidx.navigation.NavController
  * Scaffold to be used with all screens
  */
 @Composable
-fun QuizScaffold(sTitle:String, navController: NavController, content:@Composable () -> Unit){
+fun QuizScaffold(sTitle:String, navController: NavController, content:@Composable () -> Unit)
+{
 
     //Temp scaffold before we build it
     Scaffold(
@@ -44,12 +47,16 @@ fun QuizScaffold(sTitle:String, navController: NavController, content:@Composabl
 }
 
 @Composable
-fun QuizCardForLazyColumn()
+fun QuizCardForLazyColumn(
+    quizTitleText: String,
+    shortQuizDescriptionText: String
+)
 {
     Card(
         modifier =
         Modifier
-            .height(400.dp)
+            .clickable { }
+            .height(200.dp)
             .fillMaxWidth()
             .absolutePadding(bottom = 10.dp)
             .padding(horizontal = 5.dp),
@@ -75,7 +82,11 @@ fun QuizCardForLazyColumn()
             modifier = Modifier.absolutePadding(top = 10.dp)
         )
         {
-            quizTitle(quizTitleText = "Quiz Title")
+            Text(
+                text = quizTitleText,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold
+            )
         }
 
         Column(
@@ -83,7 +94,10 @@ fun QuizCardForLazyColumn()
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            shortQuizDescription(shortQuizDescriptionText = "Short quiz description")
+            Text(
+                text = shortQuizDescriptionText,
+                textAlign = TextAlign.Center
+            )
         }
 
         Row(
@@ -98,52 +112,9 @@ fun QuizCardForLazyColumn()
     }
 }
 
-
-@Composable
-fun quizTitle(
-    quizTitleText: String
-)
-{
-    Text(
-        text = quizTitleText,
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold
-    )
-}
-
-@Composable
-fun shortQuizDescription(
-    shortQuizDescriptionText: String
-)
-{
-    Text(
-        text = shortQuizDescriptionText,
-        textAlign = TextAlign.Center
-    )
-}
-
-@Composable
-fun quizTags()
-{
-    Text(
-        text = "Tags: ",
-        textAlign = TextAlign.Center
-    )
-    // Insert tags here
-
-    val tags: Set<String>
-    tags = setOf("Language", " Topic", " Quiz type")
-
-    Text(
-        text = tags.toString(),
-        textAlign = TextAlign.Center
-    )
-}
-
-
 @Preview
 @Composable
 fun ViewQuizCard()
 {
-    QuizCardForLazyColumn()
+    QuizCardForLazyColumn("Quiz Title", "Short quiz description")
 }
