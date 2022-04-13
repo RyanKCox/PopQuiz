@@ -39,7 +39,7 @@ fun Register(){
                 horizontalAlignment = Alignment.CenterHorizontally)
             {
                 Spacer(Modifier.size(30.dp))
-                Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp) {
+                Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp,modifier = Modifier.fillMaxSize(fraction = 0.9F)) {
                     Column(
                         modifier = Modifier.fillMaxSize(fraction = 0.9F),
                         horizontalAlignment = Alignment.CenterHorizontally,
