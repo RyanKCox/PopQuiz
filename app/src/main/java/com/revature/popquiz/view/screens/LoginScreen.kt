@@ -9,12 +9,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
-fun LoginScreen(navController: NavController){
+fun LoginScreen(navController: NavController)
+{
 
 
     //Dummy Setup
@@ -24,7 +26,8 @@ fun LoginScreen(navController: NavController){
     //Shared Scaffold - May not use in this screen
     QuizScaffold(
         sTitle = "Login",
-        navController = navController) {
+        navController = navController)
+    {
 
         //Screen Content
 
@@ -33,23 +36,38 @@ fun LoginScreen(navController: NavController){
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-        ) {
+        )
+        {
 
 
             //Button to navigate
             Button(
-                onClick = {
-
+                onClick =
+                {
                     //dummy navigation
-                    navController.navigate(NavScreens.CreateQuizTitle.route)
+                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                }
 
-                }) {
-                Text(text = "Login")
-
+            )
+            {
+                Text(
+                    text = "Login",
+                    textAlign = TextAlign.Center
+                )
             }
 
+            // Extra dummy button to navigate
+            Button(
+                onClick =
+                {
+                    //dummy navigation
+                    navController.navigate(NavScreens.CreateQuizTitle.route)
+                }
+
+            )
+            {
+                Text(text = "Login (Create Quiz)")
+            }
         }
-
     }
-
 }

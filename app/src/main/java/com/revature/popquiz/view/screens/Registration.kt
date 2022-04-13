@@ -23,7 +23,8 @@ import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 
 @Composable
-fun Register(){
+fun Register()
+{
     //navController: NavController
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
@@ -44,7 +45,8 @@ fun Register(){
                         modifier = Modifier.fillMaxSize(fraction = 0.9F),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
-                    ) {
+                    )
+                    {
                         var sName by rememberSaveable { mutableStateOf("") }
                         var sPass by rememberSaveable { mutableStateOf("") }
                         var sPassConfirm by rememberSaveable { mutableStateOf("") }
@@ -94,14 +96,19 @@ fun Register(){
                             onClick = {
                                 if (checkParams(sName,sPass,sEmail,sPassConfirm)&& checkMatch(sPass,sPassConfirm)){
                                     //navController.navigate(NavScreens.LoginScreen.route)
-                                }else{
-                                    if (checkMatch(sPass,sPassConfirm)) {
+                                }
+                                else
+                                {
+                                    if (checkMatch(sPass,sPassConfirm))
+                                    {
                                         Toast.makeText(
                                             context,
                                             "Fields not completed correctly",
                                             Toast.LENGTH_SHORT
                                         ).show()
-                                    }else{
+                                    }
+                                    else
+                                    {
                                         Toast.makeText(
                                             context,
                                             "Password inputs do not match",
@@ -111,7 +118,8 @@ fun Register(){
                                 }
 
                             }
-                        ){
+                        )
+                        {
                             Text(text = "Register")
                         }
                     }
