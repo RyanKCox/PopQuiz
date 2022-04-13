@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pop!Quiz</string>
+    <string name="quiz_name">Quiz Name</string>
 </resources>
