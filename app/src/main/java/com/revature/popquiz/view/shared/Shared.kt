@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import java.time.format.TextStyle
 
@@ -48,12 +49,12 @@ fun QuizScaffold(sTitle:String, navController: NavController, content:@Composabl
 }
 
 @Composable
-fun QuizCard()
+fun QuizCardForLazyColumn()
 {
     Card(
         modifier =
         Modifier
-            .height(535.dp)
+            .height(400.dp)
             .fillMaxWidth()
             .absolutePadding(bottom = 10.dp)
             .padding(horizontal = 5.dp),
@@ -82,6 +83,7 @@ fun QuizCard()
                 text = "Quiz Title",
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
+                fontSize = 25.sp,
                 modifier = Modifier.absolutePadding(top = 10.dp)
             )
         }
@@ -110,7 +112,7 @@ fun QuizCard()
             // Insert tags here
 
             val tags: Set<String>
-            tags = setOf(" Language", " Topic", " Quiz type")
+            tags = setOf("Language", " Topic", " Quiz type")
 
             Text(
                 text = tags.toString(),
@@ -128,5 +130,5 @@ fun QuizCard()
 @Composable
 fun ViewQuizCard()
 {
-    QuizCard()
+    QuizCardForLazyColumn()
 }

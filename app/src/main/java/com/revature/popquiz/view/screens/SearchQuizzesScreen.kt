@@ -14,10 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.view.shared.QuizCardForLazyColumn
+import android.content.Context as Context
+
 
 @Composable
-fun SearchQuizzesScreen()
+fun SearchQuizzesScreen(navController: NavController)
 {
     //navController: NavController
     val scaffoldState = rememberScaffoldState()
@@ -74,11 +78,4 @@ fun SearchQuizzesBody()
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun ViewSearchQuizzesScreen()
-{
-    SearchQuizzesScreen()
 }
