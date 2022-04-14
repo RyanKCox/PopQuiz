@@ -16,4 +16,10 @@ sealed class NavScreens(val route:String) {
 
     // Search Quizzes Screen
     object SearchQuizzesScreen: NavScreens("SearchQuizzesScreen")
+
+    //Quiz Question Screen
+    object QuestionScreen: NavScreens("QuestionScreen")
+
+    //Flashcard Screen
+    object FlashCardScreen: NavScreens("FlashCardScreen")
 }
