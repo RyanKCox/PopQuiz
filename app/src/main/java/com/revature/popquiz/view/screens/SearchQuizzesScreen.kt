@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.SearchBar
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
 
 @Composable
@@ -72,6 +73,9 @@ fun SearchQuizzesBody()
                 verticalArrangement = Arrangement.Top
             )
             {
+                item {
+                    SearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Search All Quizzes")
+                }
 
                 item{
                     QuizCardForLazyColumn(

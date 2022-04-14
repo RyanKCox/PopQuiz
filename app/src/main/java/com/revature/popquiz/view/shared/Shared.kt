@@ -1,13 +1,18 @@
 package com.revature.popquiz.view.shared
 
 
+import android.app.ActionBar
+import android.widget.SearchView
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -54,7 +59,8 @@ fun QuizScaffold(sTitle:String, navController: NavController, content:@Composabl
  * Temporary Scaffold that does not take in navController
  */
 @Composable
-fun TempQuizScaffold(sTitle: String, content: @Composable () -> Unit) {
+fun TempQuizScaffold(sTitle: String, content: @Composable () -> Unit)
+{
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { TopAppBar (title = {Text(sTitle)}, backgroundColor = MaterialTheme.colors.secondary) },
@@ -69,14 +75,16 @@ fun UniversalButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier
-) {
+)
+{
     Button(
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
         shape = RoundedCornerShape(25.dp)
-    ) {
+    )
+    {
         Text(
             text = text,
             textAlign = TextAlign.Center,
@@ -84,6 +92,39 @@ fun UniversalButton(
             fontSize = 20.sp
         )
     }
+}
+
+@Composable
+fun SearchBar(onSearchClicked: () -> Unit, headingText: String)
+{
+    TopAppBar(
+        modifier = Modifier
+            .padding(horizontal = 5.dp)
+            .absolutePadding(top = 15.dp, bottom = 20.dp)
+            .clip(shape = RoundedCornerShape(5.dp)),
+        title =
+        {
+            Text(text = headingText)
+        },
+        actions =
+        {
+            IconButton(onClick = { onSearchClicked() })
+            {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search Icon",
+                    tint = Color.White
+                )
+            }
+        }
+    )
+}
+
+@Preview
+@Composable
+fun PreviewSearchBar()
+{
+    SearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Saved Quizzes")
 }
 
 @Composable
@@ -96,7 +137,7 @@ fun QuizCardForLazyColumn(
         modifier =
         Modifier
             .clickable { }
-            .height(200.dp)
+            .height(150.dp)
             .fillMaxWidth()
             .absolutePadding(bottom = 10.dp)
             .padding(horizontal = 5.dp),
