@@ -98,81 +98,201 @@ fun CreateQuestQuestionsBody(navController: NavController){
                     }
                 }
 
-                //Button for Done
-                Button(
-                    onClick = {
-                        if(sQuestionTitle == ""){
-                            Toast.makeText(context,"Question Field must be filled out",Toast.LENGTH_LONG).show()
+                Row {
 
-                        } else if(questionType == Question.QUESTION_TYPE_SINGLE_ANSWER){
+                    //Button for Done
+                    Button(
+                        onClick = {
+                            if (sQuestionTitle == "") {
+                                Toast.makeText(
+                                    context,
+                                    "Question Field must be filled out",
+                                    Toast.LENGTH_LONG
+                                ).show()
 
-                            var nCount = 0
-                            answerList.forEach { answer ->
-                                if (answer.bCorrect)
-                                    nCount++
+                            } else if (questionType == Question.QUESTION_TYPE_SINGLE_ANSWER) {
 
-                            }
+                                var nCount = 0
+                                answerList.forEach { answer ->
+                                    if (answer.bCorrect)
+                                        nCount++
 
-                            if (nCount != 1){
-                                Toast.makeText(context,"Must have 1 correct answer",Toast.LENGTH_LONG).show()
-                            } else{
-                                //Save and navigate
-                                createQuizVM.newQuiz.questionList.add(Question(
-                                    nType = questionType,
-                                    question = sQuestionTitle,
-                                    answers = answerList
-                                ))
-                                //Add to Room/API
-
-                                //Navigate
-//                                navController.navigate(NavScreens.SavedQuizzesScreen.route)
-                                navController.popBackStack(NavScreens.CreateQuizTitle.route,true)
-                            }
-
-                        } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER){
-                            var bHasAnswer = false
-                            answerList.forEach { answer->
-                                if (answer.bCorrect){
-                                    bHasAnswer = true
                                 }
 
-                            }
-                            if (!bHasAnswer){
-                                Toast.makeText(context,"Atleast one answer has to be correct",Toast.LENGTH_LONG).show()
-                            } else {
+                                if (nCount != 1) {
+                                    Toast.makeText(
+                                        context,
+                                        "Must have 1 correct answer",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    //Save and navigate
+                                    createQuizVM.newQuiz.questionList.add(
+                                        Question(
+                                            nType = questionType,
+                                            question = sQuestionTitle,
+                                            answers = answerList
+                                        )
+                                    )
+                                    //Add to Room/API
+
+                                    //Navigate
+                                    navController.popBackStack(
+                                        NavScreens.CreateQuizTitle.route,
+                                        true
+                                    )
+                                }
+
+                            } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER) {
+                                var bHasAnswer = false
+                                answerList.forEach { answer ->
+                                    if (answer.bCorrect) {
+                                        bHasAnswer = true
+                                    }
+
+                                }
+                                if (!bHasAnswer) {
+                                    Toast.makeText(
+                                        context,
+                                        "Atleast one answer has to be correct",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+
+                                    //Save and navigate
+                                    createQuizVM.newQuiz.questionList.add(
+                                        Question(
+                                            nType = questionType,
+                                            question = sQuestionTitle,
+                                            answers = answerList
+                                        )
+                                    )
+                                    //Add to Room/API
+
+                                    //Navigate
+//                                navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                                    navController.popBackStack(
+                                        NavScreens.CreateQuizTitle.route,
+                                        true
+                                    )
+
+                                }
+                            } else if (questionType == Question.QUESTION_TYPE_TRUE_FALSE) {
                                 //save and navigate
                                 //Save and navigate
-                                createQuizVM.newQuiz.questionList.add(Question(
-                                    nType = questionType,
-                                    question = sQuestionTitle,
-                                    answers = answerList
-                                ))
+                                createQuizVM.newQuiz.questionList.add(
+                                    Question(
+                                        nType = questionType,
+                                        question = sQuestionTitle,
+                                        answers = answerList
+                                    )
+                                )
                                 //Add to Room/API
 
                                 //Navigate
-//                                navController.navigate(NavScreens.SavedQuizzesScreen.route)
-                                navController.popBackStack(NavScreens.CreateQuizTitle.route,true)
+//                            navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                                navController.popBackStack(NavScreens.CreateQuizTitle.route, true)
 
                             }
-                        }  else if(questionType == Question.QUESTION_TYPE_TRUE_FALSE){
-                            //save and navigate
-                            //Save and navigate
-                            createQuizVM.newQuiz.questionList.add(Question(
-                                nType = questionType,
-                                question = sQuestionTitle,
-                                answers = answerList
-                            ))
-                            //Add to Room/API
-
-                            //Navigate
-//                            navController.navigate(NavScreens.SavedQuizzesScreen.route)
-                            navController.popBackStack(NavScreens.CreateQuizTitle.route,true)
-
                         }
-                    }
-                ) {
-                    Text(text = "Finish",style = MaterialTheme.typography.body1)
+                    ) {
 
+                        Text(text = "Finish", style = MaterialTheme.typography.body1)
+                    }
+
+                    Spacer(Modifier.size(10.dp))
+
+                    //Button for New Question
+                    Button(
+                        onClick = {
+                            if (sQuestionTitle == "") {
+                                Toast.makeText(
+                                    context,
+                                    "Question Field must be filled out",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                            } else if (questionType == Question.QUESTION_TYPE_SINGLE_ANSWER) {
+
+                                var nCount = 0
+                                answerList.forEach { answer ->
+                                    if (answer.bCorrect)
+                                        nCount++
+
+                                }
+
+                                if (nCount != 1) {
+                                    Toast.makeText(
+                                        context,
+                                        "Must have 1 correct answer",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+                                    //Save and navigate
+                                    createQuizVM.newQuiz.questionList.add(
+                                        Question(
+                                            nType = questionType,
+                                            question = sQuestionTitle,
+                                            answers = answerList
+                                        )
+                                    )
+                                    //Add to Room/API
+
+                                    //Clear Question
+                                    navController.navigate(NavScreens.CreateQuizQuestions.route)
+                                }
+
+                            } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER) {
+                                var bHasAnswer = false
+                                answerList.forEach { answer ->
+                                    if (answer.bCorrect) {
+                                        bHasAnswer = true
+                                    }
+
+                                }
+                                if (!bHasAnswer) {
+                                    Toast.makeText(
+                                        context,
+                                        "Atleast one answer has to be correct",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } else {
+
+                                    //Save and navigate
+                                    createQuizVM.newQuiz.questionList.add(
+                                        Question(
+                                            nType = questionType,
+                                            question = sQuestionTitle,
+                                            answers = answerList
+                                        )
+                                    )
+                                    //Add to Room/API
+
+                                    //Clear Question
+                                    navController.navigate(NavScreens.CreateQuizQuestions.route)
+
+                                }
+                            } else if (questionType == Question.QUESTION_TYPE_TRUE_FALSE) {
+
+                                //Save and navigate
+                                createQuizVM.newQuiz.questionList.add(
+                                    Question(
+                                        nType = questionType,
+                                        question = sQuestionTitle,
+                                        answers = answerList
+                                    )
+                                )
+                                //Add to Room/API
+
+                                //Clear question
+                                navController.navigate(NavScreens.CreateQuizQuestions.route)
+
+                            }
+                        }
+                    ) {
+
+                        Text(text = "Add", style = MaterialTheme.typography.body1)
+                    }
                 }
 
 //                WrongAnswersView(context = context)
@@ -288,14 +408,17 @@ fun QuestionAnswers(context:Context):List<Answer>{
 
         for (answer in answerList) {
 
+            var checkAnswer by remember { mutableStateOf(answer.bCorrect)}
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(end = 5.dp)) {
 
                 Checkbox(
-                    checked = answer.bCorrect,
+                    checked = checkAnswer,
                     onCheckedChange = {
-                        answer.bCorrect = !answer.bCorrect
+                        checkAnswer = !checkAnswer
+                        answer.bCorrect = checkAnswer
                     }
                 )
                 Text(
@@ -307,10 +430,6 @@ fun QuestionAnswers(context:Context):List<Answer>{
         }
     }
     return answerList.toList()
-}
-@Composable
-fun MultiAnswerQuestion(){
-
 }
 
 @Composable

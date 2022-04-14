@@ -28,6 +28,8 @@ import com.revature.popquiz.viewmodel.CreateQuizVM
 fun CreateQuizResources(navController: NavController){
 
     val context = LocalContext.current
+
+    //Grab the existing VM
     val createQuizVM =
         ViewModelProvider(context as MainActivity)
             .get(CreateQuizVM::class.java)
@@ -54,6 +56,7 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
         verticalArrangement = Arrangement.Center
     ) {
 
+        //Card our input field is on
         Card(
             modifier = Modifier
                 .fillMaxSize(.95f)
@@ -61,6 +64,7 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
             shape = RoundedCornerShape(40.dp),
             elevation = 10.dp
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -69,14 +73,17 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
 
                 Spacer(Modifier.size(40.dp))
 
+                //Topic functionality
                 TopicView(context, createQuizVM)
 
                 Spacer(Modifier.size(40.dp))
 
+                //Weblink functionality
                 WebLinkView(context, createQuizVM)
 
                 Spacer(Modifier.size(40.dp))
 
+                //Button to next screen
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(.6f),
@@ -103,8 +110,8 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
 
 
     var sTopic by remember { mutableStateOf("") }
-    //val topicList:ArrayList<String> = arrayListOf()
 
+    //Text field for a new topic
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(.8f),
         value = sTopic,
@@ -114,15 +121,22 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
                 style = MaterialTheme.typography.body1)
                 },
         trailingIcon = {
+
+            //Add topic icon
             Icon(imageVector = Icons.Default.Add,
                 contentDescription = "Add Topic Icon",
                 modifier = Modifier
                     .clickable {
+
+                        //Check if the topic meets requirements and add to quiz
+
+                        //if topic isnt empty and we havnt reached max topics
                         if (sTopic != "" || createQuizVM.newQuiz.tagList.size <= 5) {
                             createQuizVM.newQuiz.tagList.add(sTopic)
                             //topicList.add(sTopic)
                             sTopic = ""
                         }
+                        //If we reached max topics
                         else if (createQuizVM.newQuiz.tagList.size > 5){
                             Toast.makeText(
                                 context,
@@ -131,6 +145,7 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
                             ).show()
 
                         }
+                        //If topic is empty
                         else{
                             Toast.makeText(
                                 context,
@@ -152,16 +167,10 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
             .height(110.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        //Dummy Data
-//        topicList.add("Kotlin")
-//        topicList.add("Java")
-//        topicList.add("Context")
-//        topicList.add("Testing")
-//        topicList.add("Services")
-//
 
         Spacer(Modifier.size(10.dp))
 
+        //Display each topic thats been added
         for (topic in createQuizVM.newQuiz.tagList) {
 
             Text(
@@ -179,8 +188,8 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
 fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
 
     var sResource by remember { mutableStateOf("") }
-    //val resourceList:ArrayList<String> = arrayListOf()
 
+    //Text Field for new Link
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(.8f),
         value = sResource,
@@ -188,15 +197,23 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
         label = { Text("Resources",
                 style = MaterialTheme.typography.body1) },
         trailingIcon = {
+
+            //Add link icon
             Icon(imageVector = Icons.Default.Add,
                 contentDescription = "Add Topic Icon",
                 modifier = Modifier
                     .clickable {
+
+                        //Check if the link meets requirements
+
+                        //If link is not empty and max links hasnt been reached
                         if (sResource != "" || createQuizVM.newQuiz.resourceList.size <= 5) {
+
+                            //Add to resource list and clear input
                             createQuizVM.newQuiz.resourceList.add(QuizResource(sResource))
-                            //resourceList.add(sResource)
                             sResource = ""
                         }
+                        //If we've reached max links
                         else if (createQuizVM.newQuiz.resourceList.size > 5){
                             Toast.makeText(
                                 context,
@@ -205,6 +222,7 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
                             ).show()
 
                         }
+                        //if the link is empty
                         else{
                             Toast.makeText(
                                 context,
@@ -226,16 +244,10 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
             .height(110.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        //Dummy Data
-//        resourceList.add("https://developer.android.com/kotlin/style-guide")
-//        resourceList.add("https://developer.android.com/kotlin/style-guide")
-//        resourceList.add("https://developer.android.com/kotlin/style-guide")
-//        resourceList.add("https://developer.android.com/kotlin/style-guide")
-//        resourceList.add("https://developer.android.com/kotlin/style-guide")
-
 
         Spacer(Modifier.size(10.dp))
 
+        //Display all links to user
         for (topic in createQuizVM.newQuiz.resourceList) {
 
             Text(
