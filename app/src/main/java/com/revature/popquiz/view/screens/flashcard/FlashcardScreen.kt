@@ -12,15 +12,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import com.revature.popquiz.view.shared.QuizScaffold
+import androidx.compose.ui.tooling.preview.Preview
+import com.revature.popquiz.ui.theme.PopQuizTheme
+import com.revature.popquiz.view.shared.TempQuizScaffold
 
 @Composable
-fun FlashCardScreen(navController: NavController) {
+fun FlashCardScreen(
+    //navController: NavController
+) {
     val scaffoldState = rememberScaffoldState()
-    QuizScaffold(
+    TempQuizScaffold(
         sTitle = "Flashcards",
-        navController = navController,
+//        navController = navController,
         content = {
             FlashCard()
         }
@@ -58,5 +61,12 @@ fun FlashCard() {
                 flipAnimationType = selectedAnimType
             )
         }
+    }
+}
+@Preview
+@Composable
+fun FlashcardScreenPreview() {
+    PopQuizTheme {
+        FlashCardScreen()
     }
 }

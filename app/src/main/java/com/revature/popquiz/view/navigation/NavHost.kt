@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.revature.popquiz.view.screens.*
-import com.revature.popquiz.view.screens.flashcard.FlashCardScreen
 
 @Composable
 fun StartNav(navController: NavHostController)
@@ -55,9 +54,9 @@ fun StartNav(navController: NavHostController)
             QuestionScreen(navController = navController)
         }
         
-        //Flashcard Screen
-        composable(NavScreens.FlashCardScreen.route) {
-            FlashCardScreen(navController = navController)
-        }
+//        //Flashcard Screen
+//        composable(NavScreens.FlashCardScreen.route) {
+//            FlashCardScreen(navController = navController)
+//        }
     }
 }
