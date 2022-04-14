@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,6 +10,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,14 +18,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.revature.popquiz.model.dataobjects.SearchWidgetState
+import com.revature.popquiz.view.shared.MainSearchBar
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
 @Composable
-fun SavedQuizzesScreen(navController: NavController)
+fun SavedQuizzesScreen(navController: NavController, searchBarViewModel: SearchBarViewModel)
 {
-    //navController: NavController
+    // Search Bar View Model
+    val searchWidgetState by searchBarViewModel.searchTextState
+    val searchTextState by searchBarViewModel.searchTextState
+
+    // navController: NavController
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
 
@@ -37,15 +46,20 @@ fun SavedQuizzesScreen(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            SavedQuizzesBody()
+            SavedQuizzesBody(searchBarViewModel = SearchBarViewModel())
         }
 
     }
 }
 
 @Composable
-fun SavedQuizzesBody()
+fun SavedQuizzesBody(searchBarViewModel: SearchBarViewModel)
 {
+    // Search Bar View Model
+    val searchWidgetState by searchBarViewModel.searchWidgetState
+    val searchTextState by searchBarViewModel.searchTextState
+
+
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
 
@@ -58,6 +72,8 @@ fun SavedQuizzesBody()
         )
         {
             // Search bar goes here
+
+
 
             LazyColumn(
 
@@ -72,6 +88,30 @@ fun SavedQuizzesBody()
                 verticalArrangement = Arrangement.Top
             )
             {
+                item {
+                    MainSearchBar(
+                        searchWidgetState = searchWidgetState,
+                        searchTextState = searchTextState,
+                        onTextChange =
+                        {
+                            searchBarViewModel.updateSearchTextState(newValue = it)
+                        },
+                        onCloseClicked =
+                        {
+                            searchBarViewModel.updateSearchTextState(newValue = "")
+                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+                        },
+                        onSearchClicked =
+                        {
+                            Log.d("Searched Text", it)
+                        },
+                        onSearchTriggered =
+                        {
+                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
+                        },
+                    )
+                }
+
 
                 item{
                     QuizCardForLazyColumn(

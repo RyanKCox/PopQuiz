@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,6 +10,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,7 +18,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.revature.popquiz.model.dataobjects.SearchWidgetState
+import com.revature.popquiz.view.shared.MainSearchBar
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
 
 @Composable
@@ -36,7 +41,7 @@ fun SearchQuizzesScreen(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            SearchQuizzesBody()
+            SearchQuizzesBody(searchBarViewModel = SearchBarViewModel())
         }
 
     }
@@ -44,10 +49,13 @@ fun SearchQuizzesScreen(navController: NavController)
 
 
 @Composable
-fun SearchQuizzesBody()
+fun SearchQuizzesBody(searchBarViewModel: SearchBarViewModel)
 {
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
+
+    val searchWidgetState by searchBarViewModel.searchWidgetState
+    val searchTextState by searchBarViewModel.searchTextState
 
     Surface(
         // Border for screen (shape + colors/gradient)
@@ -72,6 +80,29 @@ fun SearchQuizzesBody()
                 verticalArrangement = Arrangement.Top
             )
             {
+                item {
+                    MainSearchBar(
+                        searchWidgetState = searchWidgetState,
+                        searchTextState = searchTextState,
+                        onTextChange =
+                        {
+                            searchBarViewModel.updateSearchTextState(newValue = it)
+                        },
+                        onCloseClicked =
+                        {
+                            searchBarViewModel.updateSearchTextState(newValue = "")
+                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+                        },
+                        onSearchClicked =
+                        {
+                            Log.d("Searched Text", it)
+                        },
+                        onSearchTriggered =
+                        {
+                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
+                        },
+                    )
+                }
 
                 item{
                     QuizCardForLazyColumn(
