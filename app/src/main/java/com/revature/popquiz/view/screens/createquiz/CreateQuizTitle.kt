@@ -22,9 +22,10 @@ fun CreateQuizTitle(navController: NavController){
 
     Log.d("Create Q Title Screen", "Create Q Title Start")
 
+    //Create our VM
     val createQuizVM = CreateQuizVM()
 
-
+    //Use Scaffold created for app
     QuizScaffold(
         sTitle = "Quiz Title",
         navController = navController) {
@@ -43,10 +44,12 @@ fun CreateQuizTitleBody(
 
     val context = LocalContext.current
 
+    //Temp variables for the Quiz creation
     var sQuizTitle by remember { mutableStateOf("")}
     var sShortDesc by remember { mutableStateOf("")}
     var sLongDesc by remember { mutableStateOf("")}
 
+    //Column for the screen
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -54,6 +57,7 @@ fun CreateQuizTitleBody(
         verticalArrangement = Arrangement.Center
     ) {
 
+        //Card Our input field is held on
         Card(
             modifier = Modifier
                 .fillMaxSize(.95f)
@@ -61,6 +65,7 @@ fun CreateQuizTitleBody(
             shape = RoundedCornerShape(40.dp),
             elevation = 10.dp
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -69,6 +74,7 @@ fun CreateQuizTitleBody(
 
                 Spacer(Modifier.size(40.dp))
 
+                //Text field for Quiz Title
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(.8f),
                     value = sQuizTitle,
@@ -78,6 +84,7 @@ fun CreateQuizTitleBody(
 
                 Spacer(Modifier.size(40.dp))
 
+                //Text Field for the short Description
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(.8f),
                     value = sShortDesc,
@@ -87,6 +94,7 @@ fun CreateQuizTitleBody(
 
                 Spacer(Modifier.size(40.dp))
 
+                //Text field for the Full Description
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth(.8f)
@@ -98,33 +106,36 @@ fun CreateQuizTitleBody(
                 )
                 
                 Spacer(Modifier.size(40.dp))
-                
+
+                //Next Screen Button
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(.6f),
                     onClick = {
 
-                          //Save variables and navigate
+                        //Save variables and navigate
 
                         //if all 3 fields have text
-                          if (sQuizTitle != "" ||
-                              sShortDesc != "" ||
-                              sLongDesc != ""){
+                        if (sQuizTitle != "" ||
+                          sShortDesc != "" ||
+                          sLongDesc != ""){
 
-                              //Set the values in the new quiz
-                              createQuizVM.newQuiz.title = sQuizTitle
-                              createQuizVM.newQuiz.shortDescription = sShortDesc
-                              createQuizVM.newQuiz.longDescription = sLongDesc
+                          //Set the values in the new quiz
+                          createQuizVM.newQuiz.title = sQuizTitle
+                          createQuizVM.newQuiz.shortDescription = sShortDesc
+                          createQuizVM.newQuiz.longDescription = sLongDesc
 
-                              //Navigate to next screen
-                              navController.navigate(NavScreens.CreateQuizResources.route)
-                          } else {
-                              Toast.makeText(
-                                  context,
-                                  "Please fill out all fields",
-                                  Toast.LENGTH_SHORT
-                              ).show()
-                          }
+                          //Navigate to next screen
+                          navController.navigate(NavScreens.CreateQuizResources.route)
+                        } else {
+
+                            //If everything isnt filled out
+                            Toast.makeText(
+                            context,
+                            "Please fill out all fields",
+                            Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
                     },
                 ) {
