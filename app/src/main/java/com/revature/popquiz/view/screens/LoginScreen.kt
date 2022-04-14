@@ -63,7 +63,7 @@ fun LoginScreen(navController: NavController)
                 onClick =
                 {
                     //dummy navigation
-                    navController.navigate(NavScreens.CreateQuizTitle.route)
+                    navController.navigate(NavScreens.EditQuizTitle.route)
                 }
 
             )
