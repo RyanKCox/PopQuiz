@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.shared
 
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,10 +8,13 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
 import androidx.navigation.NavController
 import com.revature.popquiz.view.screens.quizTags
 
@@ -40,10 +44,46 @@ fun QuizScaffold(sTitle:String, navController: NavController, content:@Composabl
         },
         content =
         {
+
             content()
         }
     )
+}
 
+/**
+ * Temporary Scaffold that does not take in navController
+ */
+@Composable
+fun TempQuizScaffold(sTitle: String, content: @Composable () -> Unit) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = { TopAppBar (title = {Text(sTitle)}, backgroundColor = MaterialTheme.colors.secondary) },
+        backgroundColor = MaterialTheme.colors.background,
+        content = { content() }
+    )
+}
+
+@Composable
+fun UniversalButton(
+    enabled: Boolean,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier
+) {
+    Button(
+        modifier = modifier,
+        onClick = onClick,
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
+        shape = RoundedCornerShape(25.dp)
+    ) {
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            color = Color.Black,
+            fontSize = 20.sp
+        )
+    }
 }
 
 @Composable
