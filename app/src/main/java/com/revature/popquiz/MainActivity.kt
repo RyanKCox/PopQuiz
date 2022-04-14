@@ -33,7 +33,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //Navigation Start
                     StartNav(navController = navController)
+<<<<<<< HEAD
 //                    QuestionScreen()
+=======
+                    //QuestionScreen()
+>>>>>>> ab57309fa838968b8f327b5bd916d17d32171d5e
                 }
             }
         }
