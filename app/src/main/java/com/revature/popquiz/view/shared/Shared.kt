@@ -26,7 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavController
+import com.revature.popquiz.model.dataobjects.SearchWidgetState
 import com.revature.popquiz.view.screens.quizTags
+import com.revature.popquiz.viewmodels.SearchBarViewModel
+import java.io.StringBufferInputStream
 
 /**
  * Shared Composables
@@ -100,8 +103,41 @@ fun UniversalButton(
 }
 
 @Composable
-fun SearchAppBar(
-    text: String,
+fun UnclickedSearchBar(onSearchClicked: () -> Unit, headingText: String)
+{
+    TopAppBar(
+        modifier = Modifier
+            .padding(horizontal = 5.dp)
+            .absolutePadding(top = 15.dp, bottom = 20.dp)
+            .clip(shape = RoundedCornerShape(5.dp)),
+        title =
+        {
+            Text(text = headingText)
+        },
+        actions =
+        {
+            IconButton(onClick = { onSearchClicked() })
+            {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search Icon",
+                    tint = Color.White
+                )
+            }
+        }
+    )
+}
+
+@Preview
+@Composable
+fun PreviewUnclickedSearchBar()
+{
+    UnclickedSearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Saved Quizzes")
+}
+
+@Composable
+fun ClickedSearchBar(
+    headingText: String,
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
@@ -110,7 +146,6 @@ fun SearchAppBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
             .padding(horizontal = 5.dp)
             .absolutePadding(top = 15.dp, bottom = 20.dp)
             .clip(shape = RoundedCornerShape(5.dp)),
@@ -121,13 +156,12 @@ fun SearchAppBar(
         TextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = text,
-            onValueChange =
+            value = headingText,
+            onValueChange = 
             {
                 onTextChange(it)
             },
-            placeholder =
-            {
+            placeholder = {
                 Text(
                     modifier = Modifier.alpha(ContentAlpha.medium),
                     text = "Search here...",
@@ -142,7 +176,7 @@ fun SearchAppBar(
                 IconButton(
                     onClick =
                     {
-                        if(text.isNotEmpty())
+                        if(headingText.isNotEmpty())
                         {
                             onTextChange("")
                         }
@@ -164,9 +198,8 @@ fun SearchAppBar(
                 imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(
-                onSearch =
-                {
-                    onSearchClicked(text)
+                onSearch = {
+                    onSearchClicked(headingText)
                 }
             ),
             colors = TextFieldDefaults.textFieldColors(
@@ -179,14 +212,45 @@ fun SearchAppBar(
 
 @Preview
 @Composable
-fun PreviewSearchAppBar()
+fun PreviewClickedSearchBar()
 {
-    SearchAppBar(
-        text = "Search Saved Quizzes",
+    ClickedSearchBar(
+        headingText = "Saved Quizzes",
         onTextChange = {},
         onCloseClicked = {},
         onSearchClicked = {}
     )
+}
+
+@Composable
+fun MainSearchBar(
+    searchWidgetState: SearchWidgetState,
+    searchTextState: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
+    onSearchTriggered: () -> Unit
+)
+{
+    when(searchWidgetState)
+    {
+        SearchWidgetState.CLOSED ->
+        {
+            UnclickedSearchBar(
+                onSearchClicked = onSearchTriggered,
+                headingText = "Search"
+            )
+        }
+        SearchWidgetState.OPENED ->
+        {
+            ClickedSearchBar(
+                headingText = searchTextState,
+                onTextChange = onTextChange,
+                onCloseClicked = onCloseClicked,
+                onSearchClicked = onSearchClicked
+            )
+        }
+    }
 }
 
 @Composable
