@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,12 +20,17 @@ import androidx.navigation.NavController
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.view.shared.SearchBar
+import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
 @Composable
-fun SavedQuizzesScreen(navController: NavController)
+fun SavedQuizzesScreen(navController: NavController, searchBarViewModel: SearchBarViewModel)
 {
-    //navController: NavController
+    // Search Bar View Model
+    val searchWidgetState by searchBarViewModel.searchTextState
+    val searchTextState by searchBarViewModel.searchTextState
+
+    // navController: NavController
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
 
@@ -38,15 +44,20 @@ fun SavedQuizzesScreen(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            SavedQuizzesBody()
+            SavedQuizzesBody(searchBarViewModel)
         }
 
     }
 }
 
 @Composable
-fun SavedQuizzesBody()
+fun SavedQuizzesBody(searchBarViewModel: SearchBarViewModel)
 {
+    // Search Bar View Model
+    val searchWidgetState by searchBarViewModel.searchTextState
+    val searchTextState by searchBarViewModel.searchTextState
+
+
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
 

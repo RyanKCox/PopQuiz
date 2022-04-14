@@ -21,7 +21,8 @@ import com.revature.popquiz.view.navigation.StartNav
 import com.revature.popquiz.view.screens.QuestionScreen
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity()
+{
 
     //Will change with Dagger-Hilt? -Evan
     private val splashScreenViewModel: SplashScreenViewModel by viewModels()
@@ -43,12 +44,14 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
 
-            PopQuizTheme {
+            PopQuizTheme()
+            {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
-                ) {
+                )
+                {
                     //Navigation Start
                     StartNav(navController = navController)
                     //QuestionScreen()
