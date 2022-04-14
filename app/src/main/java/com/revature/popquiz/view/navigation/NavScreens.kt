@@ -13,6 +13,7 @@ sealed class NavScreens(val route:String) {
 
     //Edit Quiz Screens
     object EditQuizTitle:NavScreens("EditQuizTitle")
+    object EditQuizResource:NavScreens("EditQuizResource")
 
     // Saved Quizzes Screeen
     object SavedQuizzesScreen: NavScreens("SavedQuizzesScreen")

@@ -1,4 +1,4 @@
-package com.revature.popquiz.view.screens
+package com.revature.popquiz.view.screens.editquiz
 
 import android.content.Context
 import android.widget.Toast
@@ -14,41 +14,43 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.QuizResource
-import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.CreateQuizVM
+import com.revature.popquiz.viewmodel.EditQuizVM
 
 @Composable
-fun CreateQuizResources(navController: NavController){
+fun EditQuizResources(navController: NavController){
 
     val context = LocalContext.current
 
     //Grab the existing VM
-    val createQuizVM =
+    val editQuizVM =
         ViewModelProvider(context as MainActivity)
-            .get(CreateQuizVM::class.java)
+            .get(EditQuizVM::class.java)
+
 
     QuizScaffold(
         sTitle = "Quiz Resources",
         navController = navController
     ) {
-        CreateQuizResourcesBody(navController,createQuizVM)
+        EditQuizResourcesBody(
+            navController,
+            context,
+            editQuizVM
+        )
     }
-
 }
 
 @Composable
-fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQuizVM){
-
-    val context = LocalContext.current
-
-
+fun EditQuizResourcesBody(
+    navController: NavController,
+    context: Context,
+    editQuizVM: EditQuizVM) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -74,12 +76,12 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
                 Spacer(Modifier.size(40.dp))
 
                 //Topic functionality
-                TopicView(context, createQuizVM)
+                EditTopic(context, editQuizVM)
 
                 Spacer(Modifier.size(40.dp))
 
                 //Weblink functionality
-                WebLinkView(context, createQuizVM)
+                EditWebLink(context, editQuizVM)
 
                 Spacer(Modifier.size(40.dp))
 
@@ -90,8 +92,7 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
                     onClick = {
 
                         //Save to Quiz and navigate
-                        navController.navigate(NavScreens.CreateQuizQuestions.route)
-
+                        //navController.navigate(NavScreens.CreateQuizQuestions.route)
 
 
                     }
@@ -102,14 +103,13 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
             }
         }
     }
-
-}
-
-@Composable
-fun TopicView(context: Context, createQuizVM: CreateQuizVM){
+}@Composable
+fun EditTopic(context: Context, editQuizVM: EditQuizVM){
 
 
-    var sTopic by remember { mutableStateOf("") }
+    var nSelected by remember { mutableStateOf(0) }
+    var sTopic by remember { mutableStateOf(editQuizVM.editQuiz.tagList[nSelected]) }
+    var topicList by remember { mutableStateOf(editQuizVM.editQuiz.tagList)}
 
     //Text field for a new topic
     OutlinedTextField(
@@ -118,8 +118,8 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
         onValueChange = {sTopic = it},
         label = { Text(
             "Topics",
-                style = MaterialTheme.typography.body1)
-                },
+            style = MaterialTheme.typography.body1)
+        },
         trailingIcon = {
 
             //Add topic icon
@@ -131,13 +131,13 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
                         //Check if the topic meets requirements and add to quiz
 
                         //if topic isnt empty and we havnt reached max topics
-                        if (sTopic != "" || createQuizVM.newQuiz.tagList.size <= 5) {
-                            createQuizVM.newQuiz.tagList.add(sTopic)
-                            //topicList.add(sTopic)
-                            sTopic = ""
+                        if (sTopic != "" || editQuizVM.editQuiz.tagList.size <= 5) {
+                            editQuizVM.editQuiz.tagList[nSelected] = sTopic
+                            topicList = mutableListOf()
+                            topicList.addAll(editQuizVM.editQuiz.tagList)
                         }
                         //If we reached max topics
-                        else if (createQuizVM.newQuiz.tagList.size > 5){
+                        else if (editQuizVM.editQuiz.tagList.size > 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 topics allowed",
@@ -171,23 +171,27 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
         Spacer(Modifier.size(10.dp))
 
         //Display each topic thats been added
-        for (topic in createQuizVM.newQuiz.tagList) {
+        for (topic in topicList) {
 
             Text(
                 text = topic,
-                style = MaterialTheme.typography.body2
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.clickable {
+                    nSelected = editQuizVM.editQuiz.tagList.indexOf(topic)
+                    sTopic = editQuizVM.editQuiz.tagList[nSelected]
+                }
             )
         }
         Spacer(Modifier.size(10.dp))
-
     }
-
 }
 
 @Composable
-fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
+fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
 
-    var sResource by remember { mutableStateOf("") }
+    var nSelected by remember { mutableStateOf(0) }
+    var sResource by remember { mutableStateOf(editQuizVM.editQuiz.resourceList[nSelected]) }
+    var resourceList by remember { mutableStateOf(editQuizVM.editQuiz.resourceList)}
 
     //Text Field for new Link
     OutlinedTextField(
@@ -195,7 +199,7 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
         value = sResource,
         onValueChange = {sResource = it},
         label = { Text("Resources",
-                style = MaterialTheme.typography.body1) },
+            style = MaterialTheme.typography.body1) },
         trailingIcon = {
 
             //Add link icon
@@ -207,14 +211,14 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
                         //Check if the link meets requirements
 
                         //If link is not empty and max links hasnt been reached
-                        if (sResource != "" || createQuizVM.newQuiz.resourceList.size <= 5) {
+                        if (sResource != "" || editQuizVM.editQuiz.resourceList.size <= 5) {
 
-                            //Add to resource list and clear input
-                            createQuizVM.newQuiz.resourceList.add(sResource)
-                            sResource = ""
+                            editQuizVM.editQuiz.resourceList[nSelected] = sResource
+                            resourceList = mutableListOf()
+                            resourceList.addAll(editQuizVM.editQuiz.resourceList)
                         }
                         //If we've reached max links
-                        else if (createQuizVM.newQuiz.resourceList.size > 5){
+                        else if (editQuizVM.editQuiz.resourceList.size > 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 resources allowed",
@@ -248,21 +252,19 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
         Spacer(Modifier.size(10.dp))
 
         //Display all links to user
-        for (topic in createQuizVM.newQuiz.resourceList) {
+        for (topic in resourceList) {
 
             Text(
                 text = topic.substringAfterLast('/'),
-                style = MaterialTheme.typography.body2
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.clickable {
+                    nSelected = editQuizVM.editQuiz.resourceList.indexOf(topic)
+                    sResource = editQuizVM.editQuiz.resourceList[nSelected]
+                }
             )
         }
         Spacer(Modifier.size(10.dp))
 
     }
 
-}
-
-@Preview
-@Composable
-fun CQRPreview(){
-    //CreateQuizResourcesBody()
 }

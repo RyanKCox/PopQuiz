@@ -2,7 +2,7 @@ package com.revature.popquiz.model.dataobjects
 
 class Quiz {
     val questionList= mutableListOf<Question>()
-    val resourceList= mutableListOf<QuizResource>()
+    val resourceList= mutableListOf<String>()
     val tagList= mutableListOf<String>()
     var title=""
     var shortDescription=""
