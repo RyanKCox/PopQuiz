@@ -160,8 +160,10 @@ fun ClickedSearchBar(
             onValueChange = 
             {
                 onTextChange(it)
+//                query -> onValueChanged(query)
             },
-            placeholder = {
+            placeholder =
+            {
                 Text(
                     modifier = Modifier.alpha(ContentAlpha.medium),
                     text = "Search here...",
