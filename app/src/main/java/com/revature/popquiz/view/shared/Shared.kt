@@ -8,12 +8,15 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavController
+import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.view.screens.quizTags
 
 /**
@@ -27,7 +30,7 @@ import com.revature.popquiz.view.screens.quizTags
  *
  * Scaffold to be used with all screens
  */
-
+@Composable
 fun QuizScaffold(sTitle:String, navController: NavController, content:@Composable () -> Unit)
 {
 
@@ -68,7 +71,8 @@ fun UniversalButton(
     onClick: () -> Unit,
     modifier: Modifier
 ) {
-    Button(modifier = modifier,
+    Button(
+        modifier = modifier,
         onClick = onClick,
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
@@ -81,7 +85,9 @@ fun UniversalButton(
             fontSize = 20.sp
         )
     }
-    
+}
+
+@Composable
 fun QuizCardForLazyColumn(
     quizTitleText: String,
     shortQuizDescriptionText: String
@@ -144,6 +150,32 @@ fun QuizCardForLazyColumn(
             quizTags()
         }
 
+    }
+}
+
+@Composable
+fun basicCard(title:String,info:String)
+{
+    Card(
+        modifier = Modifier.padding(10.dp),
+        elevation = 50.dp,
+        shape = RoundedCornerShape(25.dp),
+        backgroundColor = revLightOrange
+    ) {
+        Column(modifier = Modifier.padding(10.dp)) {
+            Text(
+                text = title, fontSize = 20.sp,
+                fontWeight = FontWeight.Medium, modifier = Modifier
+                    .fillMaxWidth(0.95F)
+                    .padding(horizontal = 5.dp)
+            )
+            Text(
+                text = info, fontSize = 15.sp,
+                fontWeight = FontWeight.Normal, modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth(0.95F)
+            )
+        }
     }
 }
 
