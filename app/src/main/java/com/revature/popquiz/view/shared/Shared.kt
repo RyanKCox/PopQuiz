@@ -8,10 +8,12 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavController
 import com.revature.popquiz.view.screens.quizTags
@@ -27,7 +29,7 @@ import com.revature.popquiz.view.screens.quizTags
  *
  * Scaffold to be used with all screens
  */
-
+@Composable
 fun QuizScaffold(sTitle:String, navController: NavController, content:@Composable () -> Unit)
 {
 
@@ -68,7 +70,8 @@ fun UniversalButton(
     onClick: () -> Unit,
     modifier: Modifier
 ) {
-    Button(modifier = modifier,
+    Button(
+        modifier = modifier,
         onClick = onClick,
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
@@ -81,7 +84,9 @@ fun UniversalButton(
             fontSize = 20.sp
         )
     }
-    
+}
+
+@Composable
 fun QuizCardForLazyColumn(
     quizTitleText: String,
     shortQuizDescriptionText: String
