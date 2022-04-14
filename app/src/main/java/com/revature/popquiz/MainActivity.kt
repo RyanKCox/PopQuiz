@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //Navigation Start
                     StartNav(navController = navController)
-                    QuestionScreen()
+                    //QuestionScreen()
                 }
             }
         }

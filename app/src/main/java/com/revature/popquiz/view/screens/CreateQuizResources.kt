@@ -5,8 +5,6 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -18,23 +16,33 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.dataobjects.QuizResource
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodel.CreateQuizVM
 
 @Composable
 fun CreateQuizResources(navController: NavController){
+
+    val context = LocalContext.current
+    val createQuizVM =
+        ViewModelProvider(context as MainActivity)
+            .get(CreateQuizVM::class.java)
 
     QuizScaffold(
         sTitle = "Quiz Resources",
         navController = navController
     ) {
-        CreateQuizResourcesBody()
+        CreateQuizResourcesBody(navController,createQuizVM)
     }
 
 }
 
 @Composable
-fun CreateQuizResourcesBody(){
+fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQuizVM){
 
     val context = LocalContext.current
 
@@ -48,9 +56,10 @@ fun CreateQuizResourcesBody(){
 
         Card(
             modifier = Modifier
-                .fillMaxSize(.8f)
+                .fillMaxSize(.95f)
                 .padding(15.dp),
             shape = RoundedCornerShape(40.dp),
+            elevation = 10.dp
         ) {
             Column(
                 modifier = Modifier
@@ -60,11 +69,11 @@ fun CreateQuizResourcesBody(){
 
                 Spacer(Modifier.size(40.dp))
 
-                TopicView(context)
+                TopicView(context, createQuizVM)
 
                 Spacer(Modifier.size(40.dp))
 
-                WebLinkView(context)
+                WebLinkView(context, createQuizVM)
 
                 Spacer(Modifier.size(40.dp))
 
@@ -74,6 +83,8 @@ fun CreateQuizResourcesBody(){
                     onClick = {
 
                         //Save to Quiz and navigate
+                        navController.navigate(NavScreens.CreateQuizQuestions.route)
+
 
 
                     }
@@ -88,11 +99,11 @@ fun CreateQuizResourcesBody(){
 }
 
 @Composable
-fun TopicView(context: Context){
+fun TopicView(context: Context, createQuizVM: CreateQuizVM){
 
 
     var sTopic by remember { mutableStateOf("") }
-    val topicList:ArrayList<String> = arrayListOf()
+    //val topicList:ArrayList<String> = arrayListOf()
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(.8f),
@@ -100,18 +111,19 @@ fun TopicView(context: Context){
         onValueChange = {sTopic = it},
         label = { Text(
             "Topics",
-                style = MaterialTheme.typography.h5)
+                style = MaterialTheme.typography.body1)
                 },
         trailingIcon = {
             Icon(imageVector = Icons.Default.Add,
                 contentDescription = "Add Topic Icon",
                 modifier = Modifier
                     .clickable {
-                        if (sTopic != "" || topicList.size <= 5) {
-                            topicList.add(sTopic)
+                        if (sTopic != "" || createQuizVM.newQuiz.tagList.size <= 5) {
+                            createQuizVM.newQuiz.tagList.add(sTopic)
+                            //topicList.add(sTopic)
                             sTopic = ""
                         }
-                        else if (topicList.size > 5){
+                        else if (createQuizVM.newQuiz.tagList.size > 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 topics allowed",
@@ -136,20 +148,21 @@ fun TopicView(context: Context){
     Column(
         modifier = Modifier
             .fillMaxWidth(.8f)
-            .border(2.dp, Color.Gray),
+            .border(2.dp, Color.Gray)
+            .height(110.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         //Dummy Data
-        topicList.add("Kotlin")
-        topicList.add("Java")
-        topicList.add("Context")
-        topicList.add("Testing")
-        topicList.add("Services")
-
+//        topicList.add("Kotlin")
+//        topicList.add("Java")
+//        topicList.add("Context")
+//        topicList.add("Testing")
+//        topicList.add("Services")
+//
 
         Spacer(Modifier.size(10.dp))
 
-        for (topic in topicList) {
+        for (topic in createQuizVM.newQuiz.tagList) {
 
             Text(
                 text = topic,
@@ -163,27 +176,28 @@ fun TopicView(context: Context){
 }
 
 @Composable
-fun WebLinkView(context: Context){
+fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
 
     var sResource by remember { mutableStateOf("") }
-    val resourceList:ArrayList<String> = arrayListOf()
+    //val resourceList:ArrayList<String> = arrayListOf()
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(.8f),
         value = sResource,
         onValueChange = {sResource = it},
-        label = { Text("Topics",
-                style = MaterialTheme.typography.h5) },
+        label = { Text("Resources",
+                style = MaterialTheme.typography.body1) },
         trailingIcon = {
             Icon(imageVector = Icons.Default.Add,
                 contentDescription = "Add Topic Icon",
                 modifier = Modifier
                     .clickable {
-                        if (sResource != "" || resourceList.size <= 5) {
-                            resourceList.add(sResource)
+                        if (sResource != "" || createQuizVM.newQuiz.resourceList.size <= 5) {
+                            createQuizVM.newQuiz.resourceList.add(QuizResource(sResource))
+                            //resourceList.add(sResource)
                             sResource = ""
                         }
-                        else if (resourceList.size > 5){
+                        else if (createQuizVM.newQuiz.resourceList.size > 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 resources allowed",
@@ -208,23 +222,24 @@ fun WebLinkView(context: Context){
     Column(
         modifier = Modifier
             .fillMaxWidth(.8f)
-            .border(2.dp, Color.Gray),
+            .border(2.dp, Color.Gray)
+            .height(110.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         //Dummy Data
-        resourceList.add("https://developer.android.com/kotlin/style-guide")
-        resourceList.add("https://developer.android.com/kotlin/style-guide")
-        resourceList.add("https://developer.android.com/kotlin/style-guide")
-        resourceList.add("https://developer.android.com/kotlin/style-guide")
-        resourceList.add("https://developer.android.com/kotlin/style-guide")
+//        resourceList.add("https://developer.android.com/kotlin/style-guide")
+//        resourceList.add("https://developer.android.com/kotlin/style-guide")
+//        resourceList.add("https://developer.android.com/kotlin/style-guide")
+//        resourceList.add("https://developer.android.com/kotlin/style-guide")
+//        resourceList.add("https://developer.android.com/kotlin/style-guide")
 
 
         Spacer(Modifier.size(10.dp))
 
-        for (topic in resourceList) {
+        for (topic in createQuizVM.newQuiz.resourceList) {
 
             Text(
-                text = topic.substringAfterLast('/'),
+                text = topic.getResourceShortName(),
                 style = MaterialTheme.typography.body2
             )
         }
@@ -237,5 +252,5 @@ fun WebLinkView(context: Context){
 @Preview
 @Composable
 fun CQRPreview(){
-    CreateQuizResourcesBody()
+    //CreateQuizResourcesBody()
 }
