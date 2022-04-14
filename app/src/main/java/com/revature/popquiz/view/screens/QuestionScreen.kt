@@ -8,25 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.revature.popquiz.R
-import com.revature.popquiz.ui.theme.PopQuizTheme
-import com.revature.popquiz.ui.theme.revBlue
+import androidx.navigation.NavController
+import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
-fun QuestionScreen(
-//    navController: NavController
-) {
+fun QuestionScreen(navController: NavController) {
+
     val scaffoldState = rememberScaffoldState()
-    Scaffold(
-        topBar = { TopAppBar(modifier = Modifier
-            .fillMaxWidth()
-            .height(70.dp),
-            backgroundColor = MaterialTheme.colors.secondary) {
-                Text(text = R.string.quiz_name.toString())} },
-        scaffoldState = scaffoldState,
-        backgroundColor = revBlue,
+    QuizScaffold(
+        sTitle = "Quiz Title",
+        navController = navController,
         content = {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -139,15 +131,11 @@ fun SubmitButton() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun QuestionScreenPreview() {
-        QuestionScreen()
-}
-@Preview(showBackground = true)
-@Composable
-fun QuestionCardPreview() {
-    PopQuizTheme {
-        QuestionCard()
-    }
-}
+//@PreviewParameter([ provider = NavController])
+//@Composable
+//fun QuestionScreenPreview(navController: NavController) {
+//    PopQuizTheme {
+//        QuestionScreen(navController = navController)
+//    }
+//}
+
