@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
-import com.revature.popquiz.view.shared.SearchBar
+import com.revature.popquiz.view.shared.SearchAppBar
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
@@ -87,7 +87,12 @@ fun SavedQuizzesBody(searchBarViewModel: SearchBarViewModel)
             )
             {
                 item {
-                    SearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Search Saved Quizzes")
+                    SearchAppBar(
+                        text = "Search Saved Quizzes",
+                        onTextChange = {},
+                        onCloseClicked = {},
+                        onSearchClicked = {}
+                    )
                 }
 
                 item{

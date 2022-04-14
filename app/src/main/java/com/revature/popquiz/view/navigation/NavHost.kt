@@ -11,6 +11,7 @@ import com.revature.popquiz.view.screens.CreateQuizTitle
 import com.revature.popquiz.view.screens.LoginScreen
 import com.revature.popquiz.view.screens.SavedQuizzesScreen
 import com.revature.popquiz.view.screens.SearchQuizzesScreen
+import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 @Composable
 fun StartNav(navController: NavHostController)
@@ -39,7 +40,10 @@ fun StartNav(navController: NavHostController)
         // Saved Quizzes Screen
         composable(NavScreens.SavedQuizzesScreen.route)
         {
-            SavedQuizzesScreen(navController = navController)
+            SavedQuizzesScreen(
+                navController = navController,
+                searchBarViewModel = SearchBarViewModel()
+            )
         }
 
         // Search Quizzes Screen
@@ -47,10 +51,12 @@ fun StartNav(navController: NavHostController)
         {
             SearchQuizzesScreen(navController = navController)
         }
-        composable(NavScreens.CreateQuizResources.route){
+        composable(NavScreens.CreateQuizResources.route)
+        {
             CreateQuizResources(navController = navController)
         }
-        composable(NavScreens.CreateQuizQuestions.route){
+        composable(NavScreens.CreateQuizQuestions.route)
+        {
             CreateQuizQuestions(navController = navController)
         }
     }

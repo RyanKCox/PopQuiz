@@ -100,39 +100,6 @@ fun UniversalButton(
 }
 
 @Composable
-fun SearchBar(onSearchClicked: () -> Unit, headingText: String)
-{
-    TopAppBar(
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .absolutePadding(top = 15.dp, bottom = 20.dp)
-            .clip(shape = RoundedCornerShape(5.dp)),
-        title =
-        {
-            Text(text = headingText)
-        },
-        actions =
-        {
-            IconButton(onClick = { onSearchClicked() })
-            {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search Icon",
-                    tint = Color.White
-                )
-            }
-        }
-    )
-}
-
-@Preview
-@Composable
-fun PreviewSearchBar()
-{
-    SearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Saved Quizzes")
-}
-
-@Composable
 fun SearchAppBar(
     text: String,
     onTextChange: (String) -> Unit,
@@ -143,7 +110,10 @@ fun SearchAppBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp),
+            .height(100.dp)
+            .padding(horizontal = 5.dp)
+            .absolutePadding(top = 15.dp, bottom = 20.dp)
+            .clip(shape = RoundedCornerShape(5.dp)),
         elevation = AppBarDefaults.TopAppBarElevation,
         color = MaterialTheme.colors.primary
     )
@@ -152,10 +122,12 @@ fun SearchAppBar(
             modifier = Modifier
                 .fillMaxWidth(),
             value = text,
-            onValueChange = {
+            onValueChange =
+            {
                 onTextChange(it)
             },
-            placeholder = {
+            placeholder =
+            {
                 Text(
                     modifier = Modifier.alpha(ContentAlpha.medium),
                     text = "Search here...",
@@ -192,7 +164,8 @@ fun SearchAppBar(
                 imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(
-                onSearch = {
+                onSearch =
+                {
                     onSearchClicked(text)
                 }
             ),
@@ -204,6 +177,17 @@ fun SearchAppBar(
     }
 }
 
+@Preview
+@Composable
+fun PreviewSearchAppBar()
+{
+    SearchAppBar(
+        text = "Search Saved Quizzes",
+        onTextChange = {},
+        onCloseClicked = {},
+        onSearchClicked = {}
+    )
+}
 
 @Composable
 fun QuizCardForLazyColumn(
