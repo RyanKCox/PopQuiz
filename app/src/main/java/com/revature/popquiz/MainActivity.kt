@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
-import com.revature.popquiz.view.screens.QuestionScreen
 
 class MainActivity : ComponentActivity() {
 

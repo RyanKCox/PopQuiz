@@ -12,13 +12,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.revature.popquiz.ui.theme.PopQuizTheme
+import androidx.navigation.NavController
 import com.revature.popquiz.view.shared.TempQuizScaffold
 
 @Composable
-fun FlashCardScreen(
-    //navController: NavController
+fun FlashcardScreen(
+    navController: NavController
 ) {
     val scaffoldState = rememberScaffoldState()
     TempQuizScaffold(
@@ -63,10 +62,10 @@ fun FlashCard() {
         }
     }
 }
-@Preview
-@Composable
-fun FlashcardScreenPreview() {
-    PopQuizTheme {
-        FlashCardScreen()
-    }
-}
+//@Preview
+//@Composable
+//fun FlashcardScreenPreview() {
+//    PopQuizTheme {
+//        FlashCardScreen(navController = NavController)
+//    }
+//}

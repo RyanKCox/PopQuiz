@@ -2,7 +2,6 @@ package com.revature.popquiz.model.api
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.revature.popquiz.model.api.services.QuizApiService
-import com.revature.popquiz.model.dataobjects.Quiz
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,7 +41,7 @@ object RetrofitHelper {
         /**
          * OkHttp client using the interceptor to add logging of timeout to server
          */
-        val OkHttpClient = OkHttpClient.Builder()
+        val okHttpClient = OkHttpClient.Builder()
             .writeTimeout(0, TimeUnit.MILLISECONDS)
             .writeTimeout(30, TimeUnit.MILLISECONDS)
             .dns(DnsSelector())
@@ -51,7 +50,7 @@ object RetrofitHelper {
         /**
          * Builds the retrofit object using the OkHttp client and builder
          */
-        retrofit = builder.client(OkHttpClient).build()
+        retrofit = builder.client(okHttpClient).build()
     }
 
     /**
