@@ -478,6 +478,12 @@ fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState:
 
         }
     }
-
-
+}
+@Composable
+fun TextLengthPrompt(maxLength:Int){
+    Text(
+        text = "Too long! Max characters is $maxLength",
+        fontSize = 10.sp,
+        color = Color.Red
+    )
 }
