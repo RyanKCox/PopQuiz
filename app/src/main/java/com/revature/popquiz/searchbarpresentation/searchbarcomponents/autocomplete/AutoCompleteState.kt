@@ -38,7 +38,8 @@ interface AutoCompleteScope<T : AutoCompleteEntity> : AutoCompleteDesignScope
 }
 
 @Stable
-interface AutoCompleteDesignScope {
+interface AutoCompleteDesignScope
+{
     var boxWidthPercentage: Float
     var shouldWrapContentHeight: Boolean
     var boxMaxHeight: Dp
@@ -50,7 +51,8 @@ class AutoCompleteState<T : AutoCompleteEntity>(private val startItems: List<T>)
 {
     private var onItemSelectedBlock: ItemSelected<T>? = null
 
-    fun selectItem(item: T) {
+    fun selectItem(item: T)
+    {
         onItemSelectedBlock?.invoke(item)
     }
 
@@ -62,7 +64,8 @@ class AutoCompleteState<T : AutoCompleteEntity>(private val startItems: List<T>)
     override var boxBorderStroke by mutableStateOf(BorderStroke(2.dp, Color.Black))
     override var boxShape: Shape by mutableStateOf(RoundedCornerShape(8.dp))
 
-    override fun filter(query: String) {
+    override fun filter(query: String)
+    {
         filteredItems = startItems.filter { entity ->
             entity.filter(query)
         }

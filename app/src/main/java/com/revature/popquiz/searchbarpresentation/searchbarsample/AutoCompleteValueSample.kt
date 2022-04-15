@@ -101,8 +101,8 @@ fun AutoCompleteValueSample(items: List<String>, searchBarViewModel: SearchBarVi
                 view.clearFocus()
             },
             onFocusChanged =
-            { focusState ->
-                isSearching = true
+            {
+                    focusState -> isSearching = focusState.hasFocus
             },
             onValueChanged = { query ->
                 value = query

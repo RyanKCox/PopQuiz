@@ -41,6 +41,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import com.example.androiddevchallenge.domain.models.Quiz
 import com.example.androiddevchallenge.presentation.searchbarsample.AutoCompleteValueSample
 import com.revature.popquiz.model.dataobjects.SearchWidgetState
@@ -82,6 +83,7 @@ fun TextSearchBar(
         )
     )
 }
+
 
 
 @ExperimentalAnimationApi
