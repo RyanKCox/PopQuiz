@@ -1,6 +1,5 @@
 package com.revature.popquiz.view.screens.popquiz
 
-import android.widget.ProgressBar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -8,7 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -37,10 +40,17 @@ fun ProgressBar() {
     Box(modifier = Modifier
         .fillMaxHeight(0.1f)
         .fillMaxWidth()
-        .padding(10.dp)) {
-
+        .padding(10.dp)
+    ) {
+        Text(
+            text = "Pop! Quiz Time!",
+            modifier = Modifier,
+            style = TextStyle(Color.Black),
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            fontSize = 50.sp
+        )
     }
-    val progressBar: ProgressBar
 }
 
 @Composable
