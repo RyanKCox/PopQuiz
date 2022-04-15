@@ -23,6 +23,7 @@ import com.revature.popquiz.model.dataobjects.QuizResource
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.CreateQuizTitleBody
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.TempQuizScaffold
 import com.revature.popquiz.viewmodel.CreateQuizVM
 import com.revature.popquiz.viewmodel.EditQuizVM
 import com.revature.popquiz.viewmodel.EditQuizVMFactory
@@ -65,7 +66,7 @@ fun EditQuizTitle(navController: NavController){
     val editQuizVM = ViewModelProvider(context as MainActivity, EditQuizVMFactory(tempQuiz)).get(EditQuizVM::class.java)
 
     //Use Scaffold created for app
-    QuizScaffold(
+    TempQuizScaffold(
         sTitle = "Edit Title",
         navController = navController) {
 

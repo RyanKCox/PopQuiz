@@ -9,5 +9,6 @@ class Quiz {
     var longDescription=""
     var score=0
     var progress:Float=0F
+    var sampleQuestion="What is an example of a sample question?"
 
 }
