@@ -74,7 +74,7 @@ fun EditQuestionBody(
     for (answer in editQuizVM.editQuiz.questionList[editQuizVM.editQuestionIndex].answers) {
         list.add(answer.copy())
     }
-    var answerList:List<Answer> by remember { mutableStateOf( list)}
+    var answerList:MutableList<Answer> = list//List<Answer> by remember { mutableStateOf( list)}
        // editQuizVM.editQuiz.questionList[editQuizVM.editQuestionIndex].answers)}
 
     Column(
@@ -83,7 +83,7 @@ fun EditQuestionBody(
     ) {
         Spacer(Modifier.size(10.dp))
 
-        questionType = questionTypeDropDown(questionType)
+        questionType = questionTypeDropDown(questionType,answerList)
 
         Spacer(Modifier.size(10.dp))
 

@@ -131,17 +131,17 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
                         //Check if the topic meets requirements and add to quiz
 
                         //if topic isnt empty and we havnt reached max topics
-                        if (sTopic != "" || createQuizVM.newQuiz.tagList.size <= 5) {
+                        if (sTopic != "" && createQuizVM.newQuiz.tagList.size < 5) {
                             createQuizVM.newQuiz.tagList.add(sTopic)
                             //topicList.add(sTopic)
                             sTopic = ""
                         }
                         //If we reached max topics
-                        else if (createQuizVM.newQuiz.tagList.size > 5){
+                        else if (createQuizVM.newQuiz.tagList.size >= 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 topics allowed",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
 
                         }
@@ -150,7 +150,7 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
                             Toast.makeText(
                                 context,
                                 "Nothing in Topic",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
@@ -207,18 +207,18 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
                         //Check if the link meets requirements
 
                         //If link is not empty and max links hasnt been reached
-                        if (sResource != "" || createQuizVM.newQuiz.resourceList.size <= 5) {
+                        if (sResource != "" && createQuizVM.newQuiz.resourceList.size < 5) {
 
                             //Add to resource list and clear input
                             createQuizVM.newQuiz.resourceList.add(sResource)
                             sResource = ""
                         }
                         //If we've reached max links
-                        else if (createQuizVM.newQuiz.resourceList.size > 5){
+                        else if (createQuizVM.newQuiz.resourceList.size >= 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 resources allowed",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
 
                         }
@@ -227,7 +227,7 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
                             Toast.makeText(
                                 context,
                                 "Nothing in Resource",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
