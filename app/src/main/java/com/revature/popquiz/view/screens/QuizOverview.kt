@@ -55,7 +55,6 @@ fun quizOverView() {
 
 
     TempQuizScaffold(sTitle = "Quiz Overview", navController = navController) {
-
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
