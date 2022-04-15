@@ -1,4 +1,8 @@
 package com.revature.popquiz.view.screens.question
 
-class QuestionViewModel {
+import androidx.lifecycle.ViewModel
+
+class QuestionViewModel: ViewModel() {
+
+//    private val questionService = RetrofitHelper.getQuizService()
 }

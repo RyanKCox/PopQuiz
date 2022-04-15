@@ -1,4 +1,8 @@
 package com.revature.popquiz.view.screens.flashcard
 
-class FlashcardViewModel {
+import androidx.lifecycle.ViewModel
+
+class FlashcardViewModel: ViewModel() {
+
+//    val apiService = RetrofitHelper.getFlashcardsService()
 }
