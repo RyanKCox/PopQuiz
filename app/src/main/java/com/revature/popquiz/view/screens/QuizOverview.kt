@@ -1,5 +1,7 @@
 package com.revature.popquiz.view.screens
 
+import android.widget.ToggleButton
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
@@ -8,18 +10,31 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.R
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
+import com.revature.popquiz.view.navigation.StartNav
+import com.revature.popquiz.view.shared.TempQuizScaffold
+
+import com.revature.popquiz.view.shared.basicCard
+import com.revature.popquiz.view.shared.inDrawer
+import com.revature.popquiz.view.shared.outDrawer
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -31,15 +46,17 @@ fun quizOverView() {
     quiz.tagList.add(0,"Index")
     quiz.tagList.add(1,"Arrays")
     val scaffoldState = rememberScaffoldState()
+    val checkedState=remember{ mutableStateOf(false)}
     val context= LocalContext.current
+    val scope= rememberCoroutineScope()
+    val navController = rememberNavController()
 
 
-    Scaffold(
-        backgroundColor = revBlue,
-        topBar = {/*header*/ },
-        scaffoldState = scaffoldState
-    )
-    {
+
+
+    TempQuizScaffold(sTitle = "Quiz Overview", navController = navController
+        , scope = scope, scaffoldState =scaffoldState ) {
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,121 +64,130 @@ fun quizOverView() {
         )
         {
             LazyRow(modifier=Modifier.fillMaxWidth()) {
-               item (){
-                   Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
-                   Column(modifier=Modifier.fillParentMaxWidth(0.9F)) {
+                item (){
+                    Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
+                    Column(modifier=Modifier.fillParentMaxWidth(0.9F)) {
 
 
-                       Card(
-                           shape = RoundedCornerShape(25.dp),
-                           elevation = 50.dp,
-                           modifier = Modifier
-                               .fillMaxHeight(0.9F)
-                               .fillMaxWidth()
-                       ) {
-                           Column(
-                               modifier = Modifier.fillMaxSize(fraction = 0.9F),
-                               horizontalAlignment = Alignment.CenterHorizontally,
-                               verticalArrangement = Arrangement.Top
-                           )
-                           {
-                               Text(
-                                   text = "${quiz.title} Quiz",
-                                   fontSize = 30.sp,
-                                   fontWeight = FontWeight.Medium,
-                                   modifier = Modifier.padding(20.dp)
-                               )
-                               Spacer(modifier = Modifier.height(20.dp))
-                               Card(
-                                   modifier = Modifier.padding(10.dp),
-                                   elevation = 50.dp,
-                                   shape = RoundedCornerShape(25.dp),
-                                   backgroundColor = revLightOrange
-                               ) {
-                                   Column(modifier = Modifier.padding(10.dp)) {
-                                       Text(
-                                           text = " Description:", fontSize = 20.sp,
-                                           fontWeight = FontWeight.Medium, modifier = Modifier
-                                               .fillMaxWidth(0.95F)
-                                               .padding(horizontal = 5.dp)
-                                       )
-                                       Text(
-                                           text = quiz.longDescription, fontSize = 15.sp,
-                                           fontWeight = FontWeight.Normal, modifier = Modifier
-                                               .padding(10.dp)
-                                               .fillMaxWidth(0.95F)
-                                       )
-                                   }
-                               }
-                               Spacer(modifier = Modifier.height(20.dp))
-                               Card(
-                                   modifier = Modifier.padding(10.dp),
-                                   elevation = 50.dp,
-                                   shape = RoundedCornerShape(25.dp),
-                                   backgroundColor = revLightOrange
-                               ) {
-                                   Column(modifier = Modifier.padding(10.dp)) {
-                                       Text(
-                                           text = "Topics: ", fontSize = 20.sp,
-                                           fontWeight = FontWeight.Medium, modifier = Modifier
-                                               .fillMaxWidth(0.95F)
-                                               .padding(horizontal = 5.dp)
-                                       )
+                        Card(
+                            shape = RoundedCornerShape(25.dp),
+                            elevation = 50.dp,
+                            modifier = Modifier
+                                .fillMaxHeight(0.9F)
+                                .fillMaxWidth()
+                        ) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(fraction = 0.9F),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Top
+                            )
+                            {
+                                Spacer(modifier = Modifier.height(20.dp))
+                                Text(
+                                    text = "${quiz.title} Quiz",
+                                    fontSize = 30.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier.padding(20.dp)
+                                )
+                                Spacer(modifier = Modifier.height(20.dp))
+//description
+                                basicCard(title = "Description:", info =quiz.longDescription )
 
-                                       Row() {
-                                           quiz.tagList.forEach { tag ->
-                                               Text(
-                                                   text = "-$tag",
-                                                   fontSize = 15.sp,
-                                                   fontWeight = FontWeight.Normal,
-                                                   modifier = Modifier
-                                                       .padding(horizontal = 7.dp)
-                                               )
-                                           }
+                                Spacer(modifier = Modifier.height(20.dp))
+//Topics
+                                Card(
+                                    modifier = Modifier.padding(10.dp),
+                                    elevation = 50.dp,
+                                    shape = RoundedCornerShape(25.dp),
+                                    backgroundColor = revLightOrange
+                                ) {
+                                    Column(modifier = Modifier.padding(10.dp)) {
+                                        Text(
+                                            text = "Topics: ", fontSize = 20.sp,
+                                            fontWeight = FontWeight.Medium, modifier = Modifier
+                                                .fillMaxWidth(0.95F)
+                                                .padding(horizontal = 5.dp)
+                                        )
 
-                                       }
+                                        Row() {
+                                            quiz.tagList.forEach { tag ->
+                                                Text(
+                                                    text = "-$tag",
+                                                    fontSize = 15.sp,
+                                                    fontWeight = FontWeight.Normal,
+                                                    modifier = Modifier
+                                                        .padding(horizontal = 7.dp)
+                                                )
+                                            }
 
-                                   }
-                               }
-                               Spacer(modifier = Modifier.height(20.dp))
+                                        }
+
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(20.dp))
 
 
-                               Row(
-                                   modifier = Modifier.fillMaxWidth(0.9F),
-                                   horizontalArrangement = Arrangement.SpaceEvenly
-                               ) {
-                                   Button(
-                                       onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
-                                           backgroundColor = revOrange
-                                       ), modifier = Modifier.fillParentMaxWidth(0.2F)
-                                           .height(50.dp)
-                                   ) {
-                                       Text(text = "Edit")
-                                   }
-                                   Button(
-                                       onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
-                                           backgroundColor = revOrange
-                                       ), modifier = Modifier.fillParentMaxWidth(0.2F)
-                                           .height(50.dp)
-                                   ) {
-                                       Text(text = "Start")
-                                   }
-                                   Button(
-                                       onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
-                                           backgroundColor = revOrange
-                                       ), modifier = Modifier.fillParentMaxWidth(0.2F)
-                                           .height(50.dp)
-                                   ) {
-                                       Text(text = "Cards")
-                                   }
-                               }
-                           }
-                       }
+//Subscribe
+                                Card(
+                                    modifier = Modifier
+                                        .padding(10.dp)
+                                        .fillMaxWidth(0.95F),
+                                    elevation = 50.dp,
+                                    shape = RoundedCornerShape(25.dp),
+                                    backgroundColor = revLightOrange
+                                ) {
+                                    Column(modifier = Modifier.padding()) {
+                                        Row(modifier = Modifier.padding(horizontal = 20.dp),
+                                            verticalAlignment = Alignment.CenterVertically) {
+                                            Text(
+                                                text = "Subscribe", fontSize = 20.sp,
+                                                fontWeight = FontWeight.Medium, modifier = Modifier
+                                                    .fillMaxWidth(0.95F)
+                                                    .padding(horizontal = 0.dp)
+                                            )
+                                            Switch(checked = checkedState.value, onCheckedChange ={checkedState.value=it},
+                                                colors = SwitchDefaults.colors(
+                                                    revOrange))
 
-                   }
-                   Spacer(modifier = Modifier.width(25.dp))
 
-               }
+                                        }
+
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(20.dp))
+//Sample Quiz
+                                basicCard(title = "Sample Question: ", info = quiz.sampleQuestion )
+
+
+                                Spacer(modifier = Modifier.height(20.dp))
+//Buttons
+                                Column(modifier=Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Bottom) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(0.9F),
+                                        horizontalArrangement = Arrangement.SpaceEvenly
+                                    ) {
+                                        quizViewButton(text ="Edit" , modifier = Modifier
+                                            .fillParentMaxWidth(0.2F)
+                                            .height(50.dp), onclick = { })
+                                        quizViewButton(text ="Start" , modifier = Modifier
+                                            .fillParentMaxWidth(0.2F)
+                                            .height(50.dp), onclick = { })
+                                        quizViewButton(text ="Cards" , modifier = Modifier
+                                            .fillParentMaxWidth(0.2F)
+                                            .height(50.dp), onclick = { })
+
+
+                                    }
+                                    Spacer(modifier = Modifier.height(35.dp))
+                                }
+
+                            }
+                        }
+
+                    }
+                    Spacer(modifier = Modifier.width(25.dp))
+
+                }
                 //This is the scrollable page
                 item() {
                     Column(modifier = Modifier.fillParentMaxWidth(0.9F)) {
@@ -196,6 +222,29 @@ fun quizOverView() {
             }
         }
 
+    }
+
+
+}
+
+
+
+
+
+//------------------------------------Composables and Preview-----------------------------//
+
+
+
+@Composable
+fun quizViewButton(text:String,modifier: Modifier,onclick:
+()->Unit)
+{
+    Button(
+        onClick = { onclick}, colors = ButtonDefaults.buttonColors(
+            backgroundColor = revOrange
+        ), modifier = modifier
+    ) {
+        Text(text = text)
     }
 }
 
