@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.navigation
 
 import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,6 +26,7 @@ import com.revature.popquiz.view.screens.editquiz.EditQuizResources
 import com.revature.popquiz.view.screens.editquiz.EditQuizTitle
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun StartNav(navController: NavHostController)
 {
@@ -66,10 +68,12 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.EditQuizResource.route){
             EditQuizResources(navController = navController)
         }
-        composable(NavScreens.EditQuizQuestionSelect.route){
+        composable(NavScreens.EditQuizQuestionSelect.route)
+        {
             EditQuizQuestionSelect(navController = navController)
         }
-        composable(NavScreens.EditQuestion.route){
+        composable(NavScreens.EditQuestion.route)
+        {
             EditQuestion(navController = navController)
         }
 

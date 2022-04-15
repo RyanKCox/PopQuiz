@@ -3,6 +3,7 @@ package com.revature.popquiz.view.shared
 
 import android.app.ActionBar
 import android.widget.SearchView
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,18 +22,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
 
 import androidx.navigation.NavController
+import com.example.androiddevchallenge.domain.models.Quiz
+import com.example.androiddevchallenge.presentation.searchbarsample.AutoCompleteValueSample
 import com.revature.popquiz.model.dataobjects.SearchWidgetState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -124,38 +131,7 @@ fun UniversalButton(
     }
 }
 
-@Composable
-fun UnclickedSearchBar(onSearchClicked: () -> Unit, headingText: String)
-{
-    TopAppBar(
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .absolutePadding(top = 15.dp, bottom = 20.dp)
-            .clip(shape = RoundedCornerShape(5.dp)),
-        title =
-        {
-            Text(text = headingText)
-        },
-        actions =
-        {
-            IconButton(onClick = { onSearchClicked() })
-            {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search Icon",
-                    tint = Color.White
-                )
-            }
-        }
-    )
-}
 
-@Preview
-@Composable
-fun PreviewUnclickedSearchBar()
-{
-    UnclickedSearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Saved Quizzes")
-}
 
 @Composable
 fun ClickedSearchBar(
@@ -232,48 +208,9 @@ fun ClickedSearchBar(
     }
 }
 
-@Preview
-@Composable
-fun PreviewClickedSearchBar()
-{
-    ClickedSearchBar(
-        headingText = "Saved Quizzes",
-        onTextChange = {},
-        onCloseClicked = {},
-        onSearchClicked = {}
-    )
-}
 
-@Composable
-fun MainSearchBar(
-    searchWidgetState: SearchWidgetState,
-    searchTextState: String,
-    onTextChange: (String) -> Unit,
-    onCloseClicked: () -> Unit,
-    onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit
-)
-{
-    when(searchWidgetState)
-    {
-        SearchWidgetState.CLOSED ->
-        {
-            UnclickedSearchBar(
-                onSearchClicked = onSearchTriggered,
-                headingText = "Search"
-            )
-        }
-        SearchWidgetState.OPENED ->
-        {
-            ClickedSearchBar(
-                headingText = searchTextState,
-                onTextChange = onTextChange,
-                onCloseClicked = onCloseClicked,
-                onSearchClicked = onSearchClicked
-            )
-        }
-    }
-}
+
+
 
 @Composable
 fun QuizCardForLazyColumn(
@@ -369,7 +306,8 @@ fun basicCard(title: String, info: String) {
 
 @Preview
 @Composable
-fun ViewQuizCard() {
+fun ViewQuizCard()
+{
     QuizCardForLazyColumn("Quiz Title", "Short quiz description")
 }
 //Top drawer function
