@@ -1,7 +1,7 @@
 package com.revature.popquiz.model.dataobjects
 
 class Question(
-    
+
     val nType:Int,
     var question:String,
     var answers:List<Answer> )
@@ -26,6 +26,18 @@ class Question(
             }
         }
         return correct
+    }
+
+    fun getQuestionType():String{
+        var sType = ""
+        if (nType == 0){
+            sType = "True or False"
+        } else if (nType == 1){
+            sType = "Single Answer"
+        } else if (nType == 2) {
+            sType = "MultiAnswer"
+        }
+        return sType
     }
 
 

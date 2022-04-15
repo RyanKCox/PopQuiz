@@ -15,6 +15,8 @@ import androidx.navigation.NavController
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.TextEnums
+import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
 
 @Composable
@@ -48,6 +50,9 @@ fun CreateQuizTitleBody(
     var sQuizTitle by remember { mutableStateOf("")}
     var sShortDesc by remember { mutableStateOf("")}
     var sLongDesc by remember { mutableStateOf("")}
+    var bTitleTooLong by remember{ mutableStateOf(false)}
+    var bShortTooLong by remember{ mutableStateOf(false)}
+    var bLongTooLong by remember{ mutableStateOf(false)}
 
     //Column for the screen
     Column(
@@ -75,26 +80,40 @@ fun CreateQuizTitleBody(
                 Spacer(Modifier.size(40.dp))
 
                 //Text field for Quiz Title
+                if(sQuizTitle.length > TextEnums.MAX_TEXT_LENGTH) {
+                    bTitleTooLong = true
+                    TextLengthPrompt(maxLength = TextEnums.MAX_TEXT_LENGTH)
+                } else {bTitleTooLong = false}
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(.8f),
                     value = sQuizTitle,
                     onValueChange = {sQuizTitle = it},
-                    label = {Text("Quiz Title")}
+                    label = {Text("Quiz Title")},
+                    maxLines = 2
                 )
 
                 Spacer(Modifier.size(40.dp))
 
                 //Text Field for the short Description
+                if(sShortDesc.length > TextEnums.MAX_TEXT_LENGTH) {
+                    bShortTooLong = true
+                    TextLengthPrompt(maxLength = TextEnums.MAX_TEXT_LENGTH)
+                } else {bShortTooLong = false}
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(.8f),
                     value = sShortDesc,
                     onValueChange = {sShortDesc = it},
-                    label = {Text("Short Description")}
+                    label = {Text("Short Description")},
+                    maxLines = 2
                 )
 
                 Spacer(Modifier.size(40.dp))
 
                 //Text field for the Full Description
+                if(sLongDesc.length > TextEnums.MAX_DESCRIPTION_LENGTH) {
+                    bLongTooLong = true
+                    TextLengthPrompt(maxLength = TextEnums.MAX_DESCRIPTION_LENGTH)
+                } else { bLongTooLong = false}
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth(.8f)
@@ -114,11 +133,18 @@ fun CreateQuizTitleBody(
                     onClick = {
 
                         //Save variables and navigate
-
+                        if(bTitleTooLong || bShortTooLong || bLongTooLong){
+                            Toast.makeText(
+                                context,
+                                "Too many characters!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                         //if all 3 fields have text
-                        if (sQuizTitle != "" ||
-                          sShortDesc != "" ||
+                        else if (sQuizTitle != "" &&
+                          sShortDesc != "" &&
                           sLongDesc != ""){
+
 
                           //Set the values in the new quiz
                           createQuizVM.newQuiz.title = sQuizTitle
