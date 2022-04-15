@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import com.revature.popquiz.Register
 
 import com.revature.popquiz.view.screens.*
-import com.revature.popquiz.view.screens.flashcard.FlashcardScreen
 import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
 import com.revature.popquiz.view.screens.question.QuestionScreen
 
@@ -24,6 +23,7 @@ import com.revature.popquiz.view.screens.editquiz.EditQuizQuestionSelect
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.screens.editquiz.EditQuizResources
 import com.revature.popquiz.view.screens.editquiz.EditQuizTitle
+import com.revature.popquiz.view.screens.flashcard.FlashCardScreen
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -124,7 +124,7 @@ fun StartNav(navController: NavHostController)
         
         //Flashcard Screen
         composable(NavScreens.FlashcardScreen.route) {
-            FlashcardScreen(navController = navController)
+            FlashCardScreen(navController = navController)
         }
         
         //PopQuiz Screen

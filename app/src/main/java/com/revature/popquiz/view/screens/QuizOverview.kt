@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 
 import com.revature.popquiz.view.shared.basicCard
@@ -166,13 +167,27 @@ fun quizOverView(navController: NavController) {
                                         ) {
                                             quizViewButton(text = "Edit", modifier = Modifier
                                                 .fillParentMaxWidth(0.22F)
-                                                .height(50.dp), onclick = { })
+                                                .height(50.dp), onclick = {
+
+                                                    //Send Correct Quiz
+                                                    navController.navigate(NavScreens.EditQuizTitle.route)
+
+                                            })
                                             quizViewButton(text = "Start", modifier = Modifier
                                                 .fillParentMaxWidth(0.22F)
-                                                .height(50.dp), onclick = { })
+                                                .height(50.dp), onclick = {
+
+                                                    //Send correct quiz
+                                                    navController.navigate(NavScreens.QuestionScreen.route)
+                                            })
                                             quizViewButton(text = "Cards", modifier = Modifier
                                                 .fillParentMaxWidth(0.22F)
-                                                .height(50.dp), onclick = { })
+                                                .height(50.dp), onclick = {
+
+                                                    //Send Correct Quiz
+                                                    navController.navigate(NavScreens.FlashcardScreen.route)
+
+                                            })
 
 
                                         }
@@ -239,7 +254,7 @@ fun quizViewButton(text:String,modifier: Modifier,onclick:
 ()->Unit)
 {
     Button(
-        onClick = { onclick}, colors = ButtonDefaults.buttonColors(
+        onClick = { onclick()}, colors = ButtonDefaults.buttonColors(
             backgroundColor = revOrange
         ), modifier = modifier
     ) {
