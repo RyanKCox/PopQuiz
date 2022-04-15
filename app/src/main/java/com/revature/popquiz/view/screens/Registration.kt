@@ -21,14 +21,16 @@ import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @Composable
 fun Register(navController: NavController)
 {
-    //navController: NavController
+
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
     val scope = rememberCoroutineScope()
+
     val dataStore= LoginDataStore(context)
 
     Scaffold (
