@@ -1,8 +1,6 @@
 package com.revature.popquiz.view.screens
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,9 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
+import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.MainSearchBar
 import com.revature.popquiz.model.dataobjects.SearchWidgetState
-import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
@@ -46,9 +43,7 @@ fun SearchQuizzesScreen(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            SearchQuizzesBody(
-                navController = navController,
-                searchBarViewModel = SearchBarViewModel())
+            SearchQuizzesBody(searchBarViewModel = SearchBarViewModel())
         }
 
     }
@@ -57,9 +52,7 @@ fun SearchQuizzesScreen(navController: NavController)
 
 @ExperimentalAnimationApi
 @Composable
-fun SearchQuizzesBody(
-    navController: NavController,
-    searchBarViewModel: SearchBarViewModel)
+fun SearchQuizzesBody(searchBarViewModel: SearchBarViewModel)
 {
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
@@ -90,45 +83,56 @@ fun SearchQuizzesBody(
                 verticalArrangement = Arrangement.Top
             )
             {
-                item()
-                {
-                    quizBarSearch()
+                item {
+                    MainSearchBar(
+                        searchWidgetState = searchWidgetState,
+                        searchTextState = searchTextState,
+                        onTextChange =
+                        {
+                            searchBarViewModel.updateSearchTextState(newValue = it)
+                        },
+                        onCloseClicked =
+                        {
+                            searchBarViewModel.updateSearchTextState(newValue = "")
+                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+                        },
+                        onSearchClicked =
+                        {
+                            Log.d("Searched Text", it)
+                        },
+                        onSearchTriggered =
+                        {
+                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
+                        },
+                    )
                 }
 
                 item{
                     QuizCardForLazyColumn(
                         quizTitleText = "Java Basics",
                         shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
+                    )
                 }
 
                 item{
                     QuizCardForLazyColumn(
                         quizTitleText = "Kotlin Fundamentals",
                         shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
+                    )
                 }
 
                 item{
                     QuizCardForLazyColumn(
                         quizTitleText = "Intro to Databases",
                         shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
+                    )
                 }
 
                 item{
                     QuizCardForLazyColumn(
                         quizTitleText = "MVVM Design Pattern",
                         shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
+                    )
                 }
 
 
@@ -136,9 +140,7 @@ fun SearchQuizzesBody(
                     QuizCardForLazyColumn(
                         quizTitleText = "Quiz Title",
                         shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
+                    )
                 }
 
 
@@ -146,9 +148,7 @@ fun SearchQuizzesBody(
                     QuizCardForLazyColumn(
                         quizTitleText = "Quiz Title",
                         shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
+                    )
                 }
             }
         }

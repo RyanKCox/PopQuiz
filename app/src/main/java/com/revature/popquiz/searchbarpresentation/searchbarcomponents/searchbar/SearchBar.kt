@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.example.androiddevchallenge.domain.models.Quiz
@@ -48,6 +49,152 @@ import com.revature.popquiz.model.dataobjects.SearchWidgetState
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
+@Composable
+fun UnclickedSearchBar(onSearchClicked: () -> Unit, headingText: String)
+{
+    TopAppBar(
+        modifier = Modifier
+            .padding(horizontal = 5.dp)
+            .absolutePadding(top = 15.dp, bottom = 20.dp)
+            .clip(shape = RoundedCornerShape(5.dp)),
+        title =
+        {
+            Text(text = headingText)
+        },
+        actions =
+        {
+            IconButton(onClick = { onSearchClicked() })
+            {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search Icon",
+                    tint = Color.White
+                )
+            }
+        }
+    )
+}
+
+@Preview
+@Composable
+fun PreviewUnclickedSearchBar()
+{
+    UnclickedSearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Saved Quizzes")
+}
+
+@Composable
+fun ClickedSearchBar(
+    headingText: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit
+)
+{
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 5.dp)
+            .absolutePadding(top = 15.dp, bottom = 20.dp)
+            .clip(shape = RoundedCornerShape(5.dp)),
+        elevation = AppBarDefaults.TopAppBarElevation,
+        color = MaterialTheme.colors.primary
+    )
+    {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            value = headingText,
+            onValueChange =
+            {
+                onTextChange(it)
+            },
+            placeholder = {
+                Text(
+                    modifier = Modifier.alpha(ContentAlpha.medium),
+                    text = "Search here...",
+                    color = Color.White
+                )
+            },
+            textStyle = TextStyle(
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            ),
+            singleLine = true,
+            trailingIcon = {
+                IconButton(
+                    onClick =
+                    {
+                        if(headingText.isNotEmpty())
+                        {
+                            onTextChange("")
+                        }
+                        else
+                        {
+                            onCloseClicked()
+                        }
+                    }
+                )
+                {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon",
+                        tint = Color.White
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    onSearchClicked(headingText)
+                }
+            ),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.Transparent,
+                cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewClickedSearchBar()
+{
+    ClickedSearchBar(
+        headingText = "Saved Quizzes",
+        onTextChange = {},
+        onCloseClicked = {},
+        onSearchClicked = {}
+    )
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun MainSearchBar(
+    searchWidgetState: SearchWidgetState,
+    searchTextState: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
+    onSearchTriggered: () -> Unit
+)
+{
+    when(searchWidgetState)
+    {
+        SearchWidgetState.CLOSED ->
+        {
+            UnclickedSearchBar(
+                onSearchClicked = onSearchTriggered,
+                headingText = "Search"
+            )
+        }
+        SearchWidgetState.OPENED ->
+        {
+            quizBarSearch()
+        }
+    }
+}
 
 @Composable
 fun TextSearchBar(
