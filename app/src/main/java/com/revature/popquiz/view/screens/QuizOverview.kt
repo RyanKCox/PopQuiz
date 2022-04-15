@@ -165,13 +165,13 @@ fun quizOverView(navController: NavController) {
                                             horizontalArrangement = Arrangement.SpaceEvenly
                                         ) {
                                             quizViewButton(text = "Edit", modifier = Modifier
-                                                .fillParentMaxWidth(0.2F)
+                                                .fillParentMaxWidth(0.22F)
                                                 .height(50.dp), onclick = { })
                                             quizViewButton(text = "Start", modifier = Modifier
-                                                .fillParentMaxWidth(0.2F)
+                                                .fillParentMaxWidth(0.22F)
                                                 .height(50.dp), onclick = { })
                                             quizViewButton(text = "Cards", modifier = Modifier
-                                                .fillParentMaxWidth(0.2F)
+                                                .fillParentMaxWidth(0.22F)
                                                 .height(50.dp), onclick = { })
 
 
