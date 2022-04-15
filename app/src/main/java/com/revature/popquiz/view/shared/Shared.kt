@@ -3,6 +3,7 @@ package com.revature.popquiz.view.shared
 
 import android.app.ActionBar
 import android.widget.SearchView
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,16 +17,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
 
 import androidx.navigation.NavController
+import com.example.androiddevchallenge.domain.models.Quiz
+import com.example.androiddevchallenge.presentation.searchbarsample.AutoCompleteValueSample
 import com.revature.popquiz.model.dataobjects.SearchWidgetState
 import com.revature.popquiz.view.screens.quizTags
 import com.revature.popquiz.viewmodels.SearchBarViewModel
@@ -102,158 +109,91 @@ fun UniversalButton(
     }
 }
 
-@Composable
-fun UnclickedSearchBar(onSearchClicked: () -> Unit, headingText: String)
-{
-    TopAppBar(
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .absolutePadding(top = 15.dp, bottom = 20.dp)
-            .clip(shape = RoundedCornerShape(5.dp)),
-        title =
-        {
-            Text(text = headingText)
-        },
-        actions =
-        {
-            IconButton(onClick = { onSearchClicked() })
-            {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search Icon",
-                    tint = Color.White
-                )
-            }
-        }
-    )
-}
 
-@Preview
-@Composable
-fun PreviewUnclickedSearchBar()
-{
-    UnclickedSearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Saved Quizzes")
-}
 
-@Composable
-fun ClickedSearchBar(
-    headingText: String,
-    onTextChange: (String) -> Unit,
-    onCloseClicked: () -> Unit,
-    onSearchClicked: (String) -> Unit
-)
-{
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 5.dp)
-            .absolutePadding(top = 15.dp, bottom = 20.dp)
-            .clip(shape = RoundedCornerShape(5.dp)),
-        elevation = AppBarDefaults.TopAppBarElevation,
-        color = MaterialTheme.colors.primary
-    )
-    {
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = headingText,
-            onValueChange = 
-            {
-                onTextChange(it)
-//                query -> onValueChanged(query)
-            },
-            placeholder =
-            {
-                Text(
-                    modifier = Modifier.alpha(ContentAlpha.medium),
-                    text = "Search here...",
-                    color = Color.White
-                )
-            },
-            textStyle = TextStyle(
-                fontSize = MaterialTheme.typography.subtitle1.fontSize
-            ),
-            singleLine = true,
-            trailingIcon = {
-                IconButton(
-                    onClick =
-                    {
-                        if(headingText.isNotEmpty())
-                        {
-                            onTextChange("")
-                        }
-                        else
-                        {
-                            onCloseClicked()
-                        }
-                    }
-                )
-                {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon",
-                        tint = Color.White
-                    )
-                }
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions(
-                onSearch = {
-                    onSearchClicked(headingText)
-                }
-            ),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent,
-                cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
-            )
-        )
-    }
-}
 
-@Preview
-@Composable
-fun PreviewClickedSearchBar()
-{
-    ClickedSearchBar(
-        headingText = "Saved Quizzes",
-        onTextChange = {},
-        onCloseClicked = {},
-        onSearchClicked = {}
-    )
-}
 
-@Composable
-fun MainSearchBar(
-    searchWidgetState: SearchWidgetState,
-    searchTextState: String,
-    onTextChange: (String) -> Unit,
-    onCloseClicked: () -> Unit,
-    onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit
-)
-{
-    when(searchWidgetState)
-    {
-        SearchWidgetState.CLOSED ->
-        {
-            UnclickedSearchBar(
-                onSearchClicked = onSearchTriggered,
-                headingText = "Search"
-            )
-        }
-        SearchWidgetState.OPENED ->
-        {
-            ClickedSearchBar(
-                headingText = searchTextState,
-                onTextChange = onTextChange,
-                onCloseClicked = onCloseClicked,
-                onSearchClicked = onSearchClicked
-            )
-        }
-    }
-}
+//@Composable
+//fun ClickedSearchBar(
+//    headingText: String,
+//    onTextChange: (String) -> Unit,
+//    onCloseClicked: () -> Unit,
+//    onSearchClicked: (String) -> Unit
+//)
+//{
+//    Surface(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(horizontal = 5.dp)
+//            .absolutePadding(top = 15.dp, bottom = 20.dp)
+//            .clip(shape = RoundedCornerShape(5.dp)),
+//        elevation = AppBarDefaults.TopAppBarElevation,
+//        color = MaterialTheme.colors.primary
+//    )
+//    {
+//        TextField(
+//            modifier = Modifier
+//                .fillMaxWidth(),
+//            value = headingText,
+//            onValueChange =
+//            {
+//                onTextChange(it)
+////                query -> onValueChanged(query)
+//            },
+//            placeholder =
+//            {
+//                Text(
+//                    modifier = Modifier.alpha(ContentAlpha.medium),
+//                    text = "Search here...",
+//                    color = Color.White
+//                )
+//            },
+//            textStyle = TextStyle(
+//                fontSize = MaterialTheme.typography.subtitle1.fontSize
+//            ),
+//            singleLine = true,
+//            trailingIcon = {
+//                IconButton(
+//                    onClick =
+//                    {
+//                        if(headingText.isNotEmpty())
+//                        {
+//                            onTextChange("")
+//                        }
+//                        else
+//                        {
+//                            onCloseClicked()
+//                        }
+//                    }
+//                )
+//                {
+//                    Icon(
+//                        imageVector = Icons.Default.Search,
+//                        contentDescription = "Search Icon",
+//                        tint = Color.White
+//                    )
+//                }
+//            },
+//            keyboardOptions = KeyboardOptions(
+//                imeAction = ImeAction.Search
+//            ),
+//            keyboardActions = KeyboardActions(
+//                onSearch = {
+//                    onSearchClicked(headingText)
+//                }
+//            ),
+//            colors = TextFieldDefaults.textFieldColors(
+//                backgroundColor = Color.Transparent,
+//                cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
+//            )
+//        )
+//    }
+//}
+
+
+
+
+
 
 @Composable
 fun QuizCardForLazyColumn(
@@ -327,3 +267,4 @@ fun ViewQuizCard()
 {
     QuizCardForLazyColumn("Quiz Title", "Short quiz description")
 }
+

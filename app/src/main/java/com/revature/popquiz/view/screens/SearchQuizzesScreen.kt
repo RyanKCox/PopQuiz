@@ -1,6 +1,9 @@
 package com.revature.popquiz.view.screens
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,12 +21,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
 import com.revature.popquiz.model.dataobjects.SearchWidgetState
-import com.revature.popquiz.view.shared.MainSearchBar
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
 
+@ExperimentalAnimationApi
 @Composable
 fun SearchQuizzesScreen(navController: NavController)
 {
@@ -48,6 +52,7 @@ fun SearchQuizzesScreen(navController: NavController)
 }
 
 
+@ExperimentalAnimationApi
 @Composable
 fun SearchQuizzesBody(searchBarViewModel: SearchBarViewModel)
 {
@@ -80,28 +85,9 @@ fun SearchQuizzesBody(searchBarViewModel: SearchBarViewModel)
                 verticalArrangement = Arrangement.Top
             )
             {
-                item {
-                    MainSearchBar(
-                        searchWidgetState = searchWidgetState,
-                        searchTextState = searchTextState,
-                        onTextChange =
-                        {
-                            searchBarViewModel.updateSearchTextState(newValue = it)
-                        },
-                        onCloseClicked =
-                        {
-                            searchBarViewModel.updateSearchTextState(newValue = "")
-                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
-                        },
-                        onSearchClicked =
-                        {
-                            Log.d("Searched Text", it)
-                        },
-                        onSearchTriggered =
-                        {
-                            searchBarViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
-                        },
-                    )
+                item()
+                {
+                    quizBarSearch()
                 }
 
                 item{
