@@ -4,29 +4,30 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.shared.TempQuizScaffold
 
 @Composable
 fun FlashCardScreen(
-    //navController: NavController
+    navController: NavController
 ) {
     val scaffoldState = rememberScaffoldState()
+
     TempQuizScaffold(
         sTitle = "Flashcards",
-//        navController = navController,
+        navController = navController,
         content = {
             FlashCard()
-        }
+        },
     )
 }
 @Composable
@@ -66,7 +67,8 @@ fun FlashCard() {
 @Preview
 @Composable
 fun FlashcardScreenPreview() {
+    val navController = rememberNavController()
     PopQuizTheme {
-        FlashCardScreen()
+        FlashCardScreen(navController = navController)
     }
 }

@@ -12,7 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.Icons
+
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,7 +45,7 @@ import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.quizTags
 import com.revature.popquiz.viewmodels.SearchBarViewModel
-import java.io.StringBufferInputStream
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -84,8 +84,11 @@ fun QuizScaffold(sTitle: String, navController: NavController, content: @Composa
  * Temporary Scaffold that does not take in navController
  */
 @Composable
-fun TempQuizScaffold(color:Color= revBlue, sTitle: String, navController: NavController,
-                     scope: CoroutineScope, scaffoldState: ScaffoldState, content: @Composable () -> Unit) {
+fun TempQuizScaffold(color:Color= revBlue, sTitle: String, navController: NavController
+                     , content: @Composable () -> Unit) {
+    val scope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
