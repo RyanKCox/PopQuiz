@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.revature.popquiz.Register
 
 import com.revature.popquiz.view.screens.*
 
@@ -37,6 +38,10 @@ fun StartNav(navController: NavHostController)
         composable (NavScreens.LoginScreen.route)
         {
             LoginScreen(navController = navController)
+        }
+        composable(NavScreens.RegistrationScreen.route)
+        {
+            Register(navController=navController)
         }
         
         //Create Quiz Screens
