@@ -18,11 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
-import com.revature.popquiz.model.dataobjects.QuizResource
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
-import com.revature.popquiz.view.shared.TempQuizScaffold
-import com.revature.popquiz.viewmodel.CreateQuizVM
 import com.revature.popquiz.viewmodel.EditQuizVM
 
 @Composable
@@ -36,7 +33,7 @@ fun EditQuizResources(navController: NavController){
             .get(EditQuizVM::class.java)
 
 
-    TempQuizScaffold(
+    QuizScaffold(
         sTitle = "Quiz Resources",
         navController = navController
     ) {

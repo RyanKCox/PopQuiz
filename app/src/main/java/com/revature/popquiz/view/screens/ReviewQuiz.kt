@@ -13,15 +13,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
+import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
-fun reviewQuiz() {
+fun reviewQuiz(navController: NavController) {
     val quiz = Quiz()
     quiz.title="Arrays"
     quiz.score=90
@@ -36,13 +38,9 @@ fun reviewQuiz() {
     quiz.questionList.add(0,q)
 
 
-    Scaffold(
-        backgroundColor = revBlue,
-        topBar = {
-            TopAppBar(backgroundColor = revOrange) {
-
-            }
-        }
+    QuizScaffold(
+        sTitle = "Review Quiz",
+        navController = navController
     )
     {
         Column(
@@ -130,5 +128,5 @@ fun answers(answer: Answer)
 @Preview
 fun reviewPreview()
 {
-    reviewQuiz()
+    //reviewQuiz()
 }

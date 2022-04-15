@@ -18,7 +18,7 @@ import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.view.screens.createquiz.*
-import com.revature.popquiz.view.shared.TempQuizScaffold
+import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.EditQuizVM
 
 @Composable
@@ -33,7 +33,7 @@ fun EditQuestion(navController: NavController){
 
 
 
-    TempQuizScaffold(
+    QuizScaffold(
         sTitle = "Edit Question",
         navController = navController
     ) {

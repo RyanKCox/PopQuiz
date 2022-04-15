@@ -17,7 +17,7 @@ sealed class NavScreens(val route:String) {
     object EditQuizQuestionSelect:NavScreens("EditQuizQuestionSelect")
     object EditQuestion:NavScreens("EditQuestion")
 
-    // Saved Quizzes Screeen
+    // Saved Quizzes Screen
     object SavedQuizzesScreen: NavScreens("SavedQuizzesScreen")
 
     // Search Quizzes Screen
@@ -28,4 +28,13 @@ sealed class NavScreens(val route:String) {
 
     //Flashcard Screen
     object FlashCardScreen: NavScreens("FlashCardScreen")
+
+    //Profile Screen
+    object ProfileScreen:NavScreens("ProfileScreen")
+
+    //Settings Screen
+    object SettingsScreen:NavScreens("SettingsScreen")
+
+    //Quiz Overview
+    object QuizOverviewScreen:NavScreens("QuizOverviewScreen")
 }

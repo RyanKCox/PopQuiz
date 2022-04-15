@@ -20,7 +20,6 @@ import com.revature.popquiz.MainActivity
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
-import com.revature.popquiz.view.shared.TempQuizScaffold
 import com.revature.popquiz.viewmodel.EditQuizVM
 
 @Composable
@@ -35,7 +34,7 @@ fun EditQuizQuestionSelect(navController: NavController){
 
 
 
-    TempQuizScaffold(
+    QuizScaffold(
         sTitle = "Select Question",
         navController = navController
     ) {

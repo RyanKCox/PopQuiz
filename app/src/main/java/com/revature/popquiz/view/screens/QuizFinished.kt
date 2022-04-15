@@ -24,16 +24,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.ui.theme.Teal200
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.view.shared.QuizScaffold
 
 
 @Composable
-    fun quizComplete() {
+fun quizComplete(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
-    Scaffold(
-        backgroundColor = revBlue,
-        topBar = {/*header*/ },
-        scaffoldState = scaffoldState
+
+    QuizScaffold(
+        sTitle = "Quiz Completed",
+        navController = navController
     )
     {
         Column(
@@ -104,73 +105,73 @@ import com.revature.popquiz.ui.theme.revBlue
     }
 }
 
-                            @Composable
-                            fun reviewAnswersButton(/*navController: NavController*/) {
-                                Button(modifier = Modifier
-                                    .padding(10.dp)
-                                    .height(100.dp)
-                                    .width(150.dp)
-                                    .wrapContentHeight(),
-                                    shape = RoundedCornerShape(25),
-                                    onClick = {
+@Composable
+fun reviewAnswersButton(/*navController: NavController*/) {
+    Button(modifier = Modifier
+        .padding(10.dp)
+        .height(100.dp)
+        .width(150.dp)
+        .wrapContentHeight(),
+        shape = RoundedCornerShape(25),
+        onClick = {
 
-                                        //Send toy to trade request screen and navigate
-                                        // navController.navigate(NavScreens.AcceptTradeScreen.route)
-                                    })
-                                {
-                                    Text(
-                                        text = "Review Answers",
-                                        fontSize = 15.sp,
-                                        textAlign = TextAlign.Center
-                                    )
-                                }
-                            }
-
-
-                            @Composable
-                            fun shareButton(/*navController: NavController*/) {
-                                Button(modifier = Modifier
-                                    .padding(10.dp)
-                                    .height(100.dp)
-                                    .width(150.dp)
-                                    .wrapContentHeight(),
-                                    shape = RoundedCornerShape(25),
-                                    onClick = {
-
-                                        //Send toy to trade request screen and navigate
-                                        // navController.navigate(NavScreens.AcceptTradeScreen.route)
-                                    })
-                                {
-                                    Text(
-                                        text = "Share With Friends",
-                                        fontSize = 15.sp,
-                                        textAlign = TextAlign.Center
-                                    )
-                                }
-                            }
+            //Send toy to trade request screen and navigate
+            // navController.navigate(NavScreens.AcceptTradeScreen.route)
+        })
+    {
+        Text(
+            text = "Review Answers",
+            fontSize = 15.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
 
 
-                            @Composable
-                            fun exitButton(/*navController: NavController*/) {
-                                Button(modifier = Modifier
-                                    .padding(10.dp)
-                                    .height(100.dp)
-                                    .width(150.dp)
-                                    .wrapContentHeight(),
-                                    shape = RoundedCornerShape(25),
-                                    onClick = {
+@Composable
+fun shareButton(/*navController: NavController*/) {
+    Button(modifier = Modifier
+        .padding(10.dp)
+        .height(100.dp)
+        .width(150.dp)
+        .wrapContentHeight(),
+        shape = RoundedCornerShape(25),
+        onClick = {
 
-                                        //Send toy to trade request screen and navigate
-                                        // navController.navigate(NavScreens.AcceptTradeScreen.route)
-                                    })
-                                {
-                                    Text(
-                                        text = "Exit",
-                                        fontSize = 15.sp,
-                                        textAlign = TextAlign.Center
-                                    )
-                                }
-                            }
+            //Send toy to trade request screen and navigate
+            // navController.navigate(NavScreens.AcceptTradeScreen.route)
+        })
+    {
+        Text(
+            text = "Share With Friends",
+            fontSize = 15.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+
+@Composable
+fun exitButton(/*navController: NavController*/) {
+    Button(modifier = Modifier
+        .padding(10.dp)
+        .height(100.dp)
+        .width(150.dp)
+        .wrapContentHeight(),
+        shape = RoundedCornerShape(25),
+        onClick = {
+
+            //Send toy to trade request screen and navigate
+            // navController.navigate(NavScreens.AcceptTradeScreen.route)
+        })
+    {
+        Text(
+            text = "Exit",
+            fontSize = 15.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
 @Composable
 fun quizFinishedScreen(/*navController: NavController*/) {
     val context = LocalContext.current
@@ -220,7 +221,7 @@ fun quizFinishedScreen(/*navController: NavController*/) {
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
-                            quizComplete()
+                            //quizComplete()
                             reviewAnswersButton()
                             shareButton()
                             shareButton()
@@ -236,5 +237,5 @@ fun quizFinishedScreen(/*navController: NavController*/) {
 @Preview
 @Composable
 fun prevA(){
-    quizComplete()
+    //quizComplete()
 }

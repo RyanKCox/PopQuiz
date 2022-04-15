@@ -19,15 +19,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.revature.popquiz.R
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
-fun profile(/*navController: NavController*/) {
-    val scaffoldState = rememberScaffoldState()
-    val context = LocalContext.current
-    Scaffold(
-        backgroundColor = revBlue,
-        topBar = {/*header*/ },
-        scaffoldState = scaffoldState
+fun profile(navController: NavController) {
+    QuizScaffold(
+        sTitle = "Profile",
+        navController = navController
     )
     {
         Column(
@@ -181,5 +179,5 @@ fun profile(/*navController: NavController*/) {
 @Preview
 @Composable
 fun prevProfile(){
-    profile()
+    //profile()
 }

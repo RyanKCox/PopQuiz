@@ -60,32 +60,32 @@ import kotlinx.coroutines.launch
  *
  * Scaffold to be used with all screens
  */
-@Composable
-fun QuizScaffold(sTitle: String, navController: NavController, content: @Composable () -> Unit) {
-
-    //Temp scaffold before we build it
-    Scaffold(
-        topBar =
-        {
-            TopAppBar(
-                title = { Text(sTitle) },
-                backgroundColor = MaterialTheme.colors.secondary
-            )
-        },
-        content =
-        {
-
-            content()
-        }
-    )
-}
+//@Composable
+//fun QuizScaffold(sTitle: String, navController: NavController, content: @Composable () -> Unit) {
+//
+//    //Temp scaffold before we build it
+//    Scaffold(
+//        topBar =
+//        {
+//            TopAppBar(
+//                title = { Text(sTitle) },
+//                backgroundColor = MaterialTheme.colors.secondary
+//            )
+//        },
+//        content =
+//        {
+//
+//            content()
+//        }
+//    )
+//}
 
 /**
  * Temporary Scaffold that does not take in navController
  */
 @Composable
-fun TempQuizScaffold(color:Color= revBlue, sTitle: String, navController: NavController
-                     , content: @Composable () -> Unit) {
+fun QuizScaffold(color:Color= revBlue, sTitle: String, navController: NavController
+                 , content: @Composable () -> Unit) {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
@@ -278,13 +278,14 @@ fun MainSearchBar(
 @Composable
 fun QuizCardForLazyColumn(
     quizTitleText: String,
-    shortQuizDescriptionText: String
+    shortQuizDescriptionText: String,
+    onClick: () -> Unit = {}
 )
 {
     Card(
         modifier =
         Modifier
-            .clickable { }
+            .clickable { onClick() }
             .height(150.dp)
             .fillMaxWidth()
             .absolutePadding(bottom = 10.dp)
@@ -452,6 +453,7 @@ fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState:
             .clickable {
                 scope.launch {
                     // navController.navigate(NavScreens..route)
+                    navController.navigate(NavScreens.SettingsScreen.route)
                 }
             }) {
             Row() {
@@ -466,6 +468,7 @@ fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState:
             .clickable {
                 scope.launch {
                     // navController.navigate(NavScreens..route)
+                    navController.navigate(NavScreens.ProfileScreen.route)
                 }
             }) {
             Row() {

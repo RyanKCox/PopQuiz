@@ -84,6 +84,8 @@ fun StartNav(navController: NavHostController)
         {
             SearchQuizzesScreen(navController = navController)
         }
+
+        //Create Quizzes screens
         composable(NavScreens.CreateQuizResources.route)
         {
             CreateQuizResources(navController = navController)
@@ -96,6 +98,21 @@ fun StartNav(navController: NavHostController)
         //Question Screen
         composable(NavScreens.QuestionScreen.route) {
             QuestionScreen(navController = navController)
+        }
+
+        //Profile Screen
+        composable(NavScreens.ProfileScreen.route){
+            profile(navController = navController)
+        }
+
+        //Settings Screen
+        composable(NavScreens.SettingsScreen.route){
+            Settings(navController = navController)
+        }
+
+        //Quiz Overview
+        composable(NavScreens.QuizOverviewScreen.route){
+            quizOverView(navController = navController)
         }
         
 //        //Flashcard Screen

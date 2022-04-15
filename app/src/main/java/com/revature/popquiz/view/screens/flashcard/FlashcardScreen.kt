@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -14,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.ui.theme.PopQuizTheme
-import com.revature.popquiz.view.shared.TempQuizScaffold
+import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
 fun FlashCardScreen(
@@ -22,7 +21,7 @@ fun FlashCardScreen(
 ) {
     val scaffoldState = rememberScaffoldState()
 
-    TempQuizScaffold(
+    QuizScaffold(
         sTitle = "Flashcards",
         navController = navController,
         content = {

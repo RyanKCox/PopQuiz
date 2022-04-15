@@ -1,12 +1,7 @@
 package com.revature.popquiz.view.screens
 
-import android.widget.ToggleButton
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -16,45 +11,34 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.revature.popquiz.R
 import com.revature.popquiz.model.dataobjects.Quiz
-import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
-import com.revature.popquiz.view.navigation.StartNav
-import com.revature.popquiz.view.shared.TempQuizScaffold
+import com.revature.popquiz.view.shared.QuizScaffold
 
 import com.revature.popquiz.view.shared.basicCard
-import com.revature.popquiz.view.shared.inDrawer
-import com.revature.popquiz.view.shared.outDrawer
-import kotlinx.coroutines.launch
 
 
 @Composable
-fun quizOverView() {
+fun quizOverView(navController: NavController) {
     val quiz = Quiz()
     quiz.title="Arrays"
     quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
             " This includes properties of arrays and their usage"
     quiz.tagList.add(0,"Index")
     quiz.tagList.add(1,"Arrays")
-    val scaffoldState = rememberScaffoldState()
     val checkedState=remember{ mutableStateOf(false)}
-    val context= LocalContext.current
-    val scope= rememberCoroutineScope()
-    val navController = rememberNavController()
 
 
 
 
-    TempQuizScaffold(sTitle = "Quiz Overview", navController = navController) {
+    QuizScaffold(sTitle = "Quiz Overview", navController = navController) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -250,5 +234,5 @@ fun quizViewButton(text:String,modifier: Modifier,onclick:
 @Preview
 fun quizPreview()
 {
-    quizOverView()
+    //quizOverView()
 }

@@ -1,6 +1,5 @@
 package com.revature.popquiz.view.screens.editquiz
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,12 +18,8 @@ import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
-import com.revature.popquiz.model.dataobjects.QuizResource
 import com.revature.popquiz.view.navigation.NavScreens
-import com.revature.popquiz.view.screens.CreateQuizTitleBody
 import com.revature.popquiz.view.shared.QuizScaffold
-import com.revature.popquiz.view.shared.TempQuizScaffold
-import com.revature.popquiz.viewmodel.CreateQuizVM
 import com.revature.popquiz.viewmodel.EditQuizVM
 import com.revature.popquiz.viewmodel.EditQuizVMFactory
 
@@ -66,7 +61,7 @@ fun EditQuizTitle(navController: NavController){
     val editQuizVM = ViewModelProvider(context as MainActivity, EditQuizVMFactory(tempQuiz)).get(EditQuizVM::class.java)
 
     //Use Scaffold created for app
-    TempQuizScaffold(
+    QuizScaffold(
         sTitle = "Edit Title",
         navController = navController) {
 
