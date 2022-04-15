@@ -8,12 +8,14 @@ import androidx.navigation.compose.composable
 
 import com.revature.popquiz.view.screens.*
 
-import com.revature.popquiz.view.screens.CreateQuizQuestions
+import com.revature.popquiz.view.screens.createquiz.CreateQuizQuestions
 import com.revature.popquiz.view.screens.CreateQuizResources
 import com.revature.popquiz.view.screens.CreateQuizTitle
 import com.revature.popquiz.view.screens.LoginScreen
 import com.revature.popquiz.view.screens.SavedQuizzesScreen
 import com.revature.popquiz.view.screens.SearchQuizzesScreen
+import com.revature.popquiz.view.screens.editquiz.EditQuestion
+import com.revature.popquiz.view.screens.editquiz.EditQuizQuestionSelect
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.screens.editquiz.EditQuizResources
 import com.revature.popquiz.view.screens.editquiz.EditQuizTitle
@@ -55,6 +57,12 @@ fun StartNav(navController: NavHostController)
         }
         composable(NavScreens.EditQuizResource.route){
             EditQuizResources(navController = navController)
+        }
+        composable(NavScreens.EditQuizQuestionSelect.route){
+            EditQuizQuestionSelect(navController = navController)
+        }
+        composable(NavScreens.EditQuestion.route){
+            EditQuestion(navController = navController)
         }
 
         // Saved Quizzes Screen

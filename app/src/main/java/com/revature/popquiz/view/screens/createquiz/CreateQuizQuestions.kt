@@ -1,4 +1,4 @@
-package com.revature.popquiz.view.screens
+package com.revature.popquiz.view.screens.createquiz
 
 import android.content.Context
 import android.widget.Toast
@@ -50,7 +50,6 @@ fun CreateQuestQuestionsBody(navController: NavController){
 
 
     var sQuestionTitle by remember { mutableStateOf("") }
-//    var sAnswer by remember { mutableStateOf("") }
     var questionType by remember { mutableStateOf(0)}
     var answerList:List<Answer> by remember { mutableStateOf(listOf())}
 
@@ -76,25 +75,25 @@ fun CreateQuestQuestionsBody(navController: NavController){
 
                 Spacer(Modifier.size(10.dp))
 
-                questionType = QuestionTypeDropDown(questionType)
+                questionType = questionTypeDropDown(questionType)
 
                 Spacer(Modifier.size(10.dp))
 
-                sQuestionTitle = GetQuestionTitle()
+                sQuestionTitle = getQuestionTitle(sQuestionTitle)
 
                 Spacer(Modifier.size(10.dp))
 
                 when(questionType){
                     Question.QUESTION_TYPE_TRUE_FALSE->{
-                        answerList = TrueFalseQuestion()
+                        answerList = trueFalseQuestion(answerList)
                     }
                     Question.QUESTION_TYPE_SINGLE_ANSWER->{
 
-                        answerList = QuestionAnswers(context)
+                        answerList = questionAnswers(context,answerList)
                     }
                     Question.QUESTION_TYPE_MULTI_ANSWER->{
 
-                        answerList = QuestionAnswers(context)
+                        answerList = questionAnswers(context,answerList)
                     }
                 }
 
@@ -154,7 +153,7 @@ fun CreateQuestQuestionsBody(navController: NavController){
                                 if (!bHasAnswer) {
                                     Toast.makeText(
                                         context,
-                                        "Atleast one answer has to be correct",
+                                        "At least one answer has to be correct",
                                         Toast.LENGTH_LONG
                                     ).show()
                                 } else {
@@ -205,58 +204,13 @@ fun CreateQuestQuestionsBody(navController: NavController){
                     //Button for New Question
                     Button(
                         onClick = {
-                            if (sQuestionTitle == "") {
-                                Toast.makeText(
-                                    context,
-                                    "Question Field must be filled out",
-                                    Toast.LENGTH_LONG
-                                ).show()
 
-                            } else if (questionType == Question.QUESTION_TYPE_SINGLE_ANSWER) {
-
-                                var nCount = 0
-                                answerList.forEach { answer ->
-                                    if (answer.bCorrect)
-                                        nCount++
-
-                                }
-
-                                if (nCount != 1) {
-                                    Toast.makeText(
-                                        context,
-                                        "Must have 1 correct answer",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                } else {
-                                    //Save and navigate
-                                    createQuizVM.newQuiz.questionList.add(
-                                        Question(
-                                            nType = questionType,
-                                            question = sQuestionTitle,
-                                            answers = answerList
-                                        )
-                                    )
-                                    //Add to Room/API
-
-                                    //Clear Question
-                                    navController.navigate(NavScreens.CreateQuizQuestions.route)
-                                }
-
-                            } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER) {
-                                var bHasAnswer = false
-                                answerList.forEach { answer ->
-                                    if (answer.bCorrect) {
-                                        bHasAnswer = true
-                                    }
-
-                                }
-                                if (!bHasAnswer) {
-                                    Toast.makeText(
-                                        context,
-                                        "Atleast one answer has to be correct",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                } else {
+                            if (questionCheck(
+                                    context = context,
+                                    sQuestionTitle = sQuestionTitle,
+                                    questionType = questionType,
+                                    answerList = answerList
+                                )) {
 
                                     //Save and navigate
                                     createQuizVM.newQuiz.questionList.add(
@@ -270,46 +224,179 @@ fun CreateQuestQuestionsBody(navController: NavController){
 
                                     //Clear Question
                                     navController.navigate(NavScreens.CreateQuizQuestions.route)
-
                                 }
-                            } else if (questionType == Question.QUESTION_TYPE_TRUE_FALSE) {
-
-                                //Save and navigate
-                                createQuizVM.newQuiz.questionList.add(
-                                    Question(
-                                        nType = questionType,
-                                        question = sQuestionTitle,
-                                        answers = answerList
-                                    )
-                                )
-                                //Add to Room/API
-
-                                //Clear question
-                                navController.navigate(NavScreens.CreateQuizQuestions.route)
-
                             }
-                        }
-                    ) {
+//                            if (sQuestionTitle == "") {
+//                                Toast.makeText(
+//                                    context,
+//                                    "Question Field must be filled out",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+//
+//                            } else if (questionType == Question.QUESTION_TYPE_SINGLE_ANSWER) {
+//
+//                                var nCount = 0
+//                                answerList.forEach { answer ->
+//                                    if (answer.bCorrect)
+//                                        nCount++
+//
+//                                }
+//
+//                                if (nCount != 1) {
+//                                    Toast.makeText(
+//                                        context,
+//                                        "Must have 1 correct answer",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
+//                                } else {
+//                                    //Save and navigate
+//                                    createQuizVM.newQuiz.questionList.add(
+//                                        Question(
+//                                            nType = questionType,
+//                                            question = sQuestionTitle,
+//                                            answers = answerList
+//                                        )
+//                                    )
+//                                    //Add to Room/API
+//
+//                                    //Clear Question
+//                                    navController.navigate(NavScreens.CreateQuizQuestions.route)
+//                                }
+//
+//                            } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER) {
+//                                var bHasAnswer = false
+//                                answerList.forEach { answer ->
+//                                    if (answer.bCorrect) {
+//                                        bHasAnswer = true
+//                                    }
+//
+//                                }
+//                                if (!bHasAnswer) {
+//                                    Toast.makeText(
+//                                        context,
+//                                        "At least one answer has to be correct",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
+//                                } else {
+//
+//                                    //Save and navigate
+//                                    createQuizVM.newQuiz.questionList.add(
+//                                        Question(
+//                                            nType = questionType,
+//                                            question = sQuestionTitle,
+//                                            answers = answerList
+//                                        )
+//                                    )
+//                                    //Add to Room/API
+//
+//                                    //Clear Question
+//                                    navController.navigate(NavScreens.CreateQuizQuestions.route)
+//
+//                                }
+//                            } else if (questionType == Question.QUESTION_TYPE_TRUE_FALSE) {
+//
+//                                //Save and navigate
+//                                createQuizVM.newQuiz.questionList.add(
+//                                    Question(
+//                                        nType = questionType,
+//                                        question = sQuestionTitle,
+//                                        answers = answerList
+//                                    )
+//                                )
+//                                //Add to Room/API
+//
+//                                //Clear question
+//                                navController.navigate(NavScreens.CreateQuizQuestions.route)
+//
+//                            }
+//                        }
+                    )
+                            {
 
                         Text(text = "Add", style = MaterialTheme.typography.body1)
                     }
                 }
-
-//                WrongAnswersView(context = context)
-
             }
         }
     }
 }
-@Composable
-fun TrueFalseQuestion():List<Answer> {
+fun questionCheck(
+    context: Context,
+    sQuestionTitle:String,
+    questionType:Int,
+    answerList:List<Answer>
+):Boolean{
 
-    var answerList by remember {mutableStateOf( arrayListOf<Answer>())}
+    var bChecked = false
+
+    if (sQuestionTitle == "") {
+        Toast.makeText(
+            context,
+            "Question Field must be filled out",
+            Toast.LENGTH_LONG
+        ).show()
+
+    } else if (questionType == Question.QUESTION_TYPE_SINGLE_ANSWER) {
+
+        var nCount = 0
+        answerList.forEach { answer ->
+            if (answer.bCorrect)
+                nCount++
+
+        }
+
+        if (nCount != 1) {
+            Toast.makeText(
+                context,
+                "Must have 1 correct answer",
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            bChecked = true
+        }
+
+    } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER) {
+        var bHasAnswer = false
+        answerList.forEach { answer ->
+            if (answer.bCorrect) {
+                bHasAnswer = true
+            }
+
+        }
+        if (!bHasAnswer) {
+            Toast.makeText(
+                context,
+                "At least one answer has to be correct",
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            bChecked = true
+
+        }
+    } else if (questionType == Question.QUESTION_TYPE_TRUE_FALSE) {
+
+        bChecked = true
+
+    }
+    return bChecked
+
+}
+
+@Composable
+fun trueFalseQuestion(answers:List<Answer>):List<Answer> {
+
+    var answerList:MutableList<Answer> = answers.toMutableList() //by remember {mutableStateOf( answer)}
 
     var trueCheck by remember { mutableStateOf(true) }
     var falseCheck by remember { mutableStateOf(false) }
-    answerList.add(Answer("True",trueCheck))
-    answerList.add(Answer("False",falseCheck))
+
+    if(answerList.isEmpty()) {
+        answerList.add(Answer("True", trueCheck))
+        answerList.add(Answer("False", falseCheck))
+    } else {
+        trueCheck = answerList[0].bCorrect
+        falseCheck = answerList[1].bCorrect
+    }
 
 
     Row(
@@ -346,14 +433,15 @@ fun TrueFalseQuestion():List<Answer> {
 
 
     }
-    return answerList
+    return answerList.toList()
 
 }
 @Composable
-fun QuestionAnswers(context:Context):List<Answer>{
+fun questionAnswers(context:Context, answers:List<Answer>):List<Answer>{
 
     var sAnswer by remember { mutableStateOf("")}
-    var answerList by remember {mutableStateOf( arrayListOf<Answer>())}
+    var answerList:MutableList<Answer> = answers.toMutableList()
+//    var answerList by remember {mutableStateOf( answers.toTypedArray())}
 
 
     OutlinedTextField(
@@ -367,26 +455,26 @@ fun QuestionAnswers(context:Context):List<Answer>{
         },
         trailingIcon = {
             Icon(imageVector = Icons.Default.Add,
-                contentDescription = "Add Wrong Answer Icon",
+                contentDescription = "Add Answer Icon",
                 modifier = Modifier
                     .clickable {
-                        if (sAnswer.isNotEmpty() || answerList.size <= 3) {
+                        if (sAnswer.isNotEmpty() && answerList.size <= 3) {
                             answerList.add(Answer(sAnswer,false))
                             sAnswer = ""
                         }
                         else if (answerList.size > 3){
                             Toast.makeText(
                                 context,
-                                "Only 3 wrong answers allowed",
-                                Toast.LENGTH_SHORT
+                                "Only 4 answers allowed",
+                                Toast.LENGTH_LONG
                             ).show()
 
                         }
                         else{
                             Toast.makeText(
                                 context,
-                                "Nothing in Wrong Answer Field",
-                                Toast.LENGTH_SHORT
+                                "Nothing in Answer Field",
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
@@ -433,9 +521,9 @@ fun QuestionAnswers(context:Context):List<Answer>{
 }
 
 @Composable
-fun GetQuestionTitle():String{
+fun getQuestionTitle(sTitle:String):String{
 
-    var sTitle by remember { mutableStateOf("") }
+    var sTitle by remember { mutableStateOf(sTitle) }
 
     //Text Field for Writing the question
     OutlinedTextField(
@@ -452,80 +540,7 @@ fun GetQuestionTitle():String{
 }
 
 @Composable
-fun WrongAnswersView(context: Context){
-
-    var sWrong by remember { mutableStateOf("") }
-    val wrongList:ArrayList<String> = arrayListOf()
-
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(.8f),
-        value = sWrong,
-        onValueChange = {sWrong = it},
-        label = { Text(
-            "Wrong Answers",
-            style = MaterialTheme.typography.h6)
-        },
-        trailingIcon = {
-            Icon(imageVector = Icons.Default.Add,
-                contentDescription = "Add Wrong Answer Icon",
-                modifier = Modifier
-                    .clickable {
-                        if (sWrong != "" || wrongList.size <= 3) {
-                            wrongList.add(sWrong)
-                            sWrong = ""
-                        }
-                        else if (wrongList.size > 3){
-                            Toast.makeText(
-                                context,
-                                "Only 3 wrong answers allowed",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                        }
-                        else{
-                            Toast.makeText(
-                                context,
-                                "Nothing in Wrong Answer Field",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-            )
-        }
-    )
-
-        Spacer(Modifier.size(20.dp))
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(.8f)
-                .border(2.dp, Color.Gray),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            //Dummy Data
-            wrongList.add("Kotlin")
-            wrongList.add("Java")
-            wrongList.add("Context")
-            wrongList.add("Testing")
-            wrongList.add("Services")
-
-
-            Spacer(Modifier.size(10.dp))
-
-            for (topic in wrongList) {
-
-                Text(
-                    text = topic,
-                    style = MaterialTheme.typography.body2
-                )
-            }
-        Spacer(Modifier.size(10.dp))
-
-    }
-}
-
-@Composable
-fun QuestionTypeDropDown(nSelected:Int):Int{
+fun questionTypeDropDown(nSelected:Int):Int{
     var mExpanded by remember { mutableStateOf(false)}
     val types = listOf("True/False","Single-Answer","Multi-Answer")
     var selectedType by remember { mutableStateOf(nSelected)}
@@ -537,7 +552,7 @@ fun QuestionTypeDropDown(nSelected:Int):Int{
     else
         Icons.Filled.KeyboardArrowDown
 
-    Column(){
+    Column{
 
         OutlinedTextField(
             value = types[nSelected],

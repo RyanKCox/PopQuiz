@@ -19,7 +19,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.QuizResource
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.TempQuizScaffold
 import com.revature.popquiz.viewmodel.CreateQuizVM
 import com.revature.popquiz.viewmodel.EditQuizVM
 
@@ -34,7 +36,7 @@ fun EditQuizResources(navController: NavController){
             .get(EditQuizVM::class.java)
 
 
-    QuizScaffold(
+    TempQuizScaffold(
         sTitle = "Quiz Resources",
         navController = navController
     ) {
@@ -92,7 +94,7 @@ fun EditQuizResourcesBody(
                     onClick = {
 
                         //Save to Quiz and navigate
-                        //navController.navigate(NavScreens.CreateQuizQuestions.route)
+                        navController.navigate(NavScreens.EditQuizQuestionSelect.route)
 
 
                     }
