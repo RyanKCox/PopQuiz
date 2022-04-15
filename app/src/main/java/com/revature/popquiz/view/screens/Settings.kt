@@ -15,18 +15,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.view.shared.QuizScaffold
 
 
 @Composable
-fun Settings() {
+fun Settings(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
 
-    Scaffold(
-        backgroundColor = revBlue,
-        topBar = {/*header*/ },
-        scaffoldState = scaffoldState
+    QuizScaffold(
+        sTitle = "Settings",
+        navController = navController
     )
     {
         Column(
@@ -74,5 +75,5 @@ fun Settings() {
 @Preview
 fun setPreview()
 {
-    Settings()
+    //Settings()
 }

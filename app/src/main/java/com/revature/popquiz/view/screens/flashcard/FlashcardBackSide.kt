@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 
+
 @Composable
 fun FlashCardBackSide(flipController: FlippableController) {
     Box(modifier = Modifier) {

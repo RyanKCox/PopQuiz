@@ -15,6 +15,8 @@ import androidx.navigation.NavController
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.TextEnums
+import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
 
 @Composable
@@ -22,9 +24,10 @@ fun CreateQuizTitle(navController: NavController){
 
     Log.d("Create Q Title Screen", "Create Q Title Start")
 
+    //Create our VM
     val createQuizVM = CreateQuizVM()
 
-
+    //Use Scaffold created for app
     QuizScaffold(
         sTitle = "Quiz Title",
         navController = navController) {
@@ -43,10 +46,15 @@ fun CreateQuizTitleBody(
 
     val context = LocalContext.current
 
+    //Temp variables for the Quiz creation
     var sQuizTitle by remember { mutableStateOf("")}
     var sShortDesc by remember { mutableStateOf("")}
     var sLongDesc by remember { mutableStateOf("")}
+    var bTitleTooLong by remember{ mutableStateOf(false)}
+    var bShortTooLong by remember{ mutableStateOf(false)}
+    var bLongTooLong by remember{ mutableStateOf(false)}
 
+    //Column for the screen
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -54,6 +62,7 @@ fun CreateQuizTitleBody(
         verticalArrangement = Arrangement.Center
     ) {
 
+        //Card Our input field is held on
         Card(
             modifier = Modifier
                 .fillMaxSize(.95f)
@@ -61,6 +70,7 @@ fun CreateQuizTitleBody(
             shape = RoundedCornerShape(40.dp),
             elevation = 10.dp
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -69,24 +79,41 @@ fun CreateQuizTitleBody(
 
                 Spacer(Modifier.size(40.dp))
 
+                //Text field for Quiz Title
+                if(sQuizTitle.length > TextEnums.MAX_TEXT_LENGTH) {
+                    bTitleTooLong = true
+                    TextLengthPrompt(maxLength = TextEnums.MAX_TEXT_LENGTH)
+                } else {bTitleTooLong = false}
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(.8f),
                     value = sQuizTitle,
                     onValueChange = {sQuizTitle = it},
-                    label = {Text("Quiz Title")}
+                    label = {Text("Quiz Title")},
+                    maxLines = 2
                 )
 
                 Spacer(Modifier.size(40.dp))
 
+                //Text Field for the short Description
+                if(sShortDesc.length > TextEnums.MAX_TEXT_LENGTH) {
+                    bShortTooLong = true
+                    TextLengthPrompt(maxLength = TextEnums.MAX_TEXT_LENGTH)
+                } else {bShortTooLong = false}
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(.8f),
                     value = sShortDesc,
                     onValueChange = {sShortDesc = it},
-                    label = {Text("Short Description")}
+                    label = {Text("Short Description")},
+                    maxLines = 2
                 )
 
                 Spacer(Modifier.size(40.dp))
 
+                //Text field for the Full Description
+                if(sLongDesc.length > TextEnums.MAX_DESCRIPTION_LENGTH) {
+                    bLongTooLong = true
+                    TextLengthPrompt(maxLength = TextEnums.MAX_DESCRIPTION_LENGTH)
+                } else { bLongTooLong = false}
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth(.8f)
@@ -98,33 +125,43 @@ fun CreateQuizTitleBody(
                 )
                 
                 Spacer(Modifier.size(40.dp))
-                
+
+                //Next Screen Button
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(.6f),
                     onClick = {
 
-                          //Save variables and navigate
-
+                        //Save variables and navigate
+                        if(bTitleTooLong || bShortTooLong || bLongTooLong){
+                            Toast.makeText(
+                                context,
+                                "Too many characters!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                         //if all 3 fields have text
-                          if (sQuizTitle != "" ||
-                              sShortDesc != "" ||
-                              sLongDesc != ""){
+                        else if (sQuizTitle != "" &&
+                          sShortDesc != "" &&
+                          sLongDesc != ""){
 
-                              //Set the values in the new quiz
-                              createQuizVM.newQuiz.title = sQuizTitle
-                              createQuizVM.newQuiz.shortDescription = sShortDesc
-                              createQuizVM.newQuiz.longDescription = sLongDesc
 
-                              //Navigate to next screen
-                              navController.navigate(NavScreens.CreateQuizResources.route)
-                          } else {
-                              Toast.makeText(
-                                  context,
-                                  "Please fill out all fields",
-                                  Toast.LENGTH_SHORT
-                              ).show()
-                          }
+                          //Set the values in the new quiz
+                          createQuizVM.newQuiz.title = sQuizTitle
+                          createQuizVM.newQuiz.shortDescription = sShortDesc
+                          createQuizVM.newQuiz.longDescription = sLongDesc
+
+                          //Navigate to next screen
+                          navController.navigate(NavScreens.CreateQuizResources.route)
+                        } else {
+
+                            //If everything isnt filled out
+                            Toast.makeText(
+                            context,
+                            "Please fill out all fields",
+                            Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
                     },
                 ) {

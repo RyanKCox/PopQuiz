@@ -4,34 +4,42 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @Composable
-fun Register()
+fun Register(navController: NavController)
 {
-    //navController: NavController
+
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    val dataStore= LoginDataStore(context)
 
     Scaffold (
         backgroundColor = revBlue,
-        topBar= {/*header*/},
+        topBar= {TopAppBar(backgroundColor = revOrange) {
+            Text(text = "Login", fontSize = 18.sp, modifier = Modifier
+                .padding(horizontal =5.dp), fontWeight = FontWeight.Medium, color = Color.White
+            )
+        }},
         scaffoldState = scaffoldState,
         content =
         {
@@ -95,17 +103,25 @@ fun Register()
                                 backgroundColor = revOrange),
                             onClick = {
                                 if (checkParams(sName,sPass,sEmail,sPassConfirm)&& checkMatch(sPass,sPassConfirm)){
-                                    //navController.navigate(NavScreens.LoginScreen.route)
+                                    scope.launch {
+                                        dataStore.saveEmail(sEmail)
+                                        dataStore.saveName(sName)
+                                        dataStore.savePassword(sPass)
+                                        navController.navigate(NavScreens.LoginScreen.route)
+                                    }
+
                                 }
                                 else
                                 {
                                     if (checkMatch(sPass,sPassConfirm))
                                     {
-                                        Toast.makeText(
+                                        scope.launch {
+                                            Toast.makeText(
                                             context,
                                             "Fields not completed correctly",
                                             Toast.LENGTH_SHORT
-                                        ).show()
+                                        ).show() }
+
                                     }
                                     else
                                     {
@@ -142,6 +158,7 @@ fun checkMatch(a: String,b: String)=a.equals(b)
 @Preview
 fun regPreview()
 {
-    Register()
+    val navController = rememberNavController()
+    Register(navController)
 
 }
