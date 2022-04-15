@@ -1,4 +1,4 @@
-package com.revature.popquiz.view.screens
+package com.revature.popquiz.view.screens.question
 
 import android.widget.ProgressBar
 import androidx.compose.foundation.layout.*
