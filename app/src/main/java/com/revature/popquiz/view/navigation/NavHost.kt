@@ -20,7 +20,6 @@ import com.revature.popquiz.view.screens.SavedQuizzesScreen
 import com.revature.popquiz.view.screens.SearchQuizzesScreen
 import com.revature.popquiz.view.screens.editquiz.EditQuestion
 import com.revature.popquiz.view.screens.editquiz.EditQuizQuestionSelect
-import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.screens.editquiz.EditQuizResources
 import com.revature.popquiz.view.screens.editquiz.EditQuizTitle
 import com.revature.popquiz.view.screens.flashcard.FlashCardScreen
@@ -81,9 +80,7 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.SavedQuizzesScreen.route)
         {
             SavedQuizzesScreen(
-                navController = navController,
-                searchBarViewModel = SearchBarViewModel()
-            )
+                navController = navController)
         }
 
         // Search Quizzes Screen

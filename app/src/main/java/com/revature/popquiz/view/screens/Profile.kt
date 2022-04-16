@@ -1,14 +1,20 @@
 package com.revature.popquiz.view.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -22,7 +28,11 @@ import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
-fun profile(navController: NavController) {
+fun profile(navController: NavController)
+{
+    val context = LocalContext.current
+    val lazyState = rememberLazyListState()
+
     QuizScaffold(
         sTitle = "Profile",
         navController = navController
@@ -34,138 +44,160 @@ fun profile(navController: NavController) {
             verticalArrangement = Arrangement.SpaceAround
         )
         {
-            LazyRow(modifier = Modifier.fillMaxWidth()) {
-                item() {
-                    Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
-                    Column(modifier = Modifier.fillParentMaxWidth(0.9F)) {
+            Card(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .absolutePadding(
+                        top = 5.dp,
+//                        left = 5.dp,
+//                        right = 5.dp
+                    ),
+                shape = AbsoluteRoundedCornerShape(
+                    topLeft = 20.dp,
+                    topRight = 20.dp
+                ),
+                elevation = 10.dp
+            )
+            {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
+                )
+                {
+                    LazyColumn(
+                        state = lazyState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = Color.Transparent
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Top
+                    )
+                    {
+                        item{
 
+                            Text(
+                                text = "Profile",
+                                fontSize = 30.sp,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier.padding(20.dp)
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
 
-                        Card(
-                            shape = RoundedCornerShape(25.dp),
-                            elevation = 50.dp,
-                            modifier = Modifier
-                                .fillMaxHeight(0.9F)
-                                .fillMaxWidth()
-                        ) {
-                            Column(
-                                modifier = Modifier.fillMaxSize(fraction = 0.9F),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Top
+                            Card(
+                                shape = RoundedCornerShape(20.dp),
+                                backgroundColor = revBlue,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp)
+                                    .clickable { },
+                                elevation = 10.dp,
                             )
                             {
-                                Text(
-                                    text = "Profile",
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(20.dp)
-                                )
-                                Spacer(modifier = Modifier.height(20.dp))
-                                Card(
-                                    backgroundColor = revBlue,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(15.dp)
-                                        .clickable { },
-                                    elevation = 10.dp,
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(15.dp)
-                                    ) {
-                                        Row {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.clipart_3418189__340),
-                                                contentDescription = "",
-                                                modifier = Modifier
-                                                    .height(150.dp)
-                                                    .width(150.dp)
-                                                    .fillMaxWidth(),
-                                                contentScale = ContentScale.FillBounds
-                                            )
-                                            Text(
-                                                ("Name \n" +
-                                                        " Your Overall Score \n" +
-                                                        " Pop! Quiz Score \n" +
-                                                        " Quizzes Completed ")
-                                            )
-                                        }
+                                Column(modifier = Modifier.padding(15.dp))
+                                {
+                                    Row()
+                                    {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.clipart_3418189__340),
+                                            contentDescription = "",
+                                            modifier = Modifier
+                                                .height(150.dp)
+                                                .width(150.dp)
+                                                .fillMaxWidth(),
+                                            contentScale = ContentScale.FillBounds
+                                        )
+                                        Text(
+                                            ("Name \n" +
+                                                    " Your Overall Score \n" +
+                                                    " Pop! Quiz Score \n" +
+                                                    " Quizzes Completed ")
+                                        )
                                     }
                                 }
+                            }
 
-                                Card(
-                                    backgroundColor = revBlue,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(15.dp)
-                                        .clickable { },
-                                    elevation = 10.dp
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(15.dp)
-                                    ) {
-                                        Text(
-                                            ("About me / subject interests \n" +
-                                                    " \n" +
-                                                    " \n" +
-                                                    "  ")
-                                        )
-                                    }
+                            Card(
+                                backgroundColor = revBlue,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp)
+                                    .clickable { },
+                                elevation = 10.dp,
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                            {
+                                Column(
+                                    modifier = Modifier.padding(15.dp))
+                                {
+                                    Text(
+                                        ("About me / subject interests \n" +
+                                                " \n" +
+                                                " \n" +
+                                                "  ")
+                                    )
                                 }
-                                Card(
-                                    backgroundColor = revBlue,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(15.dp)
-                                        .clickable { },
-                                    elevation = 10.dp
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(15.dp)
-                                    ) {
-                                        Text(
-                                            ("C Quiz \n" +
-                                                    " % \n" +
-                                                    " \n" +
-                                                    "  ")
-                                        )
-                                    }
+                            }
+                            Card(
+                                backgroundColor = revBlue,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp)
+                                    .clickable { },
+                                elevation = 10.dp,
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                            {
+                                Column(modifier = Modifier.padding(15.dp))
+                                {
+                                    Text(
+                                        ("C Quiz \n" +
+                                                " % \n" +
+                                                " \n" +
+                                                "  ")
+                                    )
                                 }
-                                Card(
-                                    backgroundColor = revBlue,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(15.dp)
-                                        .clickable { },
-                                    elevation = 10.dp
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(15.dp)
-                                    ) {
-                                        Text(
-                                            ("C++ Quiz \n" +
-                                                    " % \n" +
-                                                    " \n" +
-                                                    "  ")
-                                        )
-                                    }
+                            }
+                            Card(
+                                backgroundColor = revBlue,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp)
+                                    .clickable { },
+                                elevation = 10.dp,
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                            {
+                                Column(modifier = Modifier.padding(15.dp))
+                                {
+                                    Text(
+                                        ("C++ Quiz \n" +
+                                                " % \n" +
+                                                " \n" +
+                                                "  ")
+                                    )
                                 }
-                                Card(
-                                    backgroundColor = revBlue,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(15.dp)
-                                        .clickable { },
-                                    elevation = 10.dp
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(15.dp)
-                                    ) {
-                                        Text(
-                                            ("Kotlin \n" +
-                                                    " % \n" +
-                                                    " \n" +
-                                                    "  ")
-                                        )
-                                    }
+                            }
+                            Card(
+                                backgroundColor = revBlue,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp)
+                                    .clickable { },
+                                elevation = 10.dp,
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                            {
+                                Column(modifier = Modifier.padding(15.dp))
+                                {
+                                    Text(
+                                        ("Kotlin \n" +
+                                                " % \n" +
+                                                " \n" +
+                                                "  ")
+                                    )
                                 }
                             }
                         }
@@ -176,8 +208,10 @@ fun profile(navController: NavController) {
     }
 }
 
+
 @Preview
 @Composable
-fun prevProfile(){
+fun prevProfile()
+{
     //profile()
 }

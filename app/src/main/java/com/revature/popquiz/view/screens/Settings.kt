@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
@@ -21,7 +22,8 @@ import com.revature.popquiz.view.shared.QuizScaffold
 
 
 @Composable
-fun Settings(navController: NavController) {
+fun Settings(navController: NavController)
+{
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
 
@@ -35,8 +37,21 @@ fun Settings(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            Spacer(Modifier.size(30.dp))
-            Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp, modifier = Modifier.fillMaxSize(fraction = 0.9F)) {
+            Card(
+                modifier = Modifier
+                    .fillMaxSize(),
+//                    .absolutePadding(
+//                        top = 15.dp,
+//                        left = 5.dp,
+//                        right = 5.dp
+//                    ),
+//                shape = AbsoluteRoundedCornerShape(
+//                    topLeft = 20.dp,
+//                    topRight = 20.dp
+//                ),
+                elevation = 10.dp
+            )
+            {
                 Column(
                     modifier = Modifier.fillMaxSize(fraction = 0.9F),
                     horizontalAlignment = Alignment.CenterHorizontally,

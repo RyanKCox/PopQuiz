@@ -55,7 +55,8 @@ fun reviewQuiz(navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize(0.9F)
 
-            ){
+            )
+            {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
