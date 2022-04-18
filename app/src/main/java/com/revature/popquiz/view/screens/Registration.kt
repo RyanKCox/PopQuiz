@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import kotlinx.coroutines.launch
@@ -35,8 +36,8 @@ fun Register(navController: NavController)
     val dataStore= LoginDataStore(context)
 
     Scaffold (
-        backgroundColor = revBlue,
-        topBar= {TopAppBar(backgroundColor = revOrange) {
+        backgroundColor = revOrange,
+        topBar= {TopAppBar(backgroundColor = revDarkGrey) {
             Text(text = "Login", fontSize = 18.sp, modifier = Modifier
                 .padding(horizontal =5.dp), fontWeight = FontWeight.Medium, color = Color.White
             )
