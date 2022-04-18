@@ -226,7 +226,9 @@ fun QuizCardForLazyColumn(
     Card(
         modifier =
         Modifier
-            .clickable { onClick() }
+            .clickable {
+                onClick()
+            }
             .height(150.dp)
             .fillMaxWidth()
             .absolutePadding(bottom = 10.dp)

@@ -8,6 +8,7 @@ import com.revature.popquiz.model.dataobjects.Quiz
 class EditQuizVM(var editQuiz: Quiz): ViewModel() {
 
     var editQuestionIndex: Int = 0
+    var nDeleteQuestionIndex:Int? = null
 
 }
 class EditQuizVMFactory(var editQuiz:Quiz) : ViewModelProvider.Factory {

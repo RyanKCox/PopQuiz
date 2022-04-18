@@ -65,6 +65,8 @@ fun EditQuestionBody(
     context: Context
 ){
 
+    var original = editQuizVM.editQuiz.questionList[editQuizVM.editQuestionIndex].copy()
+
     var questionType by remember { mutableStateOf(
         editQuizVM.editQuiz.questionList[editQuizVM.editQuestionIndex].nType) }
 
@@ -109,6 +111,10 @@ fun EditQuestionBody(
 
             //Cancel button
             Button(onClick = {
+
+                if(original.question == "")
+                    editQuizVM.nDeleteQuestionIndex = editQuizVM.editQuestionIndex
+
                 navController.popBackStack()
             }) {
 
