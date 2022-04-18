@@ -73,8 +73,7 @@ fun CreateQuizTitleBody(
         verticalArrangement = Arrangement.Center
     )
     {
-
-        //Card Our input field is held on
+        Spacer(Modifier.size(10.dp))
         Card(
             modifier = Modifier
                 .fillMaxSize()

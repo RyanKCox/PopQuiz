@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
-import com.revature.popquiz.model.dataobjects.QuizResource
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.view.shared.TextEnums
@@ -57,13 +57,17 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
-        //Card our input field is on
+        Spacer(Modifier.size(10.dp))
         Card(
             modifier = Modifier
-                .fillMaxSize(.95f)
-                .padding(15.dp),
-            shape = RoundedCornerShape(40.dp),
+                .fillMaxSize()
+                .absolutePadding(
+                    top = 5.dp,
+                ),
+            shape = AbsoluteRoundedCornerShape(
+                topLeft = 20.dp,
+                topRight = 20.dp
+            ),
             elevation = 10.dp
         ) {
 

@@ -44,6 +44,7 @@ fun profile(navController: NavController)
             verticalArrangement = Arrangement.SpaceAround
         )
         {
+            Spacer(Modifier.size(10.dp))
             Card(
                 modifier = Modifier
                     .fillMaxSize()

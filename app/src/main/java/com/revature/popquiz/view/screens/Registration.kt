@@ -49,7 +49,7 @@ fun Register(navController: NavController)
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center)
             {
-
+                Spacer(Modifier.size(10.dp))
                 Card(
                     modifier = Modifier
                         .fillMaxSize()

@@ -37,6 +37,7 @@ fun Settings(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
+            Spacer(Modifier.size(10.dp))
             Card(
                 modifier = Modifier
                     .fillMaxSize()

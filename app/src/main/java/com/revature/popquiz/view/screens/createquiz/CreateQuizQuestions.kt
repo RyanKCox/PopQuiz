@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -60,12 +61,17 @@ fun CreateQuestQuestionsBody(navController: NavController){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
+        Spacer(Modifier.size(10.dp))
         Card(
             modifier = Modifier
-                .fillMaxSize(.95f)
-                .padding(15.dp),
-            shape = RoundedCornerShape(40.dp),
+                .fillMaxSize()
+                .absolutePadding(
+                    top = 5.dp,
+                ),
+            shape = AbsoluteRoundedCornerShape(
+                topLeft = 20.dp,
+                topRight = 20.dp
+            ),
             elevation = 10.dp
         ) {
             Column(
