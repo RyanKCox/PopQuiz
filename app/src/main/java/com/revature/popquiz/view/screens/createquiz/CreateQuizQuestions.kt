@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuestionInterface
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.view.navigation.NavScreens
@@ -84,14 +85,14 @@ fun CreateQuestQuestionsBody(navController: NavController){
                 Spacer(Modifier.size(10.dp))
 
                 when(questionType){
-                    Question.QUESTION_TYPE_TRUE_FALSE->{
+                    QuestionInterface.QUESTION_TYPE_TRUE_FALSE->{
                         answerList = trueFalseQuestion(answerList)
                     }
-                    Question.QUESTION_TYPE_SINGLE_ANSWER->{
+                    QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER->{
 
                         answerList = questionAnswers(context,answerList)
                     }
-                    Question.QUESTION_TYPE_MULTI_ANSWER->{
+                    QuestionInterface.QUESTION_TYPE_MULTI_ANSWER->{
 
                         answerList = questionAnswers(context,answerList)
                     }
@@ -182,7 +183,7 @@ fun questionCheck(
             Toast.LENGTH_LONG
         ).show()
 
-    } else if (questionType == Question.QUESTION_TYPE_SINGLE_ANSWER) {
+    } else if (questionType == QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER) {
 
         var nCount = 0
         answerList.forEach { answer ->
@@ -201,7 +202,7 @@ fun questionCheck(
             bChecked = true
         }
 
-    } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER) {
+    } else if (questionType == QuestionInterface.QUESTION_TYPE_MULTI_ANSWER) {
         var bHasAnswer = false
         answerList.forEach { answer ->
             if (answer.bCorrect) {
@@ -219,7 +220,7 @@ fun questionCheck(
             bChecked = true
 
         }
-    } else if (questionType == Question.QUESTION_TYPE_TRUE_FALSE) {
+    } else if (questionType == QuestionInterface.QUESTION_TYPE_TRUE_FALSE) {
 
         bChecked = true
 

@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuestionInterface
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.view.screens.createquiz.*
@@ -92,14 +93,14 @@ fun EditQuestionBody(
         Spacer(Modifier.size(10.dp))
 
         when(questionType){
-            Question.QUESTION_TYPE_TRUE_FALSE->{
+            QuestionInterface.QUESTION_TYPE_TRUE_FALSE->{
                 answerList = trueFalseQuestion(answerList)
             }
-            Question.QUESTION_TYPE_SINGLE_ANSWER->{
+            QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER->{
 
                 answerList = questionAnswers(context,answerList)
             }
-            Question.QUESTION_TYPE_MULTI_ANSWER->{
+            QuestionInterface.QUESTION_TYPE_MULTI_ANSWER->{
 
                 answerList = questionAnswers(context,answerList)
             }
