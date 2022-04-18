@@ -65,11 +65,13 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
 
     //Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:2.28.3-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28.3-alpha"
+    implementation "com.google.dagger:hilt-android:2.35"
+    kapt "com.google.dagger:hilt-android-compiler:2.35"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
 
     // Activity KTX for viewModels()
     implementation "androidx.activity:activity-ktx:1.4.0"

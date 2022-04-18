@@ -1,6 +1,8 @@
 package com.revature.popquiz.model.dataobjects
 
-class Quiz {
+import javax.inject.Inject
+
+class Quiz @Inject constructor() {
     val questionList= mutableListOf<Question>()
     val resourceList= mutableListOf<String>()
     val tagList= mutableListOf<String>()
