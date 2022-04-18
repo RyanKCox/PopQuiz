@@ -2,6 +2,7 @@ package com.revature.popquiz
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -46,18 +47,28 @@ fun Register(navController: NavController)
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center)
+                verticalArrangement = Arrangement.Center)
             {
 
-                Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp,
-                    modifier = Modifier.fillMaxSize(fraction = 0.9F)) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(fraction = 0.9F),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    )
+                Card(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .absolutePadding(
+                            top = 5.dp,
+                        ),
+                    shape = AbsoluteRoundedCornerShape(
+                        topLeft = 20.dp,
+                        topRight = 20.dp
+                    ),
+                    elevation = 10.dp
                     {
-                        var sName by rememberSaveable { mutableStateOf("") }
+                        Column(
+                            modifier = Modifier.fillMaxSize(fraction = 0.9F),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        )
+                        {
+                            var sName by rememberSaveable { mutableStateOf("") }
                         var sPass by rememberSaveable { mutableStateOf("") }
                         var sPassConfirm by rememberSaveable { mutableStateOf("") }
                         var sEmail by rememberSaveable { mutableStateOf("") }

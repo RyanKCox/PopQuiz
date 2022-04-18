@@ -49,8 +49,6 @@ fun profile(navController: NavController)
                     .fillMaxSize()
                     .absolutePadding(
                         top = 5.dp,
-//                        left = 5.dp,
-//                        right = 5.dp
                     ),
                 shape = AbsoluteRoundedCornerShape(
                     topLeft = 20.dp,

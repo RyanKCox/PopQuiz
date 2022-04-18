@@ -7,7 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.revature.popquiz.Register
-import androidx.hilt.navigation.compose.hiltViewModel
+//import androidx.hilt.navigation.compose.hiltViewModel
+import com.revature.popquiz.model.dataobjects.Quiz
 
 import com.revature.popquiz.view.screens.*
 import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
@@ -53,8 +54,11 @@ fun StartNav(navController: NavHostController)
         //Create Quiz Screens
         composable(NavScreens.CreateQuizTitle.route)
         {
-            val createQuizVM = hiltViewModel<CreateQuizVM>()
-            CreateQuizTitle(navController = navController,createQuizVM)
+            val createQuizVM =
+//                hiltViewModel<CreateQuizVM>()
+            CreateQuizVM(newQuiz = Quiz())
+            CreateQuizTitle(navController = navController,
+            )
         }
         composable(NavScreens.CreateQuizResources.route){
             CreateQuizResources(navController = navController)

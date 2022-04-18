@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+//import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.revature.popquiz.model.dataobjects.Quiz
@@ -23,7 +23,11 @@ import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
 
 @Composable
-fun CreateQuizTitle(navController: NavController,createQuizVM: CreateQuizVM= hiltViewModel()){
+fun CreateQuizTitle(
+    navController: NavController,
+//    createQuizVM: CreateQuizVM = hiltViewModel()
+)
+{
 
     Log.d("Create Q Title Screen", "Create Q Title Start")
 
@@ -37,7 +41,10 @@ fun CreateQuizTitle(navController: NavController,createQuizVM: CreateQuizVM= hil
     {
 
         //Screen Content
-        CreateQuizTitleBody(navController, createQuizVM)
+        CreateQuizTitleBody(
+            navController,
+            CreateQuizVM(newQuiz = Quiz())
+        )
 
     }
 }
@@ -72,9 +79,7 @@ fun CreateQuizTitleBody(
             modifier = Modifier
                 .fillMaxSize()
                 .absolutePadding(
-                    top = 15.dp,
-                    left = 5.dp,
-                    right = 5.dp
+                    top = 5.dp,
                 ),
             shape = AbsoluteRoundedCornerShape(
                 topLeft = 20.dp,

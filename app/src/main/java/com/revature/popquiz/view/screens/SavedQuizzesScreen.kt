@@ -54,16 +54,14 @@ fun SavedQuizzesBody()
     {
         Card(
             modifier = Modifier
-                .fillMaxSize(),
-//                .absolutePadding(
-//                    top = 15.dp,
-//                    left = 5.dp,
-//                    right = 5.dp
-//                ),
-//            shape = AbsoluteRoundedCornerShape(
-//                topLeft = 20.dp,
-//                topRight = 20.dp
-//            ),
+                .fillMaxSize()
+                .absolutePadding(
+                    top = 5.dp,
+                ),
+            shape = AbsoluteRoundedCornerShape(
+                topLeft = 20.dp,
+                topRight = 20.dp
+            ),
             elevation = 10.dp
         )
         {

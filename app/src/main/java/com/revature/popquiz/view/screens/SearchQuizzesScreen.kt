@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -55,16 +56,14 @@ fun SearchQuizzesBody()
 
     Card(
         modifier = Modifier
-            .fillMaxSize(),
-//                    .absolutePadding(
-//                        top = 15.dp,
-//                        left = 5.dp,
-//                        right = 5.dp
-//                    ),
-//                shape = AbsoluteRoundedCornerShape(
-//                    topLeft = 20.dp,
-//                    topRight = 20.dp
-//                ),
+            .fillMaxSize()
+            .absolutePadding(
+                top = 5.dp,
+            ),
+        shape = AbsoluteRoundedCornerShape(
+            topLeft = 20.dp,
+            topRight = 20.dp
+        ),
         elevation = 10.dp
     )
     {
