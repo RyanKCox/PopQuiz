@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import javax.inject.Inject
 
 @Entity(tableName = "quiz")
-data class Quiz @Inject constructor(
+data class Quiz(
     @PrimaryKey(autoGenerate = true)
     val id:Int=0,
     @ColumnInfo(name="questionList")
@@ -21,11 +21,6 @@ data class Quiz @Inject constructor(
     var shortDescription: String ="",
     @ColumnInfo(name = "longDescription")
     var longDescription: String ="",
-    @ColumnInfo(name = "score")
-    var score: Int =0,
-    @ColumnInfo(name = "progress")
-    var progress:Float=0F,
-    @ColumnInfo(name = "sampleQuestion")
-    var sampleQuestion: String ="What is an example of a sample question?"
+
 )
 
