@@ -63,13 +63,13 @@ fun Register(navController: NavController)
                     elevation = 10.dp
                 )
                 {
-                        Column(
-                            modifier = Modifier.fillMaxSize(fraction = 0.9F),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        )
-                        {
-                            var sName by rememberSaveable { mutableStateOf("") }
+                    Column(
+                        modifier = Modifier.fillMaxSize(fraction = 0.9F),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    )
+                    {
+                        var sName by rememberSaveable { mutableStateOf("") }
                         var sPass by rememberSaveable { mutableStateOf("") }
                         var sPassConfirm by rememberSaveable { mutableStateOf("") }
                         var sEmail by rememberSaveable { mutableStateOf("") }
