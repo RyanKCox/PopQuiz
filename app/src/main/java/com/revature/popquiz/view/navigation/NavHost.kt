@@ -54,9 +54,9 @@ fun StartNav(navController: NavHostController)
         //Create Quiz Screens
         composable(NavScreens.CreateQuizTitle.route)
         {
-            val createQuizVM =
+          //  val createQuizVM =
 //                hiltViewModel<CreateQuizVM>()
-            CreateQuizVM(newQuiz = Quiz())
+            //CreateQuizVM(newQuiz = Quiz())
             CreateQuizTitle(navController = navController,
             )
         }
