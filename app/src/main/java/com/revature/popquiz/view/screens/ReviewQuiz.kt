@@ -26,7 +26,7 @@ import com.revature.popquiz.view.shared.QuizScaffold
 fun reviewQuiz(navController: NavController) {
     val quiz = Quiz()
     quiz.title="Arrays"
-    quiz.score=90
+
     quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
             " This includes properties of arrays and their usage"
     quiz.tagList.add(0,"Index")
