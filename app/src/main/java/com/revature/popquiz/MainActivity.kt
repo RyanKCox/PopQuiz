@@ -14,8 +14,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
+
 import com.revature.popquiz.viewmodels.SplashScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity()

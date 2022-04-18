@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.dataobjects.Question
+import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -117,11 +119,17 @@ fun EditQuizQuestionBody(
                             .padding(5.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            text = question.getQuestionType(),
-                            style = MaterialTheme.typography.h6
-                        )
 
+                        //Question Type and delete button
+                        Row {
+
+                            Text(
+                                text = question.getQuestionType(),
+                                style = MaterialTheme.typography.h6
+                            )
+                        }
+
+                        //Question number and Question text
                         Row(
                             modifier = Modifier
                                 .padding(2.dp)
@@ -131,7 +139,8 @@ fun EditQuizQuestionBody(
 
 
                             Text(
-                                "$nNumber. ",
+                                //"$nNumber. ",
+                                "${editQuizVM.editQuiz.questionList.indexOf(question)+1}",
                                 style = MaterialTheme.typography.body1
                             )
 
@@ -149,8 +158,38 @@ fun EditQuizQuestionBody(
 
         }
         Divider(thickness = 5.dp)
+
         Spacer(Modifier.size(10.dp))
 
+        //Add question Button
+        Button(
+            modifier = Modifier
+                .fillMaxWidth(.6f),
+            onClick = {
+
+                //Create an empty question
+                editQuizVM.editQuiz.questionList.add(
+                    Question(
+                        nType = 0,
+                        question = "",
+                        answers = listOf()
+                    ))
+
+                //Create a question and pass to edit question screen
+                editQuizVM.editQuestionIndex =
+                    editQuizVM.editQuiz.questionList.lastIndex
+
+                navController.navigate(NavScreens.EditQuestion.route)
+
+            }
+        ){
+            Text(text = "Add Question")
+
+        }
+
+        Spacer(Modifier.size(10.dp))
+
+        //Finish Editing button
         Button(
             modifier = Modifier
                 .fillMaxWidth(.6f),
@@ -170,6 +209,8 @@ fun EditQuizQuestionBody(
 @Composable
 fun EditPreview(){
     PopQuizTheme {
-        EditQuizQuestionSelect(rememberNavController())
+        val nav = rememberNavController()
+        val editVm = EditQuizVM(Quiz())
+        EditQuizQuestionBody(navController = nav, editQuizVM = editVm)
     }
 }

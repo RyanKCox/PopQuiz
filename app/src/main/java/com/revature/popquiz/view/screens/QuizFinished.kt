@@ -79,7 +79,7 @@ fun quizComplete(navController: NavController) {
                                     elevation = 10.dp
                                 ) {
                                     Column(
-                                       // modifier = Modifier.padding(15.dp)
+                                    // modifier = Modifier.padding(15.dp)
                                     ) {
                                         Text(
                                             ("Congratulations! \n Your Score is \n %")

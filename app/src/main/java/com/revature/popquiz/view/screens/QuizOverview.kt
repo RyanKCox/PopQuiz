@@ -21,13 +21,15 @@ import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 
 import com.revature.popquiz.view.shared.basicCard
 
 
 @Composable
-fun quizOverView(navController: NavController) {
+fun quizOverView(navController: NavController)
+{
     val quiz = Quiz()
     quiz.title="Arrays"
     quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
@@ -36,9 +38,6 @@ fun quizOverView(navController: NavController) {
     quiz.tagList.add(1,"Arrays")
     val checkedState=remember{ mutableStateOf(false)}
 
-
-
-
     QuizScaffold(sTitle = "Quiz Overview", navController = navController) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -46,8 +45,10 @@ fun quizOverView(navController: NavController) {
             verticalArrangement = Arrangement.SpaceAround
         )
         {
-            LazyRow(modifier=Modifier.fillMaxWidth()) {
-                item (){
+            LazyRow(modifier=Modifier.fillMaxWidth())
+            {
+                item ()
+                {
                     Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
                     Column(modifier=Modifier.fillParentMaxWidth(0.9F)) {
 
@@ -166,13 +167,27 @@ fun quizOverView(navController: NavController) {
                                         ) {
                                             quizViewButton(text = "Edit", modifier = Modifier
                                                 .fillParentMaxWidth(0.22F)
-                                                .height(50.dp), onclick = { })
+                                                .height(50.dp), onclick = {
+
+                                                    //Send Correct Quiz
+                                                    navController.navigate(NavScreens.EditQuizTitle.route)
+
+                                            })
                                             quizViewButton(text = "Start", modifier = Modifier
                                                 .fillParentMaxWidth(0.22F)
-                                                .height(50.dp), onclick = { })
+                                                .height(50.dp), onclick = {
+
+                                                    //Send correct quiz
+                                                    navController.navigate(NavScreens.QuestionScreen.route)
+                                            })
                                             quizViewButton(text = "Cards", modifier = Modifier
                                                 .fillParentMaxWidth(0.22F)
-                                                .height(50.dp), onclick = { })
+                                                .height(50.dp), onclick = {
+
+                                                    //Send Correct Quiz
+                                                    navController.navigate(NavScreens.FlashcardScreen.route)
+
+                                            })
 
 
                                         }
@@ -239,7 +254,7 @@ fun quizViewButton(text:String,modifier: Modifier,onclick:
 ()->Unit)
 {
     Button(
-        onClick = { onclick}, colors = ButtonDefaults.buttonColors(
+        onClick = { onclick()}, colors = ButtonDefaults.buttonColors(
             backgroundColor = revOrange
         ), modifier = modifier
     ) {

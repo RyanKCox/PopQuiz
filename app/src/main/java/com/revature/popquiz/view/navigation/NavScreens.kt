@@ -27,7 +27,13 @@ sealed class NavScreens(val route:String) {
     object QuestionScreen: NavScreens("QuestionScreen")
 
     //Flashcard Screen
-    object FlashCardScreen: NavScreens("FlashCardScreen")
+
+    object FlashcardScreen: NavScreens("FlashcardScreen")
+
+    //PopQuiz Screen
+    object PopQuizScreen: NavScreens("PopQuizScreen")
+
+//    object FlashCardScreen: NavScreens("FlashCardScreen")
 
     //Profile Screen
     object ProfileScreen:NavScreens("ProfileScreen")
@@ -37,4 +43,5 @@ sealed class NavScreens(val route:String) {
 
     //Quiz Overview
     object QuizOverviewScreen:NavScreens("QuizOverviewScreen")
+
 }

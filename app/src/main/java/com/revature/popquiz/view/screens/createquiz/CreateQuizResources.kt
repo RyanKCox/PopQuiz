@@ -22,6 +22,8 @@ import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.QuizResource
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.TextEnums
+import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
 
 @Composable
@@ -112,10 +114,15 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
     var sTopic by remember { mutableStateOf("") }
 
     //Text field for a new topic
+
+    if(sTopic.length > TextEnums.MAX_TOPIC_LENGTH) {
+        TextLengthPrompt(maxLength = TextEnums.MAX_TOPIC_LENGTH)
+    }
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(.8f),
         value = sTopic,
         onValueChange = {sTopic = it},
+        maxLines = 1,
         label = { Text(
             "Topics",
                 style = MaterialTheme.typography.body1)
@@ -130,18 +137,25 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
 
                         //Check if the topic meets requirements and add to quiz
 
+                        if(sTopic.length > TextEnums.MAX_TOPIC_LENGTH){
+                            Toast.makeText(
+                                context,
+                                "Topic too long!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                         //if topic isnt empty and we havnt reached max topics
-                        if (sTopic != "" || createQuizVM.newQuiz.tagList.size <= 5) {
+                        else if (sTopic != "" && createQuizVM.newQuiz.tagList.size < 5) {
                             createQuizVM.newQuiz.tagList.add(sTopic)
                             //topicList.add(sTopic)
                             sTopic = ""
                         }
                         //If we reached max topics
-                        else if (createQuizVM.newQuiz.tagList.size > 5){
+                        else if (createQuizVM.newQuiz.tagList.size >= 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 topics allowed",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
 
                         }
@@ -150,7 +164,7 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
                             Toast.makeText(
                                 context,
                                 "Nothing in Topic",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
@@ -196,6 +210,7 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
         onValueChange = {sResource = it},
         label = { Text("Resources",
                 style = MaterialTheme.typography.body1) },
+        maxLines = 2,
         trailingIcon = {
 
             //Add link icon
@@ -207,18 +222,18 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
                         //Check if the link meets requirements
 
                         //If link is not empty and max links hasnt been reached
-                        if (sResource != "" || createQuizVM.newQuiz.resourceList.size <= 5) {
+                        if (sResource != "" && createQuizVM.newQuiz.resourceList.size < 5) {
 
                             //Add to resource list and clear input
                             createQuizVM.newQuiz.resourceList.add(sResource)
                             sResource = ""
                         }
                         //If we've reached max links
-                        else if (createQuizVM.newQuiz.resourceList.size > 5){
+                        else if (createQuizVM.newQuiz.resourceList.size >= 5){
                             Toast.makeText(
                                 context,
                                 "Only 5 resources allowed",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
 
                         }
@@ -227,7 +242,7 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
                             Toast.makeText(
                                 context,
                                 "Nothing in Resource",
-                                Toast.LENGTH_SHORT
+                                Toast.LENGTH_LONG
                             ).show()
                         }
                     }
