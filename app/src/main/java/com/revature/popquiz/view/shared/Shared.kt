@@ -316,15 +316,13 @@ fun ViewQuizCard()
 }
 //Top drawer function
 @Composable
-fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String) {
-    TopAppBar(navigationIcon = {
-        IconButton(onClick = {
-            scope.launch {
-                scaffoldState.drawerState.open()
-            }
-        }) {
+fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String)
+{
+    TopAppBar(navigationIcon =
+    {
+        IconButton(onClick = {scope.launch{scaffoldState.drawerState.open()}})
+        {
             Icon(painter = painterResource(id = R.drawable.ic_bookblack), contentDescription = null)
-
         }
     }, title = {
         Text(title, modifier = Modifier.clickable {
@@ -332,7 +330,7 @@ fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String
                 scaffoldState.drawerState.open()
             }
         })
-    }, backgroundColor = revOrange)
+    }, backgroundColor = revDarkGrey)
 }
 
 //Drawer Menu including navigation
