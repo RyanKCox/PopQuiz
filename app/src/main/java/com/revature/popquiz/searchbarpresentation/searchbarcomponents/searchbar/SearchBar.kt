@@ -111,10 +111,7 @@ fun quizBarSearch(
 @Composable
 fun filteringQuizList()
 {
-    QuizCardForLazyColumn(
-        quizTitleText = ,
-        shortQuizDescriptionText =
-    )
+
 }
 
 
