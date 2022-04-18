@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,6 +71,46 @@ fun EditQuizQuestionBody(
     navController: NavController,
     editQuizVM: EditQuizVM){
 
+    var showDialog by remember { mutableStateOf(false)}
+    var removeIndex  = 0
+
+
+    //Alert dialog for deleting question
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showDialog = false
+
+            },
+            title = {
+                Text("Delete Question?")
+            },
+            text = {
+                Text("Do you want to delete this question?")
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        editQuizVM.editQuiz.questionList.removeAt(removeIndex)
+                        showDialog = false
+                    }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        showDialog = false
+                    }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
+
     
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -94,6 +136,7 @@ fun EditQuizQuestionBody(
         ) {
 
             var nNumber = 1
+
             items(editQuizVM.editQuiz.questionList) { question ->
 
                 Card(
@@ -127,6 +170,24 @@ fun EditQuizQuestionBody(
                                 text = question.getQuestionType(),
                                 style = MaterialTheme.typography.h6
                             )
+
+                            Row(
+                                horizontalArrangement = Arrangement.End,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+
+                                //Delete icon
+                                Icon(
+                                    imageVector = Icons.Filled.Close,
+                                    contentDescription = "Delete Question",
+                                    modifier = Modifier
+                                        .clickable {
+                                            showDialog = true
+                                            removeIndex = editQuizVM.editQuiz.questionList.indexOf(question)
+
+                                        }
+                                )
+                            }
                         }
 
                         //Question number and Question text
@@ -140,7 +201,7 @@ fun EditQuizQuestionBody(
 
                             Text(
                                 //"$nNumber. ",
-                                "${editQuizVM.editQuiz.questionList.indexOf(question)+1}",
+                                "${editQuizVM.editQuiz.questionList.indexOf(question)+1}. ",
                                 style = MaterialTheme.typography.body1
                             )
 

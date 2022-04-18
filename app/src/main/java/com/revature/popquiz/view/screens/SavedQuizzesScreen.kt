@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -33,7 +34,7 @@ fun SavedQuizzesScreen(navController: NavController)
         navController = navController
     )
     {
-        SavedQuizzesBody()
+        SavedQuizzesBody(navController)
     }
 
 }
@@ -41,7 +42,7 @@ fun SavedQuizzesScreen(navController: NavController)
 
 @ExperimentalAnimationApi
 @Composable
-fun SavedQuizzesBody()
+fun SavedQuizzesBody(navController: NavController)
 {
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
@@ -90,7 +91,9 @@ fun SavedQuizzesBody()
                     QuizCardForLazyColumn(
                         quizTitleText = "Java Basics",
                         shortQuizDescriptionText = "Short quiz description"
-                    )
+                    ){
+                        navController.navigate(NavScreens.QuizOverviewScreen.route)
+                    }
                 }
 
                 item {
@@ -104,7 +107,9 @@ fun SavedQuizzesBody()
                     QuizCardForLazyColumn(
                         quizTitleText = "Intro to Databases",
                         shortQuizDescriptionText = "Short quiz description"
-                    )
+                    ){
+
+                    }
                 }
 
                 item {
