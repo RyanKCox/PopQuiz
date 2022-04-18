@@ -74,6 +74,12 @@ fun EditQuizQuestionBody(
     var showDialog by remember { mutableStateOf(false)}
     var removeIndex  = 0
 
+    //Delete question if returning from a cancel add question
+    if(editQuizVM.nDeleteQuestionIndex != null){
+        editQuizVM.editQuiz.questionList.removeAt(editQuizVM.nDeleteQuestionIndex!!)
+        editQuizVM.nDeleteQuestionIndex = null
+    }
+
 
     //Alert dialog for deleting question
     if (showDialog) {
