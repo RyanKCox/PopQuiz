@@ -11,10 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 import androidx.navigation.NavController
-import com.revature.popquiz.view.shared.TempQuizScaffold
 
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.shared.QuizScaffold

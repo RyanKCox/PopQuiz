@@ -7,6 +7,6 @@ import java.net.InetAddress
 class DnsSelector: Dns {
     override fun lookup(hostname: String): List<InetAddress> {
         return Dns.SYSTEM.lookup(hostname)
-            .filter { Inet4Address::class.java.isInstance(it)}
+            .filter { Inet4Address::class.java.isInstance(it) }
     }
 }
