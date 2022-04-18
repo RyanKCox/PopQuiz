@@ -151,7 +151,7 @@ fun quizOverView(navController: NavController)
 //Sample Quiz
                                     basicCard(
                                         title = "Sample Question: ",
-                                        info = quiz.sampleQuestion
+                                        info = quiz.questionList[0].question
                                     )
 
 
