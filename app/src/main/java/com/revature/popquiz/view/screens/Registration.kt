@@ -45,10 +45,12 @@ fun Register(navController: NavController)
         {
             Column(
                 modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally)
+                horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center)
             {
-                Spacer(Modifier.size(30.dp))
-                Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp,modifier = Modifier.fillMaxSize(fraction = 0.9F)) {
+
+                Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp,
+                    modifier = Modifier.fillMaxSize(fraction = 0.9F)) {
                     Column(
                         modifier = Modifier.fillMaxSize(fraction = 0.9F),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,10 +62,10 @@ fun Register(navController: NavController)
                         var sPassConfirm by rememberSaveable { mutableStateOf("") }
                         var sEmail by rememberSaveable { mutableStateOf("") }
 
-                        Spacer(Modifier.size(30.dp))
+                        Spacer(Modifier.size(10.dp))
                         Text(text = "Create New Account", fontSize = 30.sp,
                             fontWeight = FontWeight.Medium)
-                        Spacer(Modifier.size(30.dp))
+                        Spacer(Modifier.size(20.dp))
 
                         TextField(
                             modifier= Modifier.padding(20.dp) ,
@@ -71,7 +73,7 @@ fun Register(navController: NavController)
                             onValueChange = { sEmail = it },
                             label = { Text("Email: ") })
 
-                        Spacer(modifier = Modifier.size(20.dp))
+                        Spacer(modifier = Modifier.size(10.dp))
 
                         TextField(
                             modifier= Modifier.padding(20.dp) ,
@@ -79,7 +81,7 @@ fun Register(navController: NavController)
                             onValueChange = { sPass = it },
                             label = { Text("Password: ") })
 
-                        Spacer(modifier = Modifier.size(20.dp))
+                        Spacer(modifier = Modifier.size(10.dp))
 
                         TextField(
                             modifier= Modifier.padding(20.dp) ,
