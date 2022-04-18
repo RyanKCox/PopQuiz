@@ -2,6 +2,7 @@ package com.revature.popquiz
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -18,10 +19,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+//import javax.inject.Inject
 
 @Composable
 fun Register(navController: NavController)
@@ -34,8 +36,8 @@ fun Register(navController: NavController)
     val dataStore= LoginDataStore(context)
 
     Scaffold (
-        backgroundColor = revBlue,
-        topBar= {TopAppBar(backgroundColor = revOrange) {
+        backgroundColor = revOrange,
+        topBar= {TopAppBar(backgroundColor = revDarkGrey) {
             Text(text = "Login", fontSize = 18.sp, modifier = Modifier
                 .padding(horizontal =5.dp), fontWeight = FontWeight.Medium, color = Color.White
             )
@@ -45,10 +47,23 @@ fun Register(navController: NavController)
         {
             Column(
                 modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally)
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center)
             {
-                Spacer(Modifier.size(30.dp))
-                Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp,modifier = Modifier.fillMaxSize(fraction = 0.9F)) {
+                Spacer(Modifier.size(10.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .absolutePadding(
+                            top = 5.dp,
+                        ),
+                    shape = AbsoluteRoundedCornerShape(
+                        topLeft = 20.dp,
+                        topRight = 20.dp
+                    ),
+                    elevation = 10.dp
+                )
+                {
                     Column(
                         modifier = Modifier.fillMaxSize(fraction = 0.9F),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,10 +75,10 @@ fun Register(navController: NavController)
                         var sPassConfirm by rememberSaveable { mutableStateOf("") }
                         var sEmail by rememberSaveable { mutableStateOf("") }
 
-                        Spacer(Modifier.size(30.dp))
+                        Spacer(Modifier.size(10.dp))
                         Text(text = "Create New Account", fontSize = 30.sp,
                             fontWeight = FontWeight.Medium)
-                        Spacer(Modifier.size(30.dp))
+                        Spacer(Modifier.size(20.dp))
 
                         TextField(
                             modifier= Modifier.padding(20.dp) ,
@@ -71,7 +86,7 @@ fun Register(navController: NavController)
                             onValueChange = { sEmail = it },
                             label = { Text("Email: ") })
 
-                        Spacer(modifier = Modifier.size(20.dp))
+                        Spacer(modifier = Modifier.size(10.dp))
 
                         TextField(
                             modifier= Modifier.padding(20.dp) ,
@@ -79,7 +94,7 @@ fun Register(navController: NavController)
                             onValueChange = { sPass = it },
                             label = { Text("Password: ") })
 
-                        Spacer(modifier = Modifier.size(20.dp))
+                        Spacer(modifier = Modifier.size(10.dp))
 
                         TextField(
                             modifier= Modifier.padding(20.dp) ,

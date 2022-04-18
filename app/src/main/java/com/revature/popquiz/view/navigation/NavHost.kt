@@ -1,14 +1,16 @@
 package com.revature.popquiz.view.navigation
 
 import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.revature.popquiz.Register
+//import androidx.hilt.navigation.compose.hiltViewModel
+import com.revature.popquiz.model.dataobjects.Quiz
 
 import com.revature.popquiz.view.screens.*
-import com.revature.popquiz.view.screens.flashcard.FlashcardScreen
 import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
 import com.revature.popquiz.view.screens.question.QuestionScreen
 
@@ -20,11 +22,13 @@ import com.revature.popquiz.view.screens.SavedQuizzesScreen
 import com.revature.popquiz.view.screens.SearchQuizzesScreen
 import com.revature.popquiz.view.screens.editquiz.EditQuestion
 import com.revature.popquiz.view.screens.editquiz.EditQuizQuestionSelect
-import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.screens.editquiz.EditQuizResources
 import com.revature.popquiz.view.screens.editquiz.EditQuizTitle
+import com.revature.popquiz.viewmodel.CreateQuizVM
+import com.revature.popquiz.view.screens.flashcard.FlashCardScreen
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun StartNav(navController: NavHostController)
 {
@@ -50,7 +54,11 @@ fun StartNav(navController: NavHostController)
         //Create Quiz Screens
         composable(NavScreens.CreateQuizTitle.route)
         {
-            CreateQuizTitle(navController = navController)
+          //  val createQuizVM =
+//                hiltViewModel<CreateQuizVM>()
+            //CreateQuizVM(newQuiz = Quiz())
+            CreateQuizTitle(navController = navController,
+            )
         }
         composable(NavScreens.CreateQuizResources.route){
             CreateQuizResources(navController = navController)
@@ -66,10 +74,12 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.EditQuizResource.route){
             EditQuizResources(navController = navController)
         }
-        composable(NavScreens.EditQuizQuestionSelect.route){
+        composable(NavScreens.EditQuizQuestionSelect.route)
+        {
             EditQuizQuestionSelect(navController = navController)
         }
-        composable(NavScreens.EditQuestion.route){
+        composable(NavScreens.EditQuestion.route)
+        {
             EditQuestion(navController = navController)
         }
 
@@ -77,9 +87,7 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.SavedQuizzesScreen.route)
         {
             SavedQuizzesScreen(
-                navController = navController,
-                searchBarViewModel = SearchBarViewModel()
-            )
+                navController = navController)
         }
 
         // Search Quizzes Screen
@@ -120,9 +128,9 @@ fun StartNav(navController: NavHostController)
         
         //Flashcard Screen
         composable(NavScreens.FlashcardScreen.route) {
-            FlashcardScreen(navController = navController)
+            FlashCardScreen(navController = navController)
         }
-        
+
         //PopQuiz Screen
         composable(NavScreens.PopQuizScreen.route) {
             PopQuizScreen(navController = navController)
