@@ -1,5 +1,10 @@
 package com.revature.popquiz.model.dataobjects
 
-data class Flashcard(
+class Flashcard {
+    var question = Question
+    var answer = Answer
 
-)
+    companion object {
+
+    }
+}
