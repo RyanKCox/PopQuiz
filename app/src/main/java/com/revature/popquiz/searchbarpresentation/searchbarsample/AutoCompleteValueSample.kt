@@ -15,11 +15,7 @@
  */
 package com.example.androiddevchallenge.presentation.searchbarsample
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,9 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusEventModifier
-import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
@@ -42,18 +35,13 @@ import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomp
 import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete.utils.AutoCompleteSearchBarTag
 import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete.utils.asAutoCompleteEntities
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.TextSearchBar
-import com.revature.popquiz.model.dataobjects.SearchWidgetState
-import com.revature.popquiz.viewmodels.SearchBarViewModel
 import java.util.Locale
 
 
 @ExperimentalAnimationApi
 @Composable
-fun AutoCompleteValueSample(items: List<String>, searchBarViewModel: SearchBarViewModel)
+fun AutoCompleteValueSample(items: List<String>)
 {
-    // Search Bar View Model
-    val searchWidgetState by searchBarViewModel.searchWidgetState
-    val searchTextState by searchBarViewModel.searchTextState
 
     val items = listOf(
         "Java",
