@@ -17,29 +17,22 @@ package com.example.androiddevchallenge.presentation.searchbarcomponents.searchb
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.domain.models.Quiz
 import com.example.androiddevchallenge.presentation.searchbarsample.AutoCompleteValueSample
-import com.revature.popquiz.model.dataobjects.SearchWidgetState
+import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 
 @Composable
 fun TextSearchBar(
@@ -113,5 +106,16 @@ fun quizBarSearch(
         AutoCompleteValueSample(items = names)
     }
 }
+
+@ExperimentalAnimationApi
+@Composable
+fun filteringQuizList()
+{
+    QuizCardForLazyColumn(
+        quizTitleText = ,
+        shortQuizDescriptionText =
+    )
+}
+
 
 
