@@ -84,57 +84,57 @@ fun SavedQuizzesBody(navController: NavController)
                 }
 
 
-                item {
+                item()
+                {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
 
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Java Basics",
-                        shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
-                }
+//                item()
+//                {
+//                    QuizCardForLazyColumn(quizTitleText = "Kotlin", shortQuizDescriptionText = "Short quiz description" +)
+//                    {
+//                        navController.navigate(NavScreens.QuizOverviewScreen.route)
+//                    }
+//                }
 
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Kotlin Fundamentals",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                }
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Intro to Databases",
-                        shortQuizDescriptionText = "Short quiz description"
-                    ){
-
-                    }
-                }
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "MVVM Design Pattern",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                }
-
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Quiz Title",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                }
-
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Quiz Title",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                }
+//                item {
+//                    QuizCardForLazyColumn(
+//                        quizTitleText = "Kotlin Fundamentals",
+//                        shortQuizDescriptionText = "Short quiz description"
+//                    )
+//                }
+//
+//                item {
+//                    QuizCardForLazyColumn(
+//                        quizTitleText = "Intro to Databases",
+//                        shortQuizDescriptionText = "Short quiz description"
+//                    ){
+//
+//                    }
+//                }
+//
+//                item {
+//                    QuizCardForLazyColumn(
+//                        quizTitleText = "MVVM Design Pattern",
+//                        shortQuizDescriptionText = "Short quiz description"
+//                    )
+//                }
+//
+//
+//                item {
+//                    QuizCardForLazyColumn(
+//                        quizTitleText = "Quiz Title",
+//                        shortQuizDescriptionText = "Short quiz description"
+//                    )
+//                }
+//
+//
+//                item {
+//                    QuizCardForLazyColumn(
+//                        quizTitleText = "Quiz Title",
+//                        shortQuizDescriptionText = "Short quiz description"
+//                    )
+//                }
             }
         }
     }

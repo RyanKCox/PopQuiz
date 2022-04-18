@@ -1,4 +1,19 @@
-package com.revature.popquiz.searchbarpresentation.searchbarcomponents.autocomplete
+/*
+ * Copyright 2021 Paulo Pereira
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,20 +26,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete.AutoCompleteEntity
 
 private typealias ItemSelected<T> = (T) -> Unit
 
 @Stable
-interface FilteringQuizScope<T : FilteringQuizEntity> : FilteringQuizDesignScope
+interface AutoCompleteScope<T : AutoCompleteEntity> : AutoCompleteDesignScope
 {
     var isSearching: Boolean
     fun filter(query: String)
     fun onItemSelected(block: ItemSelected<T> = {})
+
 }
 
 @Stable
-interface FilteringQuizDesignScope
+interface AutoCompleteDesignScope
 {
     var boxWidthPercentage: Float
     var shouldWrapContentHeight: Boolean
@@ -33,7 +48,7 @@ interface FilteringQuizDesignScope
     var boxShape: Shape
 }
 
-class FilteringQuizState<T : FilteringQuizEntity>(private val startItems: List<T>) : FilteringQuizScope<T>
+class AutoCompleteState<T : AutoCompleteEntity>(private val startItems: List<T>) : AutoCompleteScope<T>
 {
     private var onItemSelectedBlock: ItemSelected<T>? = null
 
@@ -52,7 +67,8 @@ class FilteringQuizState<T : FilteringQuizEntity>(private val startItems: List<T
 
     override fun filter(query: String)
     {
-        filteredItems = startItems.filter { entity ->
+        filteredItems = startItems.filter()
+        { entity ->
             entity.filter(query)
         }
     }

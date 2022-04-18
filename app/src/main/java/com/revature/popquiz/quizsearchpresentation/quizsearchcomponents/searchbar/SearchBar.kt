@@ -32,6 +32,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.domain.models.Quiz
 import com.example.androiddevchallenge.presentation.searchbarsample.AutoCompleteValueSample
+import com.example.androiddevchallenge.presentation.searchbarsample.ValueAutoCompleteItem
+import com.example.androiddevchallenge.presentation.searchbarsample.autoCompleteItems
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 
 @Composable
@@ -103,15 +105,9 @@ fun quizBarSearch(
         verticalArrangement = Arrangement.spacedBy(24.dp)
     )
     {
-        AutoCompleteValueSample(items = names)
+        AutoCompleteValueSample(autoCompleteItems = names)
+
     }
-}
-
-@ExperimentalAnimationApi
-@Composable
-fun filteringQuizList()
-{
-
 }
 
 
