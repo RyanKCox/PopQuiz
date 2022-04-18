@@ -1,57 +1,42 @@
 package com.revature.popquiz.view.shared
 
 
-import android.app.ActionBar
-import android.widget.SearchView
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
+import androidx.compose.material.SnackbarDefaults.primaryActionColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.PopupProperties
 
 import androidx.navigation.NavController
-import com.example.androiddevchallenge.domain.models.Quiz
-import com.example.androiddevchallenge.presentation.searchbarsample.AutoCompleteValueSample
-import com.revature.popquiz.model.dataobjects.SearchWidgetState
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.revature.popquiz.R
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.quizTags
-import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -91,18 +76,37 @@ import kotlinx.coroutines.launch
  * Temporary Scaffold that does not take in navController
  */
 @Composable
-fun QuizScaffold(color:Color= revBlue, sTitle: String, navController: NavController
-                 , content: @Composable () -> Unit) {
+fun QuizScaffold(
+//    color: Color = revBlue,
+    color: Color = revOrange,
+    sTitle: String,
+    navController: NavController,
+    content: @Composable () -> Unit
+)
+{
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            outDrawer(scope =scope , scaffoldState =scaffoldState , title =sTitle )
+        topBar =
+        {
+            outDrawer(
+                scope = scope,
+                scaffoldState = scaffoldState,
+                title = sTitle,
+            )
         },
+//        drawerBackgroundColor = revDarkGrey,
         backgroundColor = color,
-        drawerContent = { inDrawer(navController = navController , scope = scope , scaffoldState =scaffoldState )},
+        drawerContent =
+        {
+            inDrawer(
+                navController = navController,
+                scope = scope,
+                scaffoldState = scaffoldState
+            )
+        },
         scaffoldState = scaffoldState,
         content = { content() }
     )
@@ -312,15 +316,13 @@ fun ViewQuizCard()
 }
 //Top drawer function
 @Composable
-fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String) {
-    TopAppBar(navigationIcon = {
-        IconButton(onClick = {
-            scope.launch {
-                scaffoldState.drawerState.open()
-            }
-        }) {
+fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String)
+{
+    TopAppBar(navigationIcon =
+    {
+        IconButton(onClick = {scope.launch{scaffoldState.drawerState.open()}})
+        {
             Icon(painter = painterResource(id = R.drawable.ic_bookblack), contentDescription = null)
-
         }
     }, title = {
         Text(title, modifier = Modifier.clickable {
@@ -328,22 +330,31 @@ fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String
                 scaffoldState.drawerState.open()
             }
         })
-    }, backgroundColor = revOrange)
+    }, backgroundColor = revDarkGrey)
 }
+
 //Drawer Menu including navigation
 @Composable
-fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState: ScaffoldState) {
+fun inDrawer(
+    navController: NavController,
+    scope: CoroutineScope,
+    scaffoldState: ScaffoldState
+)
+{
 
     Column(
         modifier = Modifier.fillMaxSize(0.9F),
         horizontalAlignment = Alignment.Start
-    ) {
+    )
+    {
         Text(text = "Menu", fontSize = 20.sp, modifier = Modifier
             .clickable {
                 scope.launch { scaffoldState.drawerState.close() }
             }
             .fillMaxWidth(0.9f))
+
         Spacer(modifier = Modifier.height(20.dp))
+
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
             .clickable {
