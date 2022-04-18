@@ -61,7 +61,8 @@ fun Register(navController: NavController)
                         topRight = 20.dp
                     ),
                     elevation = 10.dp
-                    {
+                )
+                {
                         Column(
                             modifier = Modifier.fillMaxSize(fraction = 0.9F),
                             horizontalAlignment = Alignment.CenterHorizontally,
