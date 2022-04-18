@@ -53,6 +53,7 @@ fun SavedQuizzesBody(navController: NavController)
         verticalArrangement = Arrangement.Center
     )
     {
+        Spacer(Modifier.size(10.dp))
         Card(
             modifier = Modifier
                 .fillMaxSize()
