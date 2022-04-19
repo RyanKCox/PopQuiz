@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.ui.theme.Teal200
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -237,5 +238,6 @@ fun quizFinishedScreen(/*navController: NavController*/) {
 @Preview
 @Composable
 fun prevA(){
-    //quizComplete()
+    val navController= rememberNavController()
+    quizComplete(navController)
 }

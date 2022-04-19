@@ -33,6 +33,7 @@ import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import androidx.compose.material.TextFieldDefaults.UnfocusedIndicatorLineOpacity
 import androidx.compose.ui.text.input.VisualTransformation
+import com.revature.popquiz.ui.theme.revDarkGrey
 
 @Composable
 fun LoginScreen(navController: NavController)
@@ -47,9 +48,9 @@ fun LoginScreen(navController: NavController)
     //Dummy Setup
     Log.d("Login Screen", "Login Screen Start")
     //Shared Scaffold - May not use in this screen
-    Scaffold(backgroundColor = revBlue,
+    Scaffold(backgroundColor = revOrange,
         topBar =
-        { TopAppBar(backgroundColor = revOrange)
+        { TopAppBar(backgroundColor = revDarkGrey)
         {
             Text(
                 text = "Login",

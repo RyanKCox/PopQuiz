@@ -345,27 +345,31 @@ fun inDrawer(
 {
 
     Column(
-        modifier = Modifier.fillMaxSize(0.9F),
+        modifier = Modifier.fillMaxSize(0.9F).padding(10.dp),
         horizontalAlignment = Alignment.Start
     )
     {
-        Text(text = "Menu", fontSize = 20.sp, modifier = Modifier
+        Text(text = "Menu", fontSize = 40.sp, fontWeight = FontWeight.Bold,modifier = Modifier
             .clickable {
                 scope.launch { scaffoldState.drawerState.close() }
             }
-            .fillMaxWidth(0.9f))
+            .fillMaxWidth(0.9f)
+            .padding(10.dp))
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     navController.navigate(NavScreens.SearchQuizzesScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Search Quiz")
+                Text(text = "Search Quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -373,13 +377,16 @@ fun inDrawer(
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Saved Quizzes")
+                Text(text = "Saved Quizzes", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -387,13 +394,16 @@ fun inDrawer(
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     navController.navigate(NavScreens.CreateQuizTitle.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Create a quiz")
+                Text(text = "Create a quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -401,14 +411,17 @@ fun inDrawer(
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     // navController.navigate(NavScreens..route)
                     navController.navigate(NavScreens.SettingsScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Pop! Quiz Settings")
+                Text(text = "Pop! Quiz Settings", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -416,14 +429,17 @@ fun inDrawer(
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
-                    // navController.navigate(NavScreens..route)
+
                     navController.navigate(NavScreens.ProfileScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Profile")
+                Text(text = "Profile", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
