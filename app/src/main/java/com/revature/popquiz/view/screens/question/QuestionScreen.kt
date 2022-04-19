@@ -31,17 +31,6 @@ fun QuestionScreen(navController: NavController) {
             }
         }
     )
-//    TempQuizScaffold(
-//        sTitle = R.string.quiz_name.toString(),
-////        navController = navController,
-//        content = {
-//            Column(modifier = Modifier.fillMaxSize()) {
-//                ProgressBar()
-//                QuestionCard()
-//                SubmitButton()
-//            }
-//        }
-//    )
 }
 
 @Composable
@@ -64,7 +53,6 @@ fun QuestionCard() {
         Card(
             shape = RoundedCornerShape(25.dp),
             modifier = Modifier
-                .fillMaxHeight(0.8f)
                 .fillMaxWidth()
                 .padding(25.dp),
             elevation = 20.dp

@@ -1,6 +1,8 @@
 package com.revature.popquiz.model.dataobjects
 
-data class Answer( var sAnswer:String, var bCorrect:Boolean) {
+class Flashcard {
+    var question = Question
+    var answer = Answer
 
     companion object {
 
