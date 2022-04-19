@@ -21,6 +21,5 @@ data class Quiz(
     var shortDescription: String ="",
     @ColumnInfo(name = "longDescription")
     var longDescription: String ="",
-
 )
 

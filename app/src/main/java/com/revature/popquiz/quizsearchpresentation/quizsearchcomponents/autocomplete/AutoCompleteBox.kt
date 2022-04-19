@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,12 +41,13 @@ const val AutoCompleteBoxTag = "AutoCompleteBox"
 @ExperimentalAnimationApi
 @Composable
 fun <T : AutoCompleteEntity> AutoCompleteBox(
-    items: List<T>,
-    itemContent: @Composable (T) -> Unit,
+    autoCompleteItems: List<T>,
+    autoCompleteItemContent: @Composable (T) -> Unit,
     content: @Composable AutoCompleteScope<T>.() -> Unit
 )
 {
-    val autoCompleteState = remember { AutoCompleteState(startItems = items) }
+    val autoCompleteState = remember()
+    {AutoCompleteState(startItems = autoCompleteItems)}
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -62,19 +64,62 @@ fun <T : AutoCompleteEntity> AutoCompleteBox(
             {
                 items(autoCompleteState.filteredItems)
                 { item ->
-                    Box(modifier = Modifier.clickable { autoCompleteState.selectItem(item) })
+                    Box(
+                        modifier = Modifier.clickable
+                        { autoCompleteState.selectItem(item)} )
                     {
-                        itemContent(item)
+                        autoCompleteItemContent(item)
                     }
+                }
+            }
+
+        }
+    }
+}
+
+
+const val AutoCompleteCardTag = "AutoCompleteCard"
+
+@ExperimentalAnimationApi
+@Composable
+fun <T : AutoCompleteEntity> AutoCompleteCard(
+    autoCompleteItems: List<T>,
+    autoCompleteItemContent: @Composable (T) -> Unit,
+    content: @Composable AutoCompleteScope<T>.() -> Unit
+)
+{
+    val autoCompleteState = remember()
+    {AutoCompleteState(startItems = autoCompleteItems)}
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
+    {
+        LazyColumn(
+            modifier = Modifier.autoComplete(autoCompleteState),
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            items(autoCompleteState.filteredItems)
+            { item ->
+                Card(
+                    modifier = Modifier.clickable
+                    { autoCompleteState.selectItem(item)} )
+                {
+                    autoCompleteItemContent(item)
                 }
             }
         }
     }
 }
 
+
+
 private fun Modifier.autoComplete(
     autoCompleteItemScope: AutoCompleteDesignScope
-): Modifier = composed {
+): Modifier = composed()
+{
     val baseModifier = if (autoCompleteItemScope.shouldWrapContentHeight)
         wrapContentHeight()
     else

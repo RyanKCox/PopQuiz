@@ -11,8 +11,6 @@ class Flashcard(var context: Context, topic: String, question: String, answer: S
     var question = ""
     var answer = ""
 
-
-
     companion object {
 
     }

@@ -1,25 +1,31 @@
 package com.revature.popquiz.view.screens
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
 @ExperimentalAnimationApi
@@ -44,7 +50,11 @@ fun SavedQuizzesScreen(navController: NavController)
 @Composable
 fun SavedQuizzesBody(navController: NavController)
 {
-    val context = LocalContext.current
+    var context = LocalContext.current
+    var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
+    var x = searchBarViewModel.sSearchValue
+    var sSearchValue by remember { mutableStateOf(x) }
+
     val lazyState = rememberLazyListState()
 
     Column(
@@ -81,58 +91,22 @@ fun SavedQuizzesBody(navController: NavController)
                 item()
                 {
                     quizBarSearch()
+                    Log.d("Search bar", "$sSearchValue")
                 }
-
-
-                item {
+                item()
+                {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
 
-                item {
+//                item {
+//                    Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
+//
+//                }
+                items(searchBarViewModel.sortedList)
+                { Quiz ->
                     QuizCardForLazyColumn(
-                        quizTitleText = "Java Basics",
-                        shortQuizDescriptionText = "Short quiz description"
-                    ){
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
-                }
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Kotlin Fundamentals",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                }
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Intro to Databases",
-                        shortQuizDescriptionText = "Short quiz description"
-                    ){
-
-                    }
-                }
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "MVVM Design Pattern",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                }
-
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Quiz Title",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                }
-
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Quiz Title",
-                        shortQuizDescriptionText = "Short quiz description"
+                        quizTitleText = Quiz.title,
+                        shortQuizDescriptionText = Quiz.shortDescription
                     )
                 }
             }
