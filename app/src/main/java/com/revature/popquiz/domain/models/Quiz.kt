@@ -25,7 +25,7 @@ data class Quiz(
 {
     override fun filter(query: String): Boolean
     {
-        return name.toLowerCase(Locale.getDefault())
-            .startsWith(query.toLowerCase(Locale.getDefault()))
+        return name.lowercase(Locale.getDefault())
+            .startsWith(query.lowercase(Locale.getDefault()))
     }
 }

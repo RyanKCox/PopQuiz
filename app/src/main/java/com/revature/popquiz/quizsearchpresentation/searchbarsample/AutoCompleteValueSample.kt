@@ -28,38 +28,47 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete.AutoCompleteBox
+
 import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete.utils.AutoCompleteSearchBarTag
 import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete.utils.asAutoCompleteEntities
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.TextSearchBar
+import com.revature.popquiz.MainActivity
+import com.revature.popquiz.viewmodels.SearchBarViewModel
 import java.util.Locale
 
 
+val autoCompleteItems = listOf(
+    "Java",
+    "Kotlin",
+    "Databases",
+    "Jetpack Compose",
+    "REST API's"
+)
+val autoCompleteEntities = autoCompleteItems.asAutoCompleteEntities(
+    filter =
+    { item, query ->
+        item.lowercase(Locale.getDefault())
+            .startsWith(query.lowercase(Locale.getDefault()))
+    }
+)
+
 @ExperimentalAnimationApi
 @Composable
-fun AutoCompleteValueSample(items: List<String>)
+fun AutoCompleteValueSample(autoCompleteItems: List<String>)
 {
-
-    val items = listOf(
-        "Java",
-        "Kotlin",
-        "Databases",
-        "Jetpack Compose",
-        "REST API's"
-    )
-    val autoCompleteEntities = items.asAutoCompleteEntities(
-        filter = { item, query ->
-            item.toLowerCase(Locale.getDefault())
-                .startsWith(query.toLowerCase(Locale.getDefault()))
-        }
-    )
-
+    var context = LocalContext.current
+    var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
+//    var sReturn = ""
     AutoCompleteBox(
-        items = autoCompleteEntities,
-        itemContent = { item ->
+        autoCompleteItems = autoCompleteEntities,
+        autoCompleteItemContent =
+        { item ->
             ValueAutoCompleteItem(item.value)
         }
     )
@@ -70,6 +79,7 @@ fun AutoCompleteValueSample(items: List<String>)
         onItemSelected()
         { item ->
             value = item.value
+            searchBarViewModel.sSearchValue = value
             filter(value)
             view.clearFocus()
         }
@@ -85,6 +95,7 @@ fun AutoCompleteValueSample(items: List<String>)
             onClearClick =
             {
                 value = ""
+                searchBarViewModel.sSearchValue = value
                 filter(value)
                 view.clearFocus()
             },
@@ -92,13 +103,18 @@ fun AutoCompleteValueSample(items: List<String>)
             {
                     focusState -> isSearching = focusState.hasFocus
             },
-            onValueChanged = { query ->
+            onValueChanged =
+            { query ->
                 value = query
+                searchBarViewModel.sSearchValue = value
                 filter(value)
             }
         )
     }
 }
+
+
+
 
 @Composable
 fun ValueAutoCompleteItem(item: String)
@@ -110,6 +126,9 @@ fun ValueAutoCompleteItem(item: String)
         verticalArrangement = Arrangement.spacedBy(8.dp)
     )
     {
-        Text(text = item, style = MaterialTheme.typography.subtitle2)
+        Text(
+            text = item,
+            style = MaterialTheme.typography.subtitle2
+        )
     }
 }
