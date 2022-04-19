@@ -149,10 +149,14 @@ fun quizOverView(navController: NavController)
                                     }
                                     Spacer(modifier = Modifier.height(20.dp))
 //Sample Quiz
-                                    basicCard(
-                                        title = "Sample Question: ",
-                                        info = quiz.questionList[0].question
-                                    )
+                                    if(quiz.questionList.isNotEmpty())
+                                    {
+                                        basicCard(
+                                            title = "Sample Question: ",
+                                            info = quiz.questionList[0].question
+                                        )
+                                    }
+
 
 
                                     Spacer(modifier = Modifier.height(20.dp))

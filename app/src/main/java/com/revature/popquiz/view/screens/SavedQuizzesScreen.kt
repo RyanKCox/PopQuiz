@@ -1,6 +1,6 @@
 package com.revature.popquiz.view.screens
 
-import android.app.Application
+
 import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -10,8 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -26,15 +25,13 @@ import androidx.navigation.NavController
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.room.RoomDataManager.quizRepository
-import com.revature.popquiz.MainActivity
+
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
-import com.revature.popquiz.viewmodel.CreateQuizVM
-import androidx.compose.foundation.lazy.items
-import com.revature.popquiz.model.dataobjects.Quiz
+
+
 import com.revature.popquiz.model.dataobjects.QuizEntity
-import com.revature.popquiz.model.room.QuizRepository
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
@@ -124,11 +121,11 @@ fun SavedQuizzesBody(navController: NavController)
                     }
                 }
 
-                item {
 //                item {
-//                    Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
-//
-//                }
+////                item {
+////                    Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
+////
+////                }
                 items(searchBarViewModel.sortedList)
                 { Quiz ->
                     QuizCardForLazyColumn(
