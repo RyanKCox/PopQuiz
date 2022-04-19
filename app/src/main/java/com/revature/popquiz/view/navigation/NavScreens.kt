@@ -27,13 +27,13 @@ sealed class NavScreens(val route:String) {
     object QuestionScreen: NavScreens("QuestionScreen")
 
     //Flashcard Screen
-
     object FlashcardScreen: NavScreens("FlashcardScreen")
+
+    //CreateFlashcardScreen
+    object CreateFlashcardScreen: NavScreens("CreateFlashCardScreen")
 
     //PopQuiz Screen
     object PopQuizScreen: NavScreens("PopQuizScreen")
-
-//    object FlashCardScreen: NavScreens("FlashCardScreen")
 
     //Profile Screen
     object ProfileScreen:NavScreens("ProfileScreen")
