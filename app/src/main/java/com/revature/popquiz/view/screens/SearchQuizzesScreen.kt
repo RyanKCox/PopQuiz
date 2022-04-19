@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
@@ -102,47 +103,10 @@ fun SearchQuizzesBody()
                 Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
 
             }
-            item{
+            items(searchBarViewModel.sortedList) { Quiz ->
                 QuizCardForLazyColumn(
-                    quizTitleText = "Java Basics",
-                    shortQuizDescriptionText = "Short quiz description"
-                )
-            }
-
-            item{
-                QuizCardForLazyColumn(
-                    quizTitleText = "Kotlin Fundamentals",
-                    shortQuizDescriptionText = "Short quiz description"
-                )
-            }
-
-            item{
-                QuizCardForLazyColumn(
-                    quizTitleText = "Intro to Databases",
-                    shortQuizDescriptionText = "Short quiz description"
-                )
-            }
-
-            item{
-                QuizCardForLazyColumn(
-                    quizTitleText = "MVVM Design Pattern",
-                    shortQuizDescriptionText = "Short quiz description"
-                )
-            }
-
-
-            item{
-                QuizCardForLazyColumn(
-                    quizTitleText = "Quiz Title",
-                    shortQuizDescriptionText = "Short quiz description"
-                )
-            }
-
-
-            item{
-                QuizCardForLazyColumn(
-                    quizTitleText = "Quiz Title",
-                    shortQuizDescriptionText = "Short quiz description"
+                    quizTitleText = Quiz.title,
+                    shortQuizDescriptionText = Quiz.shortDescription
                 )
             }
         }

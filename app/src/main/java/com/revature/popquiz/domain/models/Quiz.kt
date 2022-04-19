@@ -23,7 +23,8 @@ data class Quiz(
     val description: String
 ) : AutoCompleteEntity
 {
-    override fun filter(query: String): Boolean {
+    override fun filter(query: String): Boolean
+    {
         return name.lowercase(Locale.getDefault())
             .startsWith(query.lowercase(Locale.getDefault()))
     }
