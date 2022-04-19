@@ -7,6 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.revature.popquiz.Register
+
+
+import com.revature.popquiz.view.screens.createflashcard.CreateFlashcardScreen
+
 //import androidx.hilt.navigation.compose.hiltViewModel
 import com.revature.popquiz.model.dataobjects.Quiz
 
@@ -14,18 +18,20 @@ import com.revature.popquiz.view.screens.*
 import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
 import com.revature.popquiz.view.screens.question.QuestionScreen
 
+
 import com.revature.popquiz.view.screens.createquiz.CreateQuizQuestions
-import com.revature.popquiz.view.screens.CreateQuizResources
-import com.revature.popquiz.view.screens.CreateQuizTitle
-import com.revature.popquiz.view.screens.LoginScreen
-import com.revature.popquiz.view.screens.SavedQuizzesScreen
-import com.revature.popquiz.view.screens.SearchQuizzesScreen
 import com.revature.popquiz.view.screens.editquiz.EditQuestion
 import com.revature.popquiz.view.screens.editquiz.EditQuizQuestionSelect
 import com.revature.popquiz.view.screens.editquiz.EditQuizResources
 import com.revature.popquiz.view.screens.editquiz.EditQuizTitle
+
+import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
+import com.revature.popquiz.view.screens.question.QuestionScreen
+import com.revature.popquiz.viewmodels.SearchBarViewModel
+
 import com.revature.popquiz.viewmodel.CreateQuizVM
 import com.revature.popquiz.view.screens.flashcard.FlashCardScreen
+
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -126,6 +132,11 @@ fun StartNav(navController: NavHostController)
             quizOverView(navController = navController)
         }
         
+        //Create Flashcard Screen
+        composable(NavScreens.CreateFlashcardScreen.route) {
+            CreateFlashcardScreen(navController = navController)
+        }
+
         //Flashcard Screen
         composable(NavScreens.FlashcardScreen.route) {
             FlashCardScreen(navController = navController)
