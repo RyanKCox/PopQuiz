@@ -33,7 +33,7 @@ sealed class NavScreens(val route:String) {
     //PopQuiz Screen
     object PopQuizScreen: NavScreens("PopQuizScreen")
 
-    object FlashCardScreen: NavScreens("FlashCardScreen")
+    object CreateFlashCardScreen: NavScreens("CreateFlashCardScreen")
 
     //Profile Screen
     object ProfileScreen:NavScreens("ProfileScreen")

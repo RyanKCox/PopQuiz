@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
@@ -52,16 +55,21 @@ fun CreateFlashcardBody(navController: NavController) {
             ) {
 
                 Spacer(modifier = Modifier.size(10.dp))
-
-
                 TextField(
-                    value = ,
-                    onValueChange = )
+                    value = flashcardTopic,
+                    onValueChange = { flashcardTopic = it },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent, textColor = revOrange
+                    )
+                )
+                Spacer(modifier = Modifier.size(10.dp))
             }
         }
     }
 }
+fun CheckFields() {
 
+}
 
 @Preview
 @Composable

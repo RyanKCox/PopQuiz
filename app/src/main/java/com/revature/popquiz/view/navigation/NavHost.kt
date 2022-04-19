@@ -8,10 +8,10 @@ import androidx.navigation.compose.composable
 import com.revature.popquiz.Register
 
 import com.revature.popquiz.view.screens.*
-import com.revature.popquiz.view.screens.flashcard.FlashcardScreen
 import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
 import com.revature.popquiz.view.screens.question.QuestionScreen
-
+import com.revature.popquiz.view.screens.flashcard.FlashCardScreen
+import com.revature.popquiz.view.screens.createflashcard.CreateFlashcardScreen
 import com.revature.popquiz.view.screens.createquiz.CreateQuizQuestions
 import com.revature.popquiz.view.screens.CreateQuizResources
 import com.revature.popquiz.view.screens.CreateQuizTitle
@@ -119,10 +119,15 @@ fun StartNav(navController: NavHostController)
         }
         
         //Flashcard Screen
-        composable(NavScreens.FlashcardScreen.route) {
-            FlashcardScreen(navController = navController)
+        composable(NavScreens.CreateFlashcardScreen.route) {
+            CreateFlashcardScreen(navController = navController)
         }
-        
+
+        //Flashcard Screen
+        composable(NavScreens.FlashcardScreen.route) {
+            
+        }
+
         //PopQuiz Screen
         composable(NavScreens.PopQuizScreen.route) {
             PopQuizScreen(navController = navController)
