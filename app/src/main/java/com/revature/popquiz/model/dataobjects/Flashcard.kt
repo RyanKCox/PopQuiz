@@ -1,11 +1,20 @@
 package com.revature.popquiz.model.dataobjects
 
-class Flashcard {
+import android.content.Context
+
+class Flashcard(var context: Context, topic: String, question: String, answer: String) {
+    fun add(flashcard: Flashcard) {
+
+    }
+
     var topic = ""
-    var question = Question
-    var answer = Answer
+    var question = ""
+    var answer = ""
+
+
 
     companion object {
 
     }
+
 }

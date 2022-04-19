@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
-import com.revature.popquiz.model.dataobjects.Flashcard
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -87,14 +86,14 @@ fun CreateFlashcardBody(navController: NavController) {
                             flashcardQuestion = flashcardQuestion,
                             flashcardAnswer = flashcardAnswer
                     )) {
-                        createFlashcardVM.newFlashcard.add(
-                            Flashcard(
-                                context = context,
-                                flashcardTopic = flashcardTopic,
-                                flashcardQuestion = flashcardQuestion,
-                                flashcardAnswer = flashcardAnswer
-                            )
-                        )
+//                        createFlashcardVM.newFlashcard.add(
+//                            Flashcard(
+//                                context = context,
+//                                flashcardTopic = flashcardTopic,
+//                                flashcardQuestion = flashcardQuestion,
+//                                flashcardAnswer = flashcardAnswer
+//                            )
+//                        )
                     }
                 }) {
 
