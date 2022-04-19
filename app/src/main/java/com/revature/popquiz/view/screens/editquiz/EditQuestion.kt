@@ -2,6 +2,7 @@ package com.revature.popquiz.view.screens.editquiz
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuestionInterface
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.view.screens.createquiz.*
@@ -43,14 +45,18 @@ fun EditQuestion(navController: NavController){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
-            //Card our input field is on
+            Spacer(Modifier.size(10.dp))
             Card(
                 modifier = Modifier
-                    .fillMaxSize(.95f)
-                    .padding(15.dp),
-                shape = RoundedCornerShape(40.dp),
-                elevation = 10.dp,
+                    .fillMaxSize()
+                    .absolutePadding(
+                        top = 5.dp,
+                    ),
+                shape = AbsoluteRoundedCornerShape(
+                    topLeft = 20.dp,
+                    topRight = 20.dp
+                ),
+                elevation = 10.dp
             ) {
                 EditQuestionBody(navController, editQuizVM, context )
             }
@@ -63,6 +69,8 @@ fun EditQuestionBody(
     editQuizVM: EditQuizVM,
     context: Context
 ){
+
+    var original = editQuizVM.editQuiz.questionList[editQuizVM.editQuestionIndex].copy()
 
     var questionType by remember { mutableStateOf(
         editQuizVM.editQuiz.questionList[editQuizVM.editQuestionIndex].nType) }
@@ -92,14 +100,14 @@ fun EditQuestionBody(
         Spacer(Modifier.size(10.dp))
 
         when(questionType){
-            Question.QUESTION_TYPE_TRUE_FALSE->{
+            QuestionInterface.QUESTION_TYPE_TRUE_FALSE->{
                 answerList = trueFalseQuestion(answerList)
             }
-            Question.QUESTION_TYPE_SINGLE_ANSWER->{
+            QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER->{
 
                 answerList = questionAnswers(context,answerList)
             }
-            Question.QUESTION_TYPE_MULTI_ANSWER->{
+            QuestionInterface.QUESTION_TYPE_MULTI_ANSWER->{
 
                 answerList = questionAnswers(context,answerList)
             }
@@ -108,6 +116,10 @@ fun EditQuestionBody(
 
             //Cancel button
             Button(onClick = {
+
+                if(original.question == "")
+                    editQuizVM.nDeleteQuestionIndex = editQuizVM.editQuestionIndex
+
                 navController.popBackStack()
             }) {
 

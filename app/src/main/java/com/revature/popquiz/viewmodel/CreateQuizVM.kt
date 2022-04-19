@@ -1,10 +1,14 @@
 package com.revature.popquiz.viewmodel
 
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.revature.popquiz.model.dataobjects.Quiz
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class CreateQuizVM: ViewModel() {
+//@HiltViewModel
+class CreateQuizVM (val newQuiz: Quiz): ViewModel(), LifecycleObserver {
 
     //New quiz
-    val newQuiz:Quiz = Quiz()
+
 }

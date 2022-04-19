@@ -1,29 +1,26 @@
 package com.revature.popquiz.view.shared
 
 
-import android.app.ActionBar
-import android.widget.SearchView
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
+import androidx.compose.material.SnackbarDefaults.primaryActionColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -33,18 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavController
-import com.revature.popquiz.model.dataobjects.SearchWidgetState
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.revature.popquiz.R
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.quizTags
-import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -84,18 +76,37 @@ import kotlinx.coroutines.launch
  * Temporary Scaffold that does not take in navController
  */
 @Composable
-fun QuizScaffold(color:Color= revBlue, sTitle: String, navController: NavController
-                 , content: @Composable () -> Unit) {
+fun QuizScaffold(
+//    color: Color = revBlue,
+    color: Color = revOrange,
+    sTitle: String,
+    navController: NavController,
+    content: @Composable () -> Unit
+)
+{
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            outDrawer(scope =scope , scaffoldState =scaffoldState , title =sTitle )
+        topBar =
+        {
+            outDrawer(
+                scope = scope,
+                scaffoldState = scaffoldState,
+                title = sTitle,
+            )
         },
+//        drawerBackgroundColor = revDarkGrey,
         backgroundColor = color,
-        drawerContent = { inDrawer(navController = navController , scope = scope , scaffoldState =scaffoldState )},
+        drawerContent =
+        {
+            inDrawer(
+                navController = navController,
+                scope = scope,
+                scaffoldState = scaffoldState
+            )
+        },
         scaffoldState = scaffoldState,
         content = { content() }
     )
@@ -124,38 +135,7 @@ fun UniversalButton(
     }
 }
 
-@Composable
-fun UnclickedSearchBar(onSearchClicked: () -> Unit, headingText: String)
-{
-    TopAppBar(
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .absolutePadding(top = 15.dp, bottom = 20.dp)
-            .clip(shape = RoundedCornerShape(5.dp)),
-        title =
-        {
-            Text(text = headingText)
-        },
-        actions =
-        {
-            IconButton(onClick = { onSearchClicked() })
-            {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search Icon",
-                    tint = Color.White
-                )
-            }
-        }
-    )
-}
 
-@Preview
-@Composable
-fun PreviewUnclickedSearchBar()
-{
-    UnclickedSearchBar(onSearchClicked = { /*TODO*/ }, headingText = "Saved Quizzes")
-}
 
 @Composable
 fun ClickedSearchBar(
@@ -232,48 +212,9 @@ fun ClickedSearchBar(
     }
 }
 
-@Preview
-@Composable
-fun PreviewClickedSearchBar()
-{
-    ClickedSearchBar(
-        headingText = "Saved Quizzes",
-        onTextChange = {},
-        onCloseClicked = {},
-        onSearchClicked = {}
-    )
-}
 
-@Composable
-fun MainSearchBar(
-    searchWidgetState: SearchWidgetState,
-    searchTextState: String,
-    onTextChange: (String) -> Unit,
-    onCloseClicked: () -> Unit,
-    onSearchClicked: (String) -> Unit,
-    onSearchTriggered: () -> Unit
-)
-{
-    when(searchWidgetState)
-    {
-        SearchWidgetState.CLOSED ->
-        {
-            UnclickedSearchBar(
-                onSearchClicked = onSearchTriggered,
-                headingText = "Search"
-            )
-        }
-        SearchWidgetState.OPENED ->
-        {
-            ClickedSearchBar(
-                headingText = searchTextState,
-                onTextChange = onTextChange,
-                onCloseClicked = onCloseClicked,
-                onSearchClicked = onSearchClicked
-            )
-        }
-    }
-}
+
+
 
 @Composable
 fun QuizCardForLazyColumn(
@@ -285,7 +226,9 @@ fun QuizCardForLazyColumn(
     Card(
         modifier =
         Modifier
-            .clickable { onClick() }
+            .clickable {
+                onClick()
+            }
             .height(150.dp)
             .fillMaxWidth()
             .absolutePadding(bottom = 10.dp)
@@ -369,20 +312,19 @@ fun basicCard(title: String, info: String) {
 
 @Preview
 @Composable
-fun ViewQuizCard() {
+fun ViewQuizCard()
+{
     QuizCardForLazyColumn("Quiz Title", "Short quiz description")
 }
 //Top drawer function
 @Composable
-fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String) {
-    TopAppBar(navigationIcon = {
-        IconButton(onClick = {
-            scope.launch {
-                scaffoldState.drawerState.open()
-            }
-        }) {
+fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String)
+{
+    TopAppBar(navigationIcon =
+    {
+        IconButton(onClick = {scope.launch{scaffoldState.drawerState.open()}})
+        {
             Icon(painter = painterResource(id = R.drawable.ic_bookblack), contentDescription = null)
-
         }
     }, title = {
         Text(title, modifier = Modifier.clickable {
@@ -390,31 +332,44 @@ fun outDrawer(scope: CoroutineScope, scaffoldState: ScaffoldState, title: String
                 scaffoldState.drawerState.open()
             }
         })
-    }, backgroundColor = revOrange)
+    }, backgroundColor = revDarkGrey)
 }
+
 //Drawer Menu including navigation
 @Composable
-fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState: ScaffoldState) {
+fun inDrawer(
+    navController: NavController,
+    scope: CoroutineScope,
+    scaffoldState: ScaffoldState
+)
+{
 
     Column(
-        modifier = Modifier.fillMaxSize(0.9F),
+        modifier = Modifier.fillMaxSize(0.9F).padding(10.dp),
         horizontalAlignment = Alignment.Start
-    ) {
-        Text(text = "Menu", fontSize = 20.sp, modifier = Modifier
+    )
+    {
+        Text(text = "Menu", fontSize = 40.sp, fontWeight = FontWeight.Bold,modifier = Modifier
             .clickable {
                 scope.launch { scaffoldState.drawerState.close() }
             }
-            .fillMaxWidth(0.9f))
+            .fillMaxWidth(0.9f)
+            .padding(10.dp))
+
         Spacer(modifier = Modifier.height(20.dp))
+
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     navController.navigate(NavScreens.SearchQuizzesScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Search Quiz")
+                Text(text = "Search Quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -422,13 +377,16 @@ fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState:
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Saved Quizzes")
+                Text(text = "Saved Quizzes", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -436,13 +394,16 @@ fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState:
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     navController.navigate(NavScreens.CreateQuizTitle.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Create a quiz")
+                Text(text = "Create a quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -450,14 +411,17 @@ fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState:
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
                     // navController.navigate(NavScreens..route)
                     navController.navigate(NavScreens.SettingsScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Pop! Quiz Settings")
+                Text(text = "Pop! Quiz Settings", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
@@ -465,14 +429,17 @@ fun inDrawer(navController: NavController, scope: CoroutineScope, scaffoldState:
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
+            .padding(10.dp)
             .clickable {
                 scope.launch {
-                    // navController.navigate(NavScreens..route)
+
                     navController.navigate(NavScreens.ProfileScreen.route)
+                    scaffoldState.drawerState.close()
                 }
             }) {
             Row() {
-                Text(text = "Profile")
+                Text(text = "Profile", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(10.dp))
 
             }
 
