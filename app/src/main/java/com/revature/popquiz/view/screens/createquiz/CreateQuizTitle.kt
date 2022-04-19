@@ -43,7 +43,7 @@ fun CreateQuizTitle(
         //Screen Content
         CreateQuizTitleBody(
             navController,
-            CreateQuizVM(newQuiz = Quiz())
+            CreateQuizVM()
         )
 
     }

@@ -1,5 +1,6 @@
 package com.revature.popquiz.model.dataobjects
 
+import androidx.room.Entity
 import com.revature.popquiz.model.QuestionInterface
 
 data class Question(
