@@ -78,8 +78,6 @@ fun SearchQuizzesBody()
         elevation = 10.dp
     )
     {
-        // Search bar goes here
-
         LazyColumn(
 
             state = lazyState,
@@ -99,11 +97,17 @@ fun SearchQuizzesBody()
                 Log.d("Search bar", "$sSearchValue")
             }
 
-            item { 
-                Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
-
+            item()
+            {
+                Spacer(modifier = Modifier.height(10.dp))
             }
-            items(searchBarViewModel.sortedList) { Quiz ->
+
+//            item {
+//                Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
+//
+//            }
+            items(searchBarViewModel.sortedList)
+            { Quiz ->
                 QuizCardForLazyColumn(
                     quizTitleText = Quiz.title,
                     shortQuizDescriptionText = Quiz.shortDescription

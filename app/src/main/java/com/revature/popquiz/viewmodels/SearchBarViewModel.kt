@@ -17,12 +17,17 @@ class SearchBarViewModel: ViewModel()
     {
         sortedList.clear()
         quizList.sortWith(compareBy{it.title})
-        quizList.forEach {
-            if (it.title.contains(sSearchValue, ignoreCase = true) || it.shortDescription.contains(sSearchValue, ignoreCase = true))
+        quizList.forEach()
+        {
+            if (
+                it.title.contains(sSearchValue, ignoreCase = true) ||
+                it.shortDescription.contains(sSearchValue, ignoreCase = true)
+            )
             {
                 sortedList.add(it)
             }
         }
+
     }
 
     init {
