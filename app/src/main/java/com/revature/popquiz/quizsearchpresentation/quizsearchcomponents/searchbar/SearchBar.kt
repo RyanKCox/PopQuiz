@@ -76,7 +76,9 @@ fun TextSearchBar(
 @ExperimentalAnimationApi
 @Composable
 fun quizBarSearch(
-) {
+)
+{
+
     val quizzes = listOf(
         Quiz(
             name = "Java",
@@ -108,6 +110,7 @@ fun quizBarSearch(
         AutoCompleteValueSample(autoCompleteItems = names)
 
     }
+
 }
 
 
