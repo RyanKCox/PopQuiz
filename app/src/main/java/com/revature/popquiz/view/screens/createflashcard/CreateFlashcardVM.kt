@@ -6,5 +6,5 @@ import com.revature.popquiz.model.dataobjects.Flashcard
 class CreateFlashcardVM: ViewModel() {
 
     //new Flashcard
-    val newFlashcard: Flashcard = Flashcard()
+    val newFlashcard: Flashcard = Flashcard(flashcardTopic, flashcardQuestion, flashcardAnswer)
 }

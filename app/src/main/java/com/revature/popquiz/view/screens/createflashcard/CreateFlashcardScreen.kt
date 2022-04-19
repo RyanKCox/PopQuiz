@@ -1,10 +1,10 @@
 package com.revature.popquiz.view.screens.createflashcard
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.dataobjects.Flashcard
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -63,12 +64,78 @@ fun CreateFlashcardBody(navController: NavController) {
                     )
                 )
                 Spacer(modifier = Modifier.size(10.dp))
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(.8f),
+                    value = flashcardQuestion,
+                    onValueChange = { flashcardQuestion = it },
+                    label = { Text("Front side") },
+                    maxLines = 2
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(.8f),
+                    value = flashcardAnswer,
+                    onValueChange = { flashcardAnswer = it },
+                    label = { Text("Backside") },
+                    maxLines = 2
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                Button(onClick = {
+                    if (checkFields(
+                            context = context,
+                            flashcardTopic = flashcardTopic,
+                            flashcardQuestion = flashcardQuestion,
+                            flashcardAnswer = flashcardAnswer
+                    )) {
+                        createFlashcardVM.newFlashcard.add(
+                            Flashcard(
+                                context = context,
+                                flashcardTopic = flashcardTopic,
+                                flashcardQuestion = flashcardQuestion,
+                                flashcardAnswer = flashcardAnswer
+                            )
+                        )
+                    }
+                }) {
+
+                }
             }
         }
     }
 }
-fun CheckFields() {
+@Composable
+fun CreateFlashcardButton(
+    context: Context,
+    fTopic: String,
+    fQuestion: String,
+    fAnswer: String
+) {
+    Button(
+        onClick = {
+            checkFields(
+                context = context,
+                flashcardTopic = fTopic,
+                flashcardQuestion = fQuestion,
+                flashcardAnswer = fAnswer
+            )
+        }
+    ) {
+        Text(text = "Create Flashcard")
+    }
+}
 
+fun checkFields(
+    context: Context,
+    flashcardTopic: String,
+    flashcardQuestion: String,
+    flashcardAnswer: String
+): Boolean {
+    return if (flashcardTopic.isBlank() || flashcardQuestion.isBlank() || flashcardAnswer.isEmpty()) {
+        Toast.makeText(context, "Please fill all entries", Toast.LENGTH_LONG).show()
+        false
+    } else {
+        true
+    }
 }
 
 @Preview
