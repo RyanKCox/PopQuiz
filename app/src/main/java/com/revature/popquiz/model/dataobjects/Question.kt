@@ -1,12 +1,13 @@
 package com.revature.popquiz.model.dataobjects
 
+import androidx.room.Entity
 import com.revature.popquiz.model.QuestionInterface
 
 data class Question(
 
-    override var nType:Int = 0,
-    override var question:String = "",
-    override var answers:List<Answer> = listOf() ) : QuestionInterface
+    override var nType:Int=0,
+    override var question:String="",
+    override var answers:List<Answer> =listOf() ) : QuestionInterface
 //{
 //    companion object{
 //

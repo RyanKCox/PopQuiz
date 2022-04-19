@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -33,11 +34,28 @@ import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import androidx.compose.material.TextFieldDefaults.UnfocusedIndicatorLineOpacity
 import androidx.compose.ui.text.input.VisualTransformation
+import com.revature.popquiz.MainActivity
+import com.revature.popquiz.PopQuizApp
+import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.model.dataobjects.QuizEntity
+import com.revature.popquiz.model.room.QuizRepository
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revDarkGrey
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(navController: NavController)
 {
+
+    val scope = rememberCoroutineScope()
+
+//    val quizRepository =RoomDataManager.quizRepository
+
+
+
+
+
+
     val context=LocalContext.current
     val dataStore= LoginDataStore(context)
     val userEmail = dataStore.getEmail.collectAsState(initial = "")
@@ -136,7 +154,12 @@ fun LoginScreen(navController: NavController)
                         {
                             //dummy navigation
                             if (sPass==userPass.value && sEmail==userEmail.value) {
-                                navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                                scope.launch {
+//                                    quizRepository.insertQuiz(QuizEntity(id = 20, title = "title"))
+                                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
+
+                                }
+
                             }
                         },
                         colors = ButtonDefaults.buttonColors(backgroundColor = revOrange)

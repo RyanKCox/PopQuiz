@@ -12,6 +12,8 @@ import androidx.compose.ui.platform.LocalContext
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.model.room.QuizRepository
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
 
@@ -29,6 +31,8 @@ class MainActivity : ComponentActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+        val quizRepository= QuizRepository(this.application)
+        RoomDataManager.quizRepository=quizRepository
 
 
 

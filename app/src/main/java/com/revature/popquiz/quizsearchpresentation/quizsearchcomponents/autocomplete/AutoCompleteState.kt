@@ -35,6 +35,7 @@ interface AutoCompleteScope<T : AutoCompleteEntity> : AutoCompleteDesignScope
     var isSearching: Boolean
     fun filter(query: String)
     fun onItemSelected(block: ItemSelected<T> = {})
+
 }
 
 @Stable
@@ -66,7 +67,8 @@ class AutoCompleteState<T : AutoCompleteEntity>(private val startItems: List<T>)
 
     override fun filter(query: String)
     {
-        filteredItems = startItems.filter { entity ->
+        filteredItems = startItems.filter()
+        { entity ->
             entity.filter(query)
         }
     }

@@ -1,33 +1,32 @@
 package com.revature.popquiz.model.room
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.revature.popquiz.model.dataobjects.Quiz
+
+import com.revature.popquiz.model.dataobjects.QuizEntity
 
 
-@Database(entities = [Quiz::class],version=1, exportSchema = false)
-@TypeConverters(DataConverter::class)
+@Database(entities = [QuizEntity::class],version=1, exportSchema = false)
 abstract class AppDataBase:RoomDatabase() {
     abstract fun quizDao():QuizDao
     companion object{
         @Volatile
         private var INSTANCE:AppDataBase?=null
         fun getDataBase(context: Context):AppDataBase{
-            val tempInstance= INSTANCE
-            if (tempInstance!=null){
-                return tempInstance
+            var instance = INSTANCE
+            if(instance!=null){
+                return instance
             }
+
             synchronized(this)
             {
-                val converter=DataConverter()
-                var instance= Room.databaseBuilder(context.applicationContext,
-                AppDataBase::class.java,"QUIZDATA").addTypeConverter(converter).build()
-
-                INSTANCE=instance
-                return instance
+               val tempinstance= Room.databaseBuilder(context.applicationContext,
+                    AppDataBase::class.java,"QUIZDATA").build()
+                INSTANCE=tempinstance
+                return tempinstance
             }
         }
     }

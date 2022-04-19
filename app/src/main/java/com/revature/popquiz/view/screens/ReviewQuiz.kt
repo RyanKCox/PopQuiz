@@ -32,8 +32,8 @@ fun reviewQuiz(navController: NavController) {
             " This includes properties of arrays and their usage"
     quiz.tagList.add(0,"Index")
     quiz.tagList.add(1,"Arrays")
-    val answer1=Answer("A programming Language",true)
-    val answer2=Answer("Easy",false)
+    val answer1=Answer(sAnswer = "A programming Language", bCorrect = true)
+    val answer2=Answer(sAnswer = "Easy", bCorrect = false)
     val answerList= listOf<Answer>(answer1,answer2)
     val q=Question(1,"What is Kotlin?",answerList)
     quiz.questionList.add(0,q)

@@ -88,7 +88,14 @@ dependencies {
     //Room
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    implementation 'com.google.code.gson:gson:2.9.0'
+//    def work_version = "2.5.0"
+//    implementation "androidx.work:work-runtime-ktx:$work_version"
+//    implementation("androidx.room:room-rxjava2:$room_version")
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-rc02'
+
+
+
+
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:$nav_version")
