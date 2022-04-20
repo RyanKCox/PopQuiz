@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.view.shared.TextEnums
@@ -35,6 +36,7 @@ fun CreateQuizResources(navController: NavController){
     val createQuizVM =
         ViewModelProvider(context as MainActivity)
             .get(CreateQuizVM::class.java)
+
 
     QuizScaffold(
         sTitle = "Quiz Resources",
