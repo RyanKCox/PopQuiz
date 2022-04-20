@@ -1,4 +1,4 @@
-package com.revature.popquiz.model.dataobjects
+package com.revature.popquiz.model.room.quizroom
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
