@@ -31,7 +31,7 @@ import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
 
 
-import com.revature.popquiz.model.dataobjects.QuizEntity
+import com.revature.popquiz.model.room.quizroom.QuizEntity
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
@@ -107,7 +107,7 @@ fun SavedQuizzesBody(navController: NavController)
                     Spacer(modifier = Modifier.height(10.dp))
                 }
 
-                items(quizList.value?:listOf<QuizEntity>()){quiz->
+                items(quizList.value?:listOf<QuizEntity>()){ quiz->
                     QuizCardForLazyColumn(quizTitleText = quiz.title, shortQuizDescriptionText =quiz.shortDescription )
 
                 }

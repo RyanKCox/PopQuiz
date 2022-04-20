@@ -1,8 +1,7 @@
 package com.revature.popquiz.model.dataobjects
 
-data class Answer( var sAnswer:String, var bCorrect:Boolean) {
+data class Answer(
 
-    companion object {
+    var sAnswer:String="",
 
-    }
-}
+   var bCorrect:Boolean=false)
