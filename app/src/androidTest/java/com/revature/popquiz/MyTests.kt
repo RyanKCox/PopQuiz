@@ -38,6 +38,7 @@ class MyTests {
     @get: Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
+    // Looks to see if the Login page can find "Login" text
     @Test
     fun twoLoginTextsOnLoginPageExists()
     {
@@ -45,6 +46,8 @@ class MyTests {
     }
 
 
+    // Looks to see if the Login page
+    // has a button with text that says "Login" and is clickable
     @Test
     fun loginButtonExistsAndIsClickable()
     {
