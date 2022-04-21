@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavController
 import com.revature.popquiz.R
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revLightOrange
@@ -397,6 +398,10 @@ fun inDrawer(
             .padding(10.dp)
             .clickable {
                 scope.launch {
+
+                    //Setup for Create Quiz Screen
+                    QuizEditor.createNewQuiz()
+
                     navController.navigate(NavScreens.CreateQuizTitle.route)
                     scaffoldState.drawerState.close()
                 }

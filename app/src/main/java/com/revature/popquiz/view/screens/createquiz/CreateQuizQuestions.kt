@@ -127,7 +127,7 @@ fun CreateQuestQuestionsBody(navController: NavController){
                                     )
                                 )
                                 //Add to Room/API
-                                createQuizVM.saveQuiz(createQuizVM.newQuiz)
+                                createQuizVM.saveQuiz()
 
 
                                 navController.popBackStack(NavScreens.CreateQuizTitle.route, true)
