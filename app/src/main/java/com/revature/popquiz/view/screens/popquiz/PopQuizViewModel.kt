@@ -11,6 +11,7 @@ import androidx.work.*
 import com.revature.popquiz.util.Graph
 import com.revature.popquiz.model.PopQuizRepository
 import com.revature.popquiz.model.dataobjects.PopQuiz
+import com.revature.popquiz.util.NotificationWorker
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -52,7 +53,9 @@ private fun setOneTimeNotification() {
     workManager.getWorkInfoByIdLiveData(notificationWorker.id)
         .observeForever { workInfo ->
             if (workInfo.state == WorkInfo.State.SUCCEEDED) {
-                createSimpleNotification()
+                createSuccessNotification()
+            } else {
+                createErrorNotification()
             }
         }
 }
