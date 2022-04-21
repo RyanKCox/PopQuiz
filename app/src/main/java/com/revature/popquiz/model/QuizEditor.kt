@@ -39,6 +39,7 @@ object QuizEditor {
      * Save quiz to room database
      */
     fun saveQuizToRoom() {
+
         val quizEntity =
             QuizEntity(title = focusQuiz.title, shortDescription = focusQuiz.shortDescription)
 

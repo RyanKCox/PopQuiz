@@ -244,7 +244,7 @@ fun EditQuizQuestionBody(
                     Question(
                         nType = 0,
                         question = "",
-                        answers = listOf()
+                        answers = mutableListOf()
                     ))
 
                 //Create a question and pass to edit question screen

@@ -3,7 +3,7 @@ package com.revature.popquiz.model
 import com.revature.popquiz.model.dataobjects.Answer
 
 interface QuestionInterface {
-    var answers:List<Answer>
+    var answers:MutableList<Answer>
     var question:String
     var nType:Int
 
