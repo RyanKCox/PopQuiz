@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.revature.popquiz.model.api.services.QuizApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.LoggingEventListener
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -38,6 +39,8 @@ object RetrofitHelper {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
+        val listener = LoggingEventListener.Factory()
+
         /**
          * OkHttp client using the interceptor to add logging of timeout to server
          */
@@ -45,6 +48,7 @@ object RetrofitHelper {
             .writeTimeout(0, TimeUnit.MILLISECONDS)
             .writeTimeout(30, TimeUnit.MILLISECONDS)
             .dns(DnsSelector())
+            .eventListenerFactory(listener)
             .addInterceptor(loggingInterceptor).build()
 
         /**

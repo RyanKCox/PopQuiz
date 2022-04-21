@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface QuizDao {
     @Query("SELECT * FROM quiz")
-    fun fetchAllQuiz(): LiveData<List<QuizEntity>>
+    fun fetchAllQuiz(): List<QuizEntity>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertQuiz(quiz: QuizEntity):Long
     @Query("DELETE FROM quiz WHERE id=:id")
