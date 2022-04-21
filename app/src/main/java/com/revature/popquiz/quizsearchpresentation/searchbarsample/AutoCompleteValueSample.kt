@@ -39,6 +39,7 @@ import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomp
 import com.example.androiddevchallenge.presentation.searchbarcomponents.autocomplete.utils.asAutoCompleteEntities
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.TextSearchBar
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.viewmodel.SavedQuizVM
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 import java.util.Locale
 
@@ -64,6 +65,7 @@ fun AutoCompleteValueSample(autoCompleteItems: List<String>)
 {
     var context = LocalContext.current
     var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
+    var saveQuizVM = ViewModelProvider(context).get(SavedQuizVM::class.java)
 //    var sReturn = ""
     AutoCompleteBox(
         autoCompleteItems = autoCompleteEntities,
@@ -80,6 +82,8 @@ fun AutoCompleteValueSample(autoCompleteItems: List<String>)
         { item ->
             value = item.value
             searchBarViewModel.sSearchValue = value
+            saveQuizVM.sSearchValue = value
+
             filter(value)
             view.clearFocus()
         }
@@ -96,6 +100,7 @@ fun AutoCompleteValueSample(autoCompleteItems: List<String>)
             {
                 value = ""
                 searchBarViewModel.sSearchValue = value
+                saveQuizVM.sSearchValue = value
                 filter(value)
                 view.clearFocus()
             },
@@ -107,6 +112,7 @@ fun AutoCompleteValueSample(autoCompleteItems: List<String>)
             { query ->
                 value = query
                 searchBarViewModel.sSearchValue = value
+                saveQuizVM.sSearchValue = value
                 filter(value)
             }
         )

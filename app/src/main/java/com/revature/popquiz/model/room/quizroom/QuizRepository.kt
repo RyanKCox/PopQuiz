@@ -3,6 +3,7 @@ package com.revature.popquiz.model.room.quizroom
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.revature.popquiz.model.room.AppDataBase
 
 class QuizRepository(application: Application) {
@@ -19,5 +20,8 @@ class QuizRepository(application: Application) {
        return quizDao.insertQuiz(quiz)
         Log.d("jcstn","Inside insert quiz :$quiz")
     }
-    val fetchAllQuiz:List<QuizEntity> = quizDao.fetchAllQuiz()
+    val fetchAllQuiz: LiveData<List<QuizEntity>> = quizDao.fetchAllQuiz()
+    fun fetchWithSearch(search:String):LiveData<List<QuizEntity>>{
+        return quizDao.fetchWithSearch(search)
+    }
 }

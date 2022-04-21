@@ -61,17 +61,16 @@ fun SavedQuizzesScreen(navController: NavController)
 fun SavedQuizzesBody(navController: NavController)
 {
     var context = LocalContext.current
-//    var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
     var savedQuizVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
     var x = savedQuizVM.sSearchValue
-
     var quizOverviewVM = ViewModelProvider(context as MainActivity).get(QuizOverviewVM::class.java)
-
     var sSearchValue by remember { mutableStateOf(x) }
-
     val lazyState = rememberLazyListState()
 
+
     savedQuizVM.sortBySearch()
+
+    val quizList by savedQuizVM.sortedList.observeAsState(listOf())
 
     //val quizList= remember{ mutableStateOf(searchBarViewModel.sortedList) }
 
@@ -109,13 +108,13 @@ fun SavedQuizzesBody(navController: NavController)
                 item()
                 {
                     quizBarSearch()
-                    Log.d("Search bar", "$sSearchValue")
+                    Log.d("Search bar", sSearchValue)
                 }
                 item()
                 {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
-                items(savedQuizVM.sortedList)
+                items(quizList)
                 { Quiz ->
                     QuizCardForLazyColumn(
                         quizTitleText = Quiz.title,
