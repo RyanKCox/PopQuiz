@@ -18,7 +18,9 @@ interface QuizDao {
     @Query("DELETE FROM quiz WHERE id=:id")
     suspend fun deleteQuiz(id:Int)
 
-    @Query("SELECT * FROM quiz WHERE title LIKE '%' || :search || '%'")
+    @Query("SELECT * FROM quiz WHERE title LIKE '%' || :search || '%' " +
+            "OR shortDescription LIKE  '%' || :search || '%' " +
+            "OR longDescription LIKE '%' || :search || '%' ")
     fun fetchWithSearch(search:String): LiveData<List<QuizEntity>>
 
 }
