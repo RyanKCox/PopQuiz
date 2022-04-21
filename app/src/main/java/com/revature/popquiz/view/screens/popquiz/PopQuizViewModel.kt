@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.screens.popquiz
 
 import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.content.Context
 import android.os.Build
@@ -35,7 +36,9 @@ class PopQuizViewModel: ViewModel() {
             val channel = NotificationChannel("CHANNEL_ID", notificationChannel, importance).apply {
                 description = descriptionText
             }
-            //Register the channel
+            //Register the channel with the system
+            val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
 
     }
