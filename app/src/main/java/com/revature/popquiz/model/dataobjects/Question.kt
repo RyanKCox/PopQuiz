@@ -4,8 +4,8 @@ class Question(
 
     val nType:Int,
     var question:String,
-    var answers:List<Answer> )
-{
+    var answers:List<Answer>
+    ) {
     companion object{
 
         //List of question types

@@ -11,6 +11,8 @@ import androidx.lifecycle.viewModelScope
 import com.revature.popquiz.PopQuizApp
 import com.revature.popquiz.model.PopQuizRepository
 import com.revature.popquiz.model.dataobjects.PopQuiz
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,7 +28,7 @@ class PopQuizViewModel: ViewModel() {
         get() = _state
 
     init {
-        createNotificationChannel(context = )
+        createNotificationChannel(context = Context)
         viewModelScope.launch {
             popQuizRepository.getTopic()
         }
