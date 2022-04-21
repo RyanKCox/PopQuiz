@@ -7,11 +7,8 @@ import android.content.Context
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.revature.popquiz.Graph
+import androidx.work.*
+import com.revature.popquiz.util.Graph
 import com.revature.popquiz.model.PopQuizRepository
 import com.revature.popquiz.model.dataobjects.PopQuiz
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,6 +44,17 @@ private fun setOneTimeNotification() {
         .setInitialDelay(10, TimeUnit.SECONDS)
         .setConstraints(constraints)
         .build()
+
+    //add the notification to be "worked on" in the background
+    workManager.enqueue(notificationWorker)
+
+    //monitor the state of the worker
+    workManager.getWorkInfoByIdLiveData(notificationWorker.id)
+        .observeForever { workInfo ->
+            if (workInfo.state == WorkInfo.State.SUCCEEDED) {
+                createSimpleNotification()
+            }
+        }
 }
 
 private fun createNotificationChannel(context: Context) {

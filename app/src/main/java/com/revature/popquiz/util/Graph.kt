@@ -1,4 +1,4 @@
-package com.revature.popquiz
+package com.revature.popquiz.util
 
 import android.content.Context
 import androidx.room.RoomDatabase
