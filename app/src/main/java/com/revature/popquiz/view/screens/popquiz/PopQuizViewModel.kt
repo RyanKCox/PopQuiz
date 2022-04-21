@@ -8,7 +8,8 @@ import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.revature.popquiz.model.PopQuizRepository
-import com.revature.popquiz.model.dataobjects.PopQuizViewState
+import com.revature.popquiz.model.dataobjects.PopQuiz
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -17,8 +18,9 @@ import kotlinx.coroutines.launch
 class PopQuizViewModel: ViewModel() {
 
     private val popQuizRepository = PopQuizRepository
+    private val _state = MutableStateFlow(PopQuiz)
 
-    val _state = StateFlow<PopQuizViewState>
+    val state: StateFlow<PopQuiz.Companion>
         get() = _state
 
     init {
