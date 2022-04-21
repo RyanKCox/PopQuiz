@@ -8,18 +8,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.model.room.quizroom.QuizRepository
+import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.model.room.answerroom.AnswerRepository
+import com.revature.popquiz.model.room.questionroom.QuestionRepository
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
+import com.revature.popquiz.viewmodels.QuizManager
 
 import com.revature.popquiz.viewmodels.SplashScreenViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-
-@AndroidEntryPoint
+//import dagger.hilt.android.AndroidEntryPoint
+//
+//
+//@AndroidEntryPoint
 class MainActivity : ComponentActivity()
 {
 
@@ -29,6 +37,19 @@ class MainActivity : ComponentActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+
+        val app = this
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val quizRepository = QuizRepository(app.application)
+            val questionRepository = QuestionRepository(app.application)
+            val answerRepository = AnswerRepository(app.application)
+            RoomDataManager.quizRepository = quizRepository
+            RoomDataManager.questionRepository = questionRepository
+            RoomDataManager.answerRepository = answerRepository
+            QuizManager.loadQuizzes()
+        }
 
 
 

@@ -2,7 +2,7 @@ package com.revature.popquiz.view.screens.editquiz
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.OutlinedTextField
@@ -15,18 +15,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.EditQuizVM
-import com.revature.popquiz.viewmodel.EditQuizVMFactory
 
 @Composable
 fun EditQuizTitle(navController: NavController){
 
     val context = LocalContext.current
+
 
     //Create our VM - dummy
 
@@ -42,7 +43,7 @@ fun EditQuizTitle(navController: NavController){
     tempQuiz.questionList.add(Question(
         nType = 0,
         question = "var and val are how u create new variables",
-        answers = listOf(
+        answers = mutableListOf(
             Answer("True",true),
             Answer("False",false)
         )
@@ -50,15 +51,17 @@ fun EditQuizTitle(navController: NavController){
     tempQuiz.questionList.add(Question(
         nType = 1,
         question = "How do you get the size of a string?",
-        answers = listOf(
+        answers = mutableListOf(
             Answer("myString as Int",false),
             Answer("myString.toInt()",false),
             Answer("myString.length",true),
             Answer("myString.size()",false),
         )
     ))
+    QuizEditor.focusQuiz = tempQuiz
 
-    val editQuizVM = ViewModelProvider(context as MainActivity, EditQuizVMFactory(tempQuiz)).get(EditQuizVM::class.java)
+    val editQuizVM = ViewModelProvider(context as MainActivity).get(EditQuizVM::class.java)
+
 
     //Use Scaffold created for app
     QuizScaffold(
@@ -89,15 +92,19 @@ fun EditTitleBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
-        //Card Our input field is held on
+        Spacer(Modifier.size(10.dp))
         Card(
             modifier = Modifier
-                .fillMaxSize(.95f)
-                .padding(15.dp),
-            shape = RoundedCornerShape(40.dp),
+                .fillMaxSize()
+                .absolutePadding(
+                    top = 5.dp,
+                ),
+            shape = AbsoluteRoundedCornerShape(
+                topLeft = 20.dp,
+                topRight = 20.dp
+            ),
             elevation = 10.dp
-        ) {
+        ){
 
             Column(
                 modifier = Modifier

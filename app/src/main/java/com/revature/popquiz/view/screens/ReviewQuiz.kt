@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
@@ -26,14 +27,14 @@ import com.revature.popquiz.view.shared.QuizScaffold
 fun reviewQuiz(navController: NavController) {
     val quiz = Quiz()
     quiz.title="Arrays"
-    quiz.score=90
+
     quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
             " This includes properties of arrays and their usage"
     quiz.tagList.add(0,"Index")
     quiz.tagList.add(1,"Arrays")
-    val answer1=Answer("A programming Language",true)
-    val answer2=Answer("Easy",false)
-    val answerList= listOf<Answer>(answer1,answer2)
+    val answer1=Answer(sAnswer = "A programming Language", bCorrect = true)
+    val answer2=Answer(sAnswer = "Easy", bCorrect = false)
+    val answerList= mutableListOf<Answer>(answer1,answer2)
     val q=Question(1,"What is Kotlin?",answerList)
     quiz.questionList.add(0,q)
 
@@ -55,7 +56,8 @@ fun reviewQuiz(navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize(0.9F)
 
-            ){
+            )
+            {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -128,5 +130,6 @@ fun answers(answer: Answer)
 @Preview
 fun reviewPreview()
 {
-    //reviewQuiz()
+    val navController= rememberNavController()
+    reviewQuiz(navController)
 }

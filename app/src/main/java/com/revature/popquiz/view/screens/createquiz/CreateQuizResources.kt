@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,9 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
-import com.revature.popquiz.model.dataobjects.QuizResource
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.TextEnums
+import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
 
 @Composable
@@ -33,6 +36,7 @@ fun CreateQuizResources(navController: NavController){
     val createQuizVM =
         ViewModelProvider(context as MainActivity)
             .get(CreateQuizVM::class.java)
+
 
     QuizScaffold(
         sTitle = "Quiz Resources",
@@ -55,13 +59,17 @@ fun CreateQuizResourcesBody(navController: NavController, createQuizVM: CreateQu
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
-        //Card our input field is on
+        Spacer(Modifier.size(10.dp))
         Card(
             modifier = Modifier
-                .fillMaxSize(.95f)
-                .padding(15.dp),
-            shape = RoundedCornerShape(40.dp),
+                .fillMaxSize()
+                .absolutePadding(
+                    top = 5.dp,
+                ),
+            shape = AbsoluteRoundedCornerShape(
+                topLeft = 20.dp,
+                topRight = 20.dp
+            ),
             elevation = 10.dp
         ) {
 
@@ -112,10 +120,15 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
     var sTopic by remember { mutableStateOf("") }
 
     //Text field for a new topic
+
+    if(sTopic.length > TextEnums.MAX_TOPIC_LENGTH) {
+        TextLengthPrompt(maxLength = TextEnums.MAX_TOPIC_LENGTH)
+    }
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(.8f),
         value = sTopic,
         onValueChange = {sTopic = it},
+        maxLines = 1,
         label = { Text(
             "Topics",
                 style = MaterialTheme.typography.body1)
@@ -130,8 +143,15 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
 
                         //Check if the topic meets requirements and add to quiz
 
+                        if(sTopic.length > TextEnums.MAX_TOPIC_LENGTH){
+                            Toast.makeText(
+                                context,
+                                "Topic too long!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                         //if topic isnt empty and we havnt reached max topics
-                        if (sTopic != "" && createQuizVM.newQuiz.tagList.size < 5) {
+                        else if (sTopic != "" && createQuizVM.newQuiz.tagList.size < 5) {
                             createQuizVM.newQuiz.tagList.add(sTopic)
                             //topicList.add(sTopic)
                             sTopic = ""
@@ -196,6 +216,7 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
         onValueChange = {sResource = it},
         label = { Text("Resources",
                 style = MaterialTheme.typography.body1) },
+        maxLines = 2,
         trailingIcon = {
 
             //Add link icon

@@ -9,6 +9,6 @@ class NetConstants {
         /**
          * Base URL for mock API (temporary)
          */
-        const val BASE_URL = "some url"
+        const val BASE_URL = "https://private-b4b5b1-popquiz1.apiary-mock.com"
     }
 }

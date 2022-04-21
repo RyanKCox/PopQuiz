@@ -8,7 +8,23 @@ import com.revature.popquiz.model.dataobjects.Quiz
  */
 data class ResponseAllQuizzes (
 
-    @SerializedName("quizzes")
-    var results:ArrayList<Quiz>
+    @SerializedName("statusCode")
+    var nStatusCode:Int,
+    @SerializedName("description")
+    var sResponseDesc:String,
+    @SerializedName("data")
+    var quizList:List<QuizResponse>
 
 )
+data class QuizResponse(
+
+    @SerializedName("id")
+    var nQuizID:Int,
+    @SerializedName("title")
+    var sTitle:String,
+    @SerializedName("categoryName")
+    var sCategoryName:String
+)
+
+
+

@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
@@ -16,14 +17,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.revature.popquiz.model.room.Merge
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodels.QuizManager
 
 
 @Composable
-fun Settings(navController: NavController) {
+fun Settings(navController: NavController)
+{
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
+
+    val list = RoomDataManager.quizRepository.fetchAllQuiz
 
     QuizScaffold(
         sTitle = "Settings",
@@ -35,8 +42,20 @@ fun Settings(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            Spacer(Modifier.size(30.dp))
-            Card(shape = RoundedCornerShape(25.dp), elevation = 50.dp, modifier = Modifier.fillMaxSize(fraction = 0.9F)) {
+            Spacer(Modifier.size(10.dp))
+            Card(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .absolutePadding(
+                        top = 5.dp,
+                    ),
+                shape = AbsoluteRoundedCornerShape(
+                    topLeft = 20.dp,
+                    topRight = 20.dp
+                ),
+                elevation = 10.dp
+            )
+            {
                 Column(
                     modifier = Modifier.fillMaxSize(fraction = 0.9F),
                     horizontalAlignment = Alignment.CenterHorizontally,

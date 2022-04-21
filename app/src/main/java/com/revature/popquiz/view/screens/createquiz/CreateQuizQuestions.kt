@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -26,11 +27,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuestionInterface
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.CreateQuizVM
+import com.revature.popquiz.viewmodels.QuizManager
 
 @Composable
 fun CreateQuizQuestions(navController: NavController){
@@ -59,12 +64,17 @@ fun CreateQuestQuestionsBody(navController: NavController){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
+        Spacer(Modifier.size(10.dp))
         Card(
             modifier = Modifier
-                .fillMaxSize(.95f)
-                .padding(15.dp),
-            shape = RoundedCornerShape(40.dp),
+                .fillMaxSize()
+                .absolutePadding(
+                    top = 5.dp,
+                ),
+            shape = AbsoluteRoundedCornerShape(
+                topLeft = 20.dp,
+                topRight = 20.dp
+            ),
             elevation = 10.dp
         ) {
             Column(
@@ -84,14 +94,14 @@ fun CreateQuestQuestionsBody(navController: NavController){
                 Spacer(Modifier.size(10.dp))
 
                 when(questionType){
-                    Question.QUESTION_TYPE_TRUE_FALSE->{
+                    QuestionInterface.QUESTION_TYPE_TRUE_FALSE->{
                         answerList = trueFalseQuestion(answerList)
                     }
-                    Question.QUESTION_TYPE_SINGLE_ANSWER->{
+                    QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER->{
 
                         answerList = questionAnswers(context,answerList)
                     }
-                    Question.QUESTION_TYPE_MULTI_ANSWER->{
+                    QuestionInterface.QUESTION_TYPE_MULTI_ANSWER->{
 
                         answerList = questionAnswers(context,answerList)
                     }
@@ -119,6 +129,9 @@ fun CreateQuestQuestionsBody(navController: NavController){
                                     )
                                 )
                                 //Add to Room/API
+                                createQuizVM.saveQuiz()
+                                QuizManager.loadQuizzes()
+
 
                                 navController.popBackStack(NavScreens.CreateQuizTitle.route, true)
 
@@ -182,7 +195,7 @@ fun questionCheck(
             Toast.LENGTH_LONG
         ).show()
 
-    } else if (questionType == Question.QUESTION_TYPE_SINGLE_ANSWER) {
+    } else if (questionType == QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER) {
 
         var nCount = 0
         answerList.forEach { answer ->
@@ -201,7 +214,7 @@ fun questionCheck(
             bChecked = true
         }
 
-    } else if (questionType == Question.QUESTION_TYPE_MULTI_ANSWER) {
+    } else if (questionType == QuestionInterface.QUESTION_TYPE_MULTI_ANSWER) {
         var bHasAnswer = false
         answerList.forEach { answer ->
             if (answer.bCorrect) {
@@ -219,7 +232,7 @@ fun questionCheck(
             bChecked = true
 
         }
-    } else if (questionType == Question.QUESTION_TYPE_TRUE_FALSE) {
+    } else if (questionType == QuestionInterface.QUESTION_TYPE_TRUE_FALSE) {
 
         bChecked = true
 

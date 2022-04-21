@@ -1,28 +1,75 @@
 package com.revature.popquiz.viewmodels
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
+import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.revature.popquiz.model.dataobjects.SearchWidgetState
+import androidx.lifecycle.viewModelScope
+import com.revature.popquiz.model.api.RetrofitHelper
+import com.revature.popquiz.model.api.services.quiz.AllQuizRepo
+import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.model.room.quizroom.QuizEntity
+
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 class SearchBarViewModel: ViewModel()
 {
-    private val _searchWidgetState: MutableState<SearchWidgetState> =
-        mutableStateOf(value = SearchWidgetState.CLOSED)
-    val searchWidgetState: State<SearchWidgetState> = _searchWidgetState
+    private val quizService = RetrofitHelper.getAllQuizzesServices()
+    private lateinit var quizRepo:AllQuizRepo
 
-    private val _searchTextState: MutableState<String> =
-        mutableStateOf(value = "")
-    val searchTextState: State<String> = _searchTextState
+    var sSearchValue by mutableStateOf("")
+    var quizList = mutableListOf<QuizEntity>()
 
-    fun updateSearchWidgetState(newValue: SearchWidgetState)
+    var sortedList:List<QuizEntity> by mutableStateOf(listOf())
+
+    fun sortBySearch()
     {
-        _searchWidgetState.value = newValue
+        var tempList = mutableListOf<QuizEntity>()
+        quizList.sortWith(compareBy{it.title})
+        quizList.forEach()
+        {
+            if (
+                it.title.contains(sSearchValue, ignoreCase = true) ||
+                it.shortDescription.contains(sSearchValue, ignoreCase = true)
+            )
+            {
+                tempList.add(it)
+            }
+        }
+        sortedList = tempList.toList()
+
     }
 
-    fun updateSearchTextState(newValue: String)
+    init
     {
-        _searchTextState.value = newValue
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            loadQuizzes()
+        }
+    }
+
+    private suspend fun loadQuizzes()
+    {
+        quizRepo = AllQuizRepo(quizService)
+
+        when (val response = quizRepo.fetchQuizResponse()){
+
+            is AllQuizRepo.Result.Success->
+            {
+                quizList = response.quizList.toMutableList()
+
+                var tempList = mutableListOf<QuizEntity>()
+                tempList.addAll(quizList)
+                sortedList = tempList.toList()
+            }
+            is AllQuizRepo.Result.Failure->
+            {
+                Log.d("SearchVM", "Loading Failed")
+            }
+        }
     }
 }

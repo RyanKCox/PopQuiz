@@ -1,14 +1,25 @@
 package com.revature.popquiz.model.dataobjects
 
-class Quiz {
-    val questionList= mutableListOf<Question>()
-    val resourceList= mutableListOf<String>()
-    val tagList= mutableListOf<String>()
-    var title=""
-    var shortDescription=""
-    var longDescription=""
-    var score=0
-    var progress:Float=0F
-    var sampleQuestion="What is an example of a sample question?"
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import javax.inject.Inject
 
-}
+
+data class Quiz(
+
+    val id:Int=0,
+
+    val questionList: MutableList<Question> = mutableListOf<Question>(),
+
+    val resourceList: MutableList<String> = mutableListOf<String>(),
+
+    val tagList: MutableList<String> = mutableListOf<String>(),
+
+    var title: String ="",
+
+    var shortDescription: String ="",
+
+    var longDescription: String ="",
+)
+
