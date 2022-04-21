@@ -63,11 +63,10 @@ fun SavedQuizzesBody(navController: NavController)
 //    var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
     var savedQuizVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
     var x = savedQuizVM.sSearchValue
-
     var sSearchValue by remember { mutableStateOf(x) }
-
-
     val lazyState = rememberLazyListState()
+
+    savedQuizVM.sortBySearch()
 
     //val quizList= remember{ mutableStateOf(searchBarViewModel.sortedList) }
 
