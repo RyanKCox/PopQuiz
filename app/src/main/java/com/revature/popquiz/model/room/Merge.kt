@@ -11,7 +11,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class Merge (){
+class Merge ()
+{
     val scope=CoroutineScope(Dispatchers.IO)
 
     fun createQuizFromEntity(quizEntity: QuizEntity):Quiz
@@ -84,7 +85,7 @@ class Merge (){
 
     fun stringToList(tag:String):List<String>
     {
-       return tag.split("\n")
+        return tag.split("\n")
 
     }
     fun listToString(list: List<String>): String {

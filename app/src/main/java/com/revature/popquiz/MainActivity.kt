@@ -17,12 +17,13 @@ import com.revature.popquiz.model.room.answerroom.AnswerRepository
 import com.revature.popquiz.model.room.questionroom.QuestionRepository
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
+import com.revature.popquiz.viewmodels.QuizManager
 
 import com.revature.popquiz.viewmodels.SplashScreenViewModel
-import dagger.hilt.android.AndroidEntryPoint
-
-
-@AndroidEntryPoint
+//import dagger.hilt.android.AndroidEntryPoint
+//
+//
+//@AndroidEntryPoint
 class MainActivity : ComponentActivity()
 {
 
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity()
         RoomDataManager.quizRepository=quizRepository
         RoomDataManager.questionRepository=questionRepository
         RoomDataManager.answerRepository=answerRepository
+        QuizManager.loadQuizzes()
 
 
 

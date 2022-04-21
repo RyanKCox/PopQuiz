@@ -53,6 +53,7 @@ dependencies {
     def nav_version = "2.4.2"
     def room_version = "2.4.2"
     def coroutine_version = "1.6.0"
+    def compose_version = '1.0.1'
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -93,6 +94,10 @@ dependencies {
 //    implementation("androidx.room:room-rxjava2:$room_version")
     implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-rc02'
 
+
+
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 //Mock
     // Required -- JUnit 4 framework
     testImplementation "junit:junit:4.13.2"

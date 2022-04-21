@@ -42,8 +42,10 @@ class SearchBarViewModel: ViewModel()
 
     }
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
+    init
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
             loadQuizzes()
         }
     }
@@ -54,10 +56,12 @@ class SearchBarViewModel: ViewModel()
 
         when (val response = quizRepo.fetchQuizResponse()){
 
-            is AllQuizRepo.Result.Success->{
+            is AllQuizRepo.Result.Success->
+            {
                 quizList = response.quizList.toMutableList()
             }
-            is AllQuizRepo.Result.Failure->{
+            is AllQuizRepo.Result.Failure->
+            {
                 Log.d("SearchVM", "Loading Failed")
             }
         }
