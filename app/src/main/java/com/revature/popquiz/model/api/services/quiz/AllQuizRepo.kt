@@ -2,7 +2,8 @@ package com.revature.popquiz.model.api.services.quiz
 
 import android.util.Log
 import com.revature.popquiz.model.api.services.QuizApiService
-import com.revature.popquiz.model.dataobjects.QuizEntity
+import com.revature.popquiz.model.room.quizroom.QuizEntity
+
 import java.lang.Exception
 
 class AllQuizRepo(val quizService:QuizApiService) {

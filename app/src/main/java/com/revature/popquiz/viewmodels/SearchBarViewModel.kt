@@ -9,8 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.revature.popquiz.model.api.RetrofitHelper
 import com.revature.popquiz.model.api.services.quiz.AllQuizRepo
 import com.revature.popquiz.model.dataobjects.Quiz
-import com.revature.popquiz.model.dataobjects.QuizEntity
-import com.revature.popquiz.model.room.QuizRepository
+import com.revature.popquiz.model.room.quizroom.QuizEntity
+
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
