@@ -7,12 +7,17 @@ import android.content.Context
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.revature.popquiz.Graph.appContext
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.revature.popquiz.Graph
 import com.revature.popquiz.model.PopQuizRepository
 import com.revature.popquiz.model.dataobjects.PopQuiz
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 //foreground service
 
@@ -25,12 +30,25 @@ class PopQuizViewModel: ViewModel() {
         get() = _state
 
     init {
-        createNotificationChannel(context = appContext)
+        createNotificationChannel(context = Graph.appContext)
         viewModelScope.launch {
             popQuizRepository.getTopic()
         }
     }
 }
+
+//With this method you can set the constraints required for the notification to show
+private fun setOneTimeNotification() {
+    val workManager = WorkManager.getInstance(Graph.appContext)
+    val constraints = Constraints.Builder()
+        .setRequiredNetworkType(NetworkType.CONNECTED)
+        .build()
+    val notificationWorker = OneTimeWorkRequestBuilder<NotificationWorker>()
+        .setInitialDelay(10, TimeUnit.SECONDS)
+        .setConstraints(constraints)
+        .build()
+}
+
 private fun createNotificationChannel(context: Context) {
 
     //Create the NotificationChannel
