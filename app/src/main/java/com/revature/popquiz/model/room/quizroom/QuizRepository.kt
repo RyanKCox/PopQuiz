@@ -19,5 +19,5 @@ class QuizRepository(application: Application) {
        return quizDao.insertQuiz(quiz)
         Log.d("jcstn","Inside insert quiz :$quiz")
     }
-    val fetchAllQuiz:LiveData<List<QuizEntity>> = quizDao.fetchAllQuiz()
+    val fetchAllQuiz:List<QuizEntity> = quizDao.fetchAllQuiz()
 }

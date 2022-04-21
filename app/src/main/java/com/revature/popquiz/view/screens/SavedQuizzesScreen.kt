@@ -32,6 +32,8 @@ import com.revature.popquiz.view.shared.QuizScaffold
 
 
 import com.revature.popquiz.model.room.quizroom.QuizEntity
+import com.revature.popquiz.viewmodel.SavedQuizVM
+import com.revature.popquiz.viewmodels.QuizManager
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
@@ -58,13 +60,16 @@ fun SavedQuizzesScreen(navController: NavController)
 fun SavedQuizzesBody(navController: NavController)
 {
     var context = LocalContext.current
-    var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
-    var x = searchBarViewModel.sSearchValue
+//    var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
+    var savedQuizVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
+    var x = savedQuizVM.sSearchValue
+
     var sSearchValue by remember { mutableStateOf(x) }
+
 
     val lazyState = rememberLazyListState()
 
-    val quizList= quizRepository.fetchAllQuiz.observeAsState()
+    //val quizList= remember{ mutableStateOf(searchBarViewModel.sortedList) }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -106,37 +111,33 @@ fun SavedQuizzesBody(navController: NavController)
                 {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
-
-                items(quizList.value?:listOf<QuizEntity>())
-                { quiz->
-                    QuizCardForLazyColumn(
-                        quizTitleText = quiz.title,
-                        shortQuizDescriptionText =quiz.shortDescription
-                    )
-                }
-
-                item {
-                    QuizCardForLazyColumn(
-                        quizTitleText = "Java Basics",
-                        shortQuizDescriptionText = "Short quiz description"
-                    )
-                    {
-                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-                    }
-                }
-
-//                item {
-////                item {
-////                    Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
-////
-////                }
-                items(searchBarViewModel.sortedList)
+                items(savedQuizVM.sortedList)
                 { Quiz ->
                     QuizCardForLazyColumn(
                         quizTitleText = Quiz.title,
                         shortQuizDescriptionText = Quiz.shortDescription
                     )
                 }
+
+//                items(quizList.value?:listOf<QuizEntity>()){ quiz->
+//                    QuizCardForLazyColumn(quizTitleText = quiz.title, shortQuizDescriptionText =quiz.shortDescription )
+//
+//                }
+//
+//                item {
+//                    QuizCardForLazyColumn(
+//                        quizTitleText = "Java Basics",
+//                        shortQuizDescriptionText = "Short quiz description"
+//                    ){
+//                        navController.navigate(NavScreens.QuizOverviewScreen.route)
+//                    }
+//                }
+
+//                item {
+////                item {
+////                    Text(text = "Wow here's the value: ${searchBarViewModel.sSearchValue}")
+////
+////                }
             }
         }
     }

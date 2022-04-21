@@ -20,6 +20,10 @@ import com.revature.popquiz.view.navigation.StartNav
 import com.revature.popquiz.viewmodels.QuizManager
 
 import com.revature.popquiz.viewmodels.SplashScreenViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 //import dagger.hilt.android.AndroidEntryPoint
 //
 //
@@ -33,13 +37,19 @@ class MainActivity : ComponentActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        val quizRepository= QuizRepository(this.application)
-        val questionRepository = QuestionRepository(this.application)
-        val answerRepository=AnswerRepository(this.application)
-        RoomDataManager.quizRepository=quizRepository
-        RoomDataManager.questionRepository=questionRepository
-        RoomDataManager.answerRepository=answerRepository
-        QuizManager.loadQuizzes()
+
+        val app = this
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val quizRepository = QuizRepository(app.application)
+            val questionRepository = QuestionRepository(app.application)
+            val answerRepository = AnswerRepository(app.application)
+            RoomDataManager.quizRepository = quizRepository
+            RoomDataManager.questionRepository = questionRepository
+            RoomDataManager.answerRepository = answerRepository
+            QuizManager.loadQuizzes()
+        }
 
 
 

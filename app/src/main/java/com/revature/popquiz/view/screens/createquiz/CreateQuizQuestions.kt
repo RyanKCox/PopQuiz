@@ -34,6 +34,7 @@ import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.CreateQuizVM
+import com.revature.popquiz.viewmodels.QuizManager
 
 @Composable
 fun CreateQuizQuestions(navController: NavController){
@@ -128,6 +129,7 @@ fun CreateQuestQuestionsBody(navController: NavController){
                                 )
                                 //Add to Room/API
                                 createQuizVM.saveQuiz()
+                                QuizManager.loadQuizzes()
 
 
                                 navController.popBackStack(NavScreens.CreateQuizTitle.route, true)
