@@ -32,6 +32,7 @@ import com.revature.popquiz.view.shared.QuizScaffold
 
 
 import com.revature.popquiz.model.room.quizroom.QuizEntity
+import com.revature.popquiz.viewmodel.QuizOverviewVM
 import com.revature.popquiz.viewmodel.SavedQuizVM
 import com.revature.popquiz.viewmodels.QuizManager
 import com.revature.popquiz.viewmodels.SearchBarViewModel
@@ -63,7 +64,11 @@ fun SavedQuizzesBody(navController: NavController)
 //    var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
     var savedQuizVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
     var x = savedQuizVM.sSearchValue
+
+    var quizOverviewVM = ViewModelProvider(context as MainActivity).get(QuizOverviewVM::class.java)
+
     var sSearchValue by remember { mutableStateOf(x) }
+
     val lazyState = rememberLazyListState()
 
     savedQuizVM.sortBySearch()
@@ -116,21 +121,11 @@ fun SavedQuizzesBody(navController: NavController)
                         quizTitleText = Quiz.title,
                         shortQuizDescriptionText = Quiz.shortDescription
                     )
+                    {
+                        quizOverviewVM.quiz=Quiz
+                        navController.navigate(NavScreens.QuizOverviewScreen.route)
+                    }
                 }
-
-//                items(quizList.value?:listOf<QuizEntity>()){ quiz->
-//                    QuizCardForLazyColumn(quizTitleText = quiz.title, shortQuizDescriptionText =quiz.shortDescription )
-//
-//                }
-//
-//                item {
-//                    QuizCardForLazyColumn(
-//                        quizTitleText = "Java Basics",
-//                        shortQuizDescriptionText = "Short quiz description"
-//                    ){
-//                        navController.navigate(NavScreens.QuizOverviewScreen.route)
-//                    }
-//                }
 
 //                item {
 ////                item {
