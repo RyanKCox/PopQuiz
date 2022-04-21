@@ -6,7 +6,8 @@ import com.revature.popquiz.model.room.quizroom.QuizEntity
 
 import java.lang.Exception
 
-class AllQuizRepo(val quizService:QuizApiService) {
+class AllQuizRepo(val quizService:QuizApiService)
+{
 
     sealed class Result{
         object Loading:Result()
