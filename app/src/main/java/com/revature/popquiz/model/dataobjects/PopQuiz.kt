@@ -1,7 +1,7 @@
 package com.revature.popquiz.model.dataobjects
 
-class PopQuiz {
-    val question = Question
-    var title = ""
-    var answer = Answer
-}
+data class PopQuiz (
+    val nType: Int,
+    val question: Question,
+    val answer: List<Answer> = emptyList()
+)
