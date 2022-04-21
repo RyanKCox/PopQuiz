@@ -23,11 +23,12 @@ class SearchBarViewModel: ViewModel()
 
     var sSearchValue by mutableStateOf("")
     var quizList = mutableListOf<QuizEntity>()
-    var sortedList = mutableListOf<QuizEntity>()
+
+    var sortedList:List<QuizEntity> by mutableStateOf(listOf())
 
     fun sortBySearch()
     {
-        sortedList.clear()
+        var tempList = mutableListOf<QuizEntity>()
         quizList.sortWith(compareBy{it.title})
         quizList.forEach()
         {
@@ -36,9 +37,10 @@ class SearchBarViewModel: ViewModel()
                 it.shortDescription.contains(sSearchValue, ignoreCase = true)
             )
             {
-                sortedList.add(it)
+                tempList.add(it)
             }
         }
+        sortedList = tempList.toList()
 
     }
 
@@ -59,42 +61,15 @@ class SearchBarViewModel: ViewModel()
             is AllQuizRepo.Result.Success->
             {
                 quizList = response.quizList.toMutableList()
+
+                var tempList = mutableListOf<QuizEntity>()
+                tempList.addAll(quizList)
+                sortedList = tempList.toList()
             }
             is AllQuizRepo.Result.Failure->
             {
                 Log.d("SearchVM", "Loading Failed")
             }
         }
-
-
-
-//        quizList.add(
-//            Quiz(
-//                title = "Kotlin Fundamentals",
-//                shortDescription = "Goat",
-//                tagList = mutableListOf("Kotlin", "Beginners", "Kotlin for beginners")
-//            ),
-//        )
-//        quizList.add(
-//            Quiz(
-//                title = "Java Basics",
-//                shortDescription = "Java",
-//                tagList = mutableListOf("Java", "Easy", "OOP")
-//            ),
-//        )
-//        quizList.add(
-//            Quiz(
-//                title = "Kotlin",
-//                shortDescription = "Duck",
-//                tagList = mutableListOf("Kotlin", "Beginners", "Kotlin for beginners")
-//            ),
-//        )
-//        quizList.add(
-//            Quiz(
-//                title = "MVVM Kotlin",
-//                shortDescription = "Short quiz description",
-//                tagList = mutableListOf("Kotlin", "Beginners", "Kotlin for beginners")
-//            ),
-//        )
     }
 }

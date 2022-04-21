@@ -21,6 +21,7 @@ import com.revature.popquiz.model.room.Merge
 import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodels.QuizManager
 
 
 @Composable
@@ -29,7 +30,7 @@ fun Settings(navController: NavController)
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
 
-    val list = RoomDataManager.quizRepository.fetchAllQuiz.value
+    val list = RoomDataManager.quizRepository.fetchAllQuiz
 
     QuizScaffold(
         sTitle = "Settings",
