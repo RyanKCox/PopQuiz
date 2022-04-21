@@ -142,7 +142,8 @@ fun LoginScreen(navController: NavController)
                         onClick =
                         {
                             //dummy navigation
-                            if (sPass==userPass.value && sEmail==userEmail.value) {
+                            if (sPass==userPass.value && sEmail==userEmail.value)
+                            {
                                 scope.launch {
 //                                    quizRepository.insertQuiz(QuizEntity(id = 20, title = "title"))
                                     navController.navigate(NavScreens.SavedQuizzesScreen.route)

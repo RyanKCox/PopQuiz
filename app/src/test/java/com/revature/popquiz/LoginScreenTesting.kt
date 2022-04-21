@@ -19,7 +19,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MyTests {
+class LoginScreenTesting {
 
     // Generic test to see if the testing environment is set up right
     @Test
@@ -55,5 +55,13 @@ class MyTests {
             .onAllNodesWithText("Login")
             .onFirst().assertHasClickAction()
     }
+
+    // Still working on this
+    @Test
+    fun loginButtonTriggersLoginFunction()
+    {
+        composeTestRule.onAllNodesWithText("Login").onFirst().performClick()
+    }
+
 }
 
