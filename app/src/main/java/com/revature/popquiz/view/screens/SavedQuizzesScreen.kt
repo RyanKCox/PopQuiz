@@ -121,7 +121,7 @@ fun SavedQuizzesBody(navController: NavController)
                         shortQuizDescriptionText = Quiz.shortDescription
                     )
                     {
-                        quizOverviewVM.quiz=Quiz
+                        quizOverviewVM.setQuiz(Quiz)
                         navController.navigate(NavScreens.QuizOverviewScreen.route)
                     }
                 }

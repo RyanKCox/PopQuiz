@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 object QuizEditor {
 
     var focusQuiz = Quiz()
-    var mergeManger = Merge()
+    //var mergeManger = Merge()
 
 
     //Repo for Room database
@@ -42,7 +42,7 @@ object QuizEditor {
      */
     fun saveQuizToRoom() {
 
-        mergeManger.saveQuizToRoom(focusQuiz)
+        Merge.saveQuizToRoom(focusQuiz)
 
 
 //        val quizEntity =
