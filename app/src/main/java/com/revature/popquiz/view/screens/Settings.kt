@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.revature.popquiz.model.room.Merge
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -26,6 +28,8 @@ fun Settings(navController: NavController)
 {
     val scaffoldState = rememberScaffoldState()
     val context= LocalContext.current
+
+    val list = RoomDataManager.quizRepository.fetchAllQuiz.value
 
     QuizScaffold(
         sTitle = "Settings",

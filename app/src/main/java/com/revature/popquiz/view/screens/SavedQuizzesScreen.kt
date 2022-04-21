@@ -65,7 +65,8 @@ fun SavedQuizzesBody(navController: NavController)
 
     val lazyState = rememberLazyListState()
 
-    val quizList= QuizManager.usableQuizList
+    val quizList= remember{ mutableStateOf(searchBarViewModel.sortedList) }
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -108,7 +109,7 @@ fun SavedQuizzesBody(navController: NavController)
                     Spacer(modifier = Modifier.height(10.dp))
                 }
 
-                items(quizList)
+                items(quizList.value)
                 { quiz->
                     QuizCardForLazyColumn(
                         quizTitleText = quiz.title,
