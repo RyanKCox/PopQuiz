@@ -282,7 +282,8 @@ fun EditQuizQuestionBody(
 fun EditPreview(){
     PopQuizTheme {
         val nav = rememberNavController()
-        val editVm = EditQuizVM(Quiz())
+        val editVm = EditQuizVM()
+        editVm.editQuiz = Quiz()
         EditQuizQuestionBody(navController = nav, editQuizVM = editVm)
     }
 }
