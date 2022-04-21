@@ -5,17 +5,21 @@ import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.content.Context
 import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
-import com.revature.popquiz.util.Graph
+import com.revature.popquiz.R
 import com.revature.popquiz.model.PopQuizRepository
 import com.revature.popquiz.model.dataobjects.PopQuiz
+import com.revature.popquiz.util.Graph
 import com.revature.popquiz.util.NotificationWorker
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+
 
 //foreground service
 
@@ -58,6 +62,33 @@ private fun setOneTimeNotification() {
                 createErrorNotification()
             }
         }
+}
+
+fun createSuccessNotification() {
+    val notificationId = 1
+    val builder = NotificationCompat.Builder(Graph.appContext, "CHANNEL_ID")   //TODO create a companion object to store CHANNEL_ID
+        .setSmallIcon(R.drawable.rev_logo_2)
+        .setContentTitle("Notification Successful")
+        .setContentText("Pop!Quiz time")
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    with(NotificationManagerCompat.from(Graph.appContext)) {
+        //Notification is unique for each notification defined, 1 is success
+        notify(notificationId, builder.build())
+    }
+}
+
+fun createErrorNotification() {
+    val notificationId = 2
+    val builder = NotificationCompat.Builder(Graph.appContext, "CHANNEL_ID")   //TODO create a companion object to store CHANNEL_ID
+        .setSmallIcon(R.drawable.rev_logo_2)
+        .setContentTitle("Notification Failed")
+        .setContentText("no Pop!Quiz")
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    with(NotificationManagerCompat.from(Graph.appContext)) {
+        //Notification is unique for each notification defined, 2 is failure
+        notify(notificationId, builder.build())
 }
 
 private fun createNotificationChannel(context: Context) {
