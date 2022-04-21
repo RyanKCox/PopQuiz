@@ -34,7 +34,7 @@ fun reviewQuiz(navController: NavController) {
     quiz.tagList.add(1,"Arrays")
     val answer1=Answer(sAnswer = "A programming Language", bCorrect = true)
     val answer2=Answer(sAnswer = "Easy", bCorrect = false)
-    val answerList= listOf<Answer>(answer1,answer2)
+    val answerList= mutableListOf<Answer>(answer1,answer2)
     val q=Question(1,"What is Kotlin?",answerList)
     quiz.questionList.add(0,q)
 

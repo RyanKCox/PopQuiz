@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.model.dataobjects.Answer
+import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
@@ -31,11 +33,22 @@ import com.revature.popquiz.view.shared.basicCard
 fun quizOverView(navController: NavController)
 {
     val quiz = Quiz()
+    val quiz2 = Quiz()
+    val question = Question(question = "This is a question")
+    val question2 = Question(question = "This is another question")
+    val question3 = Question(question = "This is third question")
+    val answer = Answer(sAnswer = "This is an answer")
+    question.answers.add(answer)
+    question3.answers.add(answer)
+    quiz2.questionList.add(question3)
     quiz.title="Arrays"
     quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
             " This includes properties of arrays and their usage"
     quiz.tagList.add(0,"Index")
     quiz.tagList.add(1,"Arrays")
+    quiz.questionList.add(question)
+
+
     val checkedState=remember{ mutableStateOf(false)}
 
     QuizScaffold(sTitle = "Quiz Overview", navController = navController) {

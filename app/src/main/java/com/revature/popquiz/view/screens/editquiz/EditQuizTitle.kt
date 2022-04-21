@@ -43,7 +43,7 @@ fun EditQuizTitle(navController: NavController){
     tempQuiz.questionList.add(Question(
         nType = 0,
         question = "var and val are how u create new variables",
-        answers = listOf(
+        answers = mutableListOf(
             Answer("True",true),
             Answer("False",false)
         )
@@ -51,7 +51,7 @@ fun EditQuizTitle(navController: NavController){
     tempQuiz.questionList.add(Question(
         nType = 1,
         question = "How do you get the size of a string?",
-        answers = listOf(
+        answers = mutableListOf(
             Answer("myString as Int",false),
             Answer("myString.toInt()",false),
             Answer("myString.length",true),

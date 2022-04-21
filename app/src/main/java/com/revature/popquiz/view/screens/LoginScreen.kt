@@ -25,11 +25,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.R
+import com.revature.popquiz.model.dataobjects.Answer
+import com.revature.popquiz.model.dataobjects.Question
+import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.model.room.Merge
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.ui.theme.revDarkGrey
+import com.revature.popquiz.viewmodels.QuizManager
 import kotlinx.coroutines.launch
 
 @Composable
@@ -40,6 +45,27 @@ fun LoginScreen(navController: NavController)
 
 //    val quizRepository =RoomDataManager.quizRepository
 
+//    val quiz = Quiz()
+//    val quiz2 = Quiz()
+//    val question = Question(question = "This is a question")
+//    val question2 = Question(question = "This is another question")
+//    val question3 = Question(question = "This is third question")
+//    val answer = Answer(sAnswer = "This is an answer")
+//    question.answers.add(answer)
+//    question3.answers.add(answer)
+//    quiz2.questionList.add(question3)
+//    quiz.title="Arrays"
+//    quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
+//            " This includes properties of arrays and their usage"
+//    quiz.tagList.add(0,"Index")
+//    quiz.tagList.add(1,"Arrays")
+//    quiz.questionList.add(question)
+//
+//    val m = Merge()
+//    m.saveQuizToRoom(quiz)
+//    m.saveQuizToRoom(quiz2)
+
+    val q = QuizManager.usableQuizList
 
 
 
