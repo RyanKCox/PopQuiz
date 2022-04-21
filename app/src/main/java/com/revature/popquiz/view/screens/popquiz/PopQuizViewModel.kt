@@ -32,7 +32,7 @@ class PopQuizViewModel: ViewModel() {
         get() = _state
 
     init {
-        createNotificationChannel(context = Graph.appContext)
+//        createNotificationChannel(context = Graph.appContext)
         viewModelScope.launch {
             popQuizRepository.getTopic()
         }
@@ -80,7 +80,10 @@ fun createSuccessNotification() {
 
 fun createErrorNotification() {
     val notificationId = 2
-    val builder = NotificationCompat.Builder(Graph.appContext, "CHANNEL_ID")   //TODO create a companion object to store CHANNEL_ID
+    val builder = NotificationCompat.Builder(
+        Graph.appContext,
+        "CHANNEL_ID"
+    )   //TODO create a companion object to store CHANNEL_ID
         .setSmallIcon(R.drawable.rev_logo_2)
         .setContentTitle("Notification Failed")
         .setContentText("no Pop!Quiz")
@@ -89,9 +92,9 @@ fun createErrorNotification() {
     with(NotificationManagerCompat.from(Graph.appContext)) {
         //Notification is unique for each notification defined, 2 is failure
         notify(notificationId, builder.build())
+    }
 }
-
-private fun createNotificationChannel(context: Context) {
+fun createNotificationChannel(context: Context) {
 
     //Create the NotificationChannel
     //This is only available in SDK Version 26+
