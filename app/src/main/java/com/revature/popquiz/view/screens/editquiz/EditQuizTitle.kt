@@ -3,7 +3,6 @@ package com.revature.popquiz.view.screens.editquiz
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.OutlinedTextField
@@ -16,13 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.EditQuizVM
-import com.revature.popquiz.viewmodel.EditQuizVMFactory
 
 @Composable
 fun EditQuizTitle(navController: NavController){
@@ -59,8 +58,10 @@ fun EditQuizTitle(navController: NavController){
             Answer("myString.size()",false),
         )
     ))
+    QuizEditor.focusQuiz = tempQuiz
 
-    val editQuizVM = ViewModelProvider(context as MainActivity, EditQuizVMFactory(tempQuiz)).get(EditQuizVM::class.java)
+    val editQuizVM = ViewModelProvider(context as MainActivity).get(EditQuizVM::class.java)
+
 
     //Use Scaffold created for app
     QuizScaffold(

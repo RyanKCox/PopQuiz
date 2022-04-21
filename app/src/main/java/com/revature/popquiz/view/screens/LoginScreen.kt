@@ -1,6 +1,5 @@
 package com.revature.popquiz.view.screens
 
-import android.app.Application
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -9,8 +8,6 @@ import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.TextFieldDefaults.UnfocusedIndicatorLineOpacity
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -32,14 +29,6 @@ import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
-import androidx.compose.material.TextFieldDefaults.UnfocusedIndicatorLineOpacity
-import androidx.compose.ui.text.input.VisualTransformation
-import com.revature.popquiz.MainActivity
-import com.revature.popquiz.PopQuizApp
-import com.revature.popquiz.model.dataobjects.Quiz
-import com.revature.popquiz.model.dataobjects.QuizEntity
-import com.revature.popquiz.model.room.QuizRepository
-import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revDarkGrey
 import kotlinx.coroutines.launch
 

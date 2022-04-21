@@ -15,8 +15,9 @@ interface QuizApiService {
     /**
      * Retrieves all quizzes from the server
      */
-    @POST("allquizzes")
-    suspend fun getQuizzes(@Body RequestAllQuizzes: RequestAllQuizzes): ResponseAllQuizzes
+    @POST("/quiz/secure/quizzes")
+    suspend fun getQuizzes(@Body RequestAllQuizzes: RequestAllQuizzes)
+        : ResponseAllQuizzes
 
     //Retrieves Pop Quiz from the server
     @POST("popquiz")

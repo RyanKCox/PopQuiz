@@ -95,8 +95,21 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-rc02'
 
 
+
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
+//Mock
+    // Required -- JUnit 4 framework
+    testImplementation "junit:junit:4.13.2"
+    // Optional -- Robolectric environment
+    testImplementation "androidx.test:core:1.4.0"
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:3.4.6"
+    // Optional -- mockito-kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+    // Optional -- Mockk framework
+    testImplementation "io.mockk:mockk:1.12.3"
+
 
 
     //Navigation

@@ -1,4 +1,4 @@
-package com.revature.popquiz.model.dataobjects
+package com.revature.popquiz.model.room.quizroom
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,4 +14,10 @@ data class QuizEntity (
     var shortDescription: String ="",
     @ColumnInfo(name = "longDescription")
     var longDescription: String ="",
-        )
+    @ColumnInfo(name = "tags")
+    var tags:String="",
+    @ColumnInfo(name = "resources")
+    var resources:String=""
+
+
+)

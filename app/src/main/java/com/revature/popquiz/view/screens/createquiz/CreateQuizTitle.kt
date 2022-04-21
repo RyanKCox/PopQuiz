@@ -12,9 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 //import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -24,15 +27,17 @@ import com.revature.popquiz.viewmodel.CreateQuizVM
 
 @Composable
 fun CreateQuizTitle(
-    navController: NavController,
-//    createQuizVM: CreateQuizVM = hiltViewModel()
+    navController: NavController
 )
 {
 
     Log.d("Create Q Title Screen", "Create Q Title Start")
 
-    //Create our VM
-   // val createQuizVM = _createQuizVM
+    //Grab our viewmodel
+    val context = LocalContext.current
+    val createQuizVM =
+        ViewModelProvider(context as MainActivity)
+            .get(CreateQuizVM::class.java)
 
     //Use Scaffold created for app
     QuizScaffold(
@@ -43,7 +48,7 @@ fun CreateQuizTitle(
         //Screen Content
         CreateQuizTitleBody(
             navController,
-            CreateQuizVM()
+            createQuizVM
         )
 
     }
@@ -167,8 +172,8 @@ fun CreateQuizTitleBody(
                             sShortDesc != "" &&
                             sLongDesc != ""){ //Set the values in the new quiz
                                 createQuizVM.newQuiz.title = sQuizTitle
-                          createQuizVM.newQuiz.shortDescription = sShortDesc
-                          createQuizVM.newQuiz.longDescription = sLongDesc
+                                createQuizVM.newQuiz.shortDescription = sShortDesc
+                                createQuizVM.newQuiz.longDescription = sLongDesc
 
                           //Navigate to next screen
                           navController.navigate(NavScreens.CreateQuizResources.route)
