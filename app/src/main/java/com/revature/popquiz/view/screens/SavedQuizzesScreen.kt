@@ -32,6 +32,7 @@ import com.revature.popquiz.view.shared.QuizScaffold
 
 
 import com.revature.popquiz.model.room.quizroom.QuizEntity
+import com.revature.popquiz.viewmodels.QuizManager
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 
 
@@ -64,7 +65,7 @@ fun SavedQuizzesBody(navController: NavController)
 
     val lazyState = rememberLazyListState()
 
-    val quizList= quizRepository.fetchAllQuiz.observeAsState()
+    val quizList= QuizManager.usableQuizList
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -107,7 +108,7 @@ fun SavedQuizzesBody(navController: NavController)
                     Spacer(modifier = Modifier.height(10.dp))
                 }
 
-                items(quizList.value?:listOf<QuizEntity>())
+                items(quizList)
                 { quiz->
                     QuizCardForLazyColumn(
                         quizTitleText = quiz.title,

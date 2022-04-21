@@ -7,7 +7,7 @@ data class Question(
 
     override var nType:Int=0,
     override var question:String="",
-    override var answers:List<Answer> =listOf() ) : QuestionInterface
+    override var answers:MutableList<Answer> =mutableListOf() ) : QuestionInterface
 //{
 //    companion object{
 //
