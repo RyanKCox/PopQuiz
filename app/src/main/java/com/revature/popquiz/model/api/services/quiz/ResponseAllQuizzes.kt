@@ -26,3 +26,35 @@ data class QuizResponse(
     @SerializedName("categoryName")
     var sCategoryName:String
 )
+
+data class ResponseRetrieveQuestionByID(
+
+    @SerializedName("qIdStatusCode")
+    var qIdStatusCode: Int,
+    @SerializedName("qIdDescription")
+    var qIdDescription: String,
+    @SerializedName("qIdData")
+    var retrieveQuestionByIDList: List<QuestionsResponse>
+)
+
+data class QuestionsResponse(
+
+    @SerializedName("questionId")
+    var questionId: Int,
+    @SerializedName("questionTitle")
+    var questionTitle: String,
+    @SerializedName("questionLevelId")
+    var questionLevelId: Int,
+    var questionAnswers: List<QuestionAnswersResponse>
+)
+
+data class QuestionAnswersResponse(
+    @SerializedName("questionAnswerId")
+    var questionAnswerId: Int,
+    @SerializedName("questionAnswer")
+    var questionAnswer: String,
+    @SerializedName("questionAnswerOrder")
+    var questionAnswerOrder: Int,
+    @SerializedName("questionAnswerCorrect")
+    var questionAnswerCorrect: Boolean
+)
