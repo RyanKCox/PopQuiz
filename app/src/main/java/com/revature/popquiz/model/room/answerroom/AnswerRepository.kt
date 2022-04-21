@@ -23,4 +23,5 @@ class AnswerRepository(application: Application) {
         Log.d("jcstn","Inside insert answer :$answer")
     }
     val fetchAllAnswer: LiveData<List<AnswerEntity>> = answerDao.fetchAllAnswer()
+    suspend fun fetchAnswerWithQuestionId(id:Int)=answerDao.fetchAnswerWithQuestionId(id)
 }

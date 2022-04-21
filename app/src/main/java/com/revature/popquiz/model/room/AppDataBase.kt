@@ -5,13 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.revature.popquiz.model.room.answerroom.AnswerDao
+import com.revature.popquiz.model.room.answerroom.AnswerEntity
 import com.revature.popquiz.model.room.questionroom.QuestionDao
 import com.revature.popquiz.model.room.questionroom.QuestionEntity
 import com.revature.popquiz.model.room.quizroom.QuizDao
 import com.revature.popquiz.model.room.quizroom.QuizEntity
 
 
-@Database(entities = [QuizEntity::class,QuestionEntity::class],version=1, exportSchema = false)
+@Database(entities = [QuizEntity::class,QuestionEntity::class,AnswerEntity::class],version=1, exportSchema = false)
 abstract class AppDataBase:RoomDatabase() {
     abstract fun quizDao(): QuizDao
     abstract fun questionDao(): QuestionDao

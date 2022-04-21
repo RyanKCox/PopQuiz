@@ -8,11 +8,11 @@ import com.revature.popquiz.model.QuestionInterface
 @Entity(tableName = "question")
 data class QuestionEntity (
     @PrimaryKey(autoGenerate = true)
-    var questionId:Int,
+    var questionId:Int=0,
     @ColumnInfo(name = "quizId")
-    var quizId:Int,
+    var quizId:Int=0,
     @ColumnInfo(name = "nType")
-    var nType:Int,
+    var nType:Int=0,
     @ColumnInfo(name="question")
-    var question:String,
+    var question:String="",
     )

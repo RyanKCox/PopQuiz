@@ -16,7 +16,7 @@ interface QuestionDao {
     fun fetchQuestionWithQuizId(id:Int): LiveData<List<QuestionEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertQuestion(question: QuestionEntity)
+    suspend fun insertQuestion(question: QuestionEntity):Long
 
     @Query("DELETE FROM question WHERE questionId=:id")
     suspend fun deleteQuestion(id:Int)

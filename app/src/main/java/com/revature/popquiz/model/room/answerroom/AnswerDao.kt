@@ -12,7 +12,7 @@ interface AnswerDao {
     @Query("SELECT * FROM answer")
     fun fetchAllAnswer(): LiveData<List<AnswerEntity>>
 
-    @Query("SELECT * FROM question WHERE questionId=:id")
+    @Query("SELECT * FROM answer WHERE questionId=:id")
     fun fetchAnswerWithQuestionId(id:Int): LiveData<List<AnswerEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -15,8 +15,8 @@ class QuizRepository(application: Application) {
     suspend fun deleteQuiz(id:Int){
         quizDao.deleteQuiz(id)
     }
-    suspend fun insertQuiz(quiz: QuizEntity){
-        quizDao.insertQuiz(quiz)
+    suspend fun insertQuiz(quiz: QuizEntity):Long{
+       return quizDao.insertQuiz(quiz)
         Log.d("jcstn","Inside insert quiz :$quiz")
     }
     val fetchAllQuiz:LiveData<List<QuizEntity>> = quizDao.fetchAllQuiz()

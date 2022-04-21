@@ -13,12 +13,13 @@ class QuestionRepository(application: Application) {
         var qdataBase= AppDataBase.getDataBase(application)
         questionDao=qdataBase.questionDao()
     }
-    suspend fun deleteQuiz(id:Int){
+    suspend fun deleteQuestion(id:Int){
         questionDao.deleteQuestion(id)
     }
-    suspend fun insertQuiz(question: QuestionEntity){
-        questionDao.insertQuestion(question = question )
+    suspend fun insertQuestion(question: QuestionEntity):Long{
+        return questionDao.insertQuestion(question = question )
         Log.d("jcstn","Inside insert question :$question")
     }
-    val fetchAllQuiz: LiveData<List<QuestionEntity>> = questionDao.fetchAllQuestion()
+    val fetchAllQuestion: LiveData<List<QuestionEntity>> = questionDao.fetchAllQuestion()
+    suspend fun fetchQuestionWithQuizId(id:Int):LiveData<List<QuestionEntity>> = questionDao.fetchQuestionWithQuizId(id)
 }
