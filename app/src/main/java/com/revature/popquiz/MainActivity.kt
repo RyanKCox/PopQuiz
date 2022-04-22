@@ -13,8 +13,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.room.quizroom.QuizRepository
 import com.revature.popquiz.model.room.RoomDataManager
-import com.revature.popquiz.model.room.answerroom.AnswerRepository
-import com.revature.popquiz.model.room.questionroom.QuestionRepository
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
 import com.revature.popquiz.viewmodels.QuizManager
@@ -43,11 +41,8 @@ class MainActivity : ComponentActivity()
         CoroutineScope(Dispatchers.IO).launch {
 
             val quizRepository = QuizRepository(app.application)
-            val questionRepository = QuestionRepository(app.application)
-            val answerRepository = AnswerRepository(app.application)
             RoomDataManager.quizRepository = quizRepository
-            RoomDataManager.questionRepository = questionRepository
-            RoomDataManager.answerRepository = answerRepository
+
             QuizManager.loadQuizzes()
         }
 

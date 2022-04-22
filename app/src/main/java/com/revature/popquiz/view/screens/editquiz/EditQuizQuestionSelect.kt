@@ -178,7 +178,7 @@ fun EditQuizQuestionBody(
                         Row {
 
                             Text(
-                                text = question.getQuestionType(),
+                                text = question.nType.toString(),
                                 style = MaterialTheme.typography.h6
                             )
 

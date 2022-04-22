@@ -31,7 +31,7 @@ import com.revature.popquiz.view.shared.QuizCardForLazyColumn
 import com.revature.popquiz.view.shared.QuizScaffold
 
 
-import com.revature.popquiz.model.room.quizroom.QuizEntity
+
 import com.revature.popquiz.viewmodel.QuizOverviewVM
 import com.revature.popquiz.viewmodel.SavedQuizVM
 import com.revature.popquiz.viewmodels.QuizManager
@@ -121,7 +121,7 @@ fun SavedQuizzesBody(navController: NavController)
                         shortQuizDescriptionText = Quiz.shortDescription
                     )
                     {
-                        quizOverviewVM.setQuiz(Quiz)
+                        quizOverviewVM.quiz=Quiz
                         navController.navigate(NavScreens.QuizOverviewScreen.route)
                     }
                 }
