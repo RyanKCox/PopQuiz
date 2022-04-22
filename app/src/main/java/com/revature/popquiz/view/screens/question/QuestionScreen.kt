@@ -56,7 +56,7 @@ fun QuestionScreen(navController: NavController) {
             ) {
 
                 QuestionCard(runningQuiz)
-                SubmitButton(runningQuiz)
+                SubmitButton(runningQuiz, navController)
             }
         }
     )
@@ -123,9 +123,9 @@ fun AnswerButton(answer: String) {
 }
 
 @Composable
-fun SubmitButton(quiz: RunningQuiz) {
+fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
     val context= LocalContext.current
-    val navController= rememberNavController()
+
     val questionVM =
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
@@ -145,6 +145,8 @@ fun SubmitButton(quiz: RunningQuiz) {
 
                 //go to finished screen
                 //navController.navigate(NavScreens.FinishedQuizScreen.route)
+                navController.navigate(NavScreens.QuizFinishScreen.route)
+
                       },
             modifier = Modifier
                 .fillMaxWidth(0.7f)
