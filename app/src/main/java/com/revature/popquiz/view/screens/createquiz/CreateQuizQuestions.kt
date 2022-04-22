@@ -246,16 +246,17 @@ fun trueFalseQuestion(answers:MutableList<Answer>):MutableList<Answer> {
 
     var answerList:MutableList<Answer> = answers //by remember {mutableStateOf( answer)}
 
-    var trueCheck by remember { mutableStateOf(true) }
-    var falseCheck by remember { mutableStateOf(false) }
+
+    var trueCheck by remember { mutableStateOf(if(answerList.isNotEmpty()) answerList[0].bCorrect else true) }
+    var falseCheck by remember { mutableStateOf(if(answerList.isNotEmpty()) answerList[1].bCorrect else false) }
 
     if(answerList.isEmpty()) {
         answerList.add(Answer("True", trueCheck))
         answerList.add(Answer("False", falseCheck))
-    } else {
+    } /*else {
         trueCheck = answerList[0].bCorrect
         falseCheck = answerList[1].bCorrect
-    }
+    }*/
 
 
     Row(
