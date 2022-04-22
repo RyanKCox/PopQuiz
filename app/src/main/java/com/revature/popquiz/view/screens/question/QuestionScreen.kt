@@ -2,8 +2,11 @@ package com.revature.popquiz.view.screens.question
 
 import android.widget.ProgressBar
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,7 +42,7 @@ fun QuestionScreen(navController: NavController) {
     runningQuiz.questions=quiz.questionList
     runningQuiz.maxScore=runningQuiz.questions.size.toFloat()
     QuizScaffold(
-        sTitle = quiz.title.uppercase(),
+        sTitle = "TAKE QUIZ",
         navController = navController,
         content = {
             Column(
@@ -48,8 +51,11 @@ fun QuestionScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Top
             ) {
 
-                QuestionCard(runningQuiz)
-                SubmitButton(runningQuiz, navController)
+                Text(text="${quiz.title.uppercase()} QUIZ", fontSize = 40.sp, modifier = Modifier.padding(20.dp))
+
+                QuestionCard(runningQuiz,navController)
+
+
             }
         }
     )
@@ -67,9 +73,12 @@ fun ProgressBar() {
 }
 
 @Composable
-fun QuestionCard(quiz: RunningQuiz) {
+fun QuestionCard(quiz: RunningQuiz,navController: NavController) {
+    val scrollState= rememberScrollState()
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         quiz.questions.forEach { question->
@@ -91,6 +100,9 @@ fun QuestionCard(quiz: RunningQuiz) {
             }
 
         }
+        Spacer(modifier = Modifier.height(10.dp))
+        SubmitButton(quiz, navController)
+        Spacer(modifier = Modifier.height(20.dp))
 
     }
 }
@@ -139,7 +151,7 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
                 .fillMaxWidth(0.7f)
                 .padding(10.dp),
             shape = RoundedCornerShape(25.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
+            colors = ButtonDefaults.buttonColors(backgroundColor = revLightOrange)
         ) {
             Text(text = "Submit")
         }

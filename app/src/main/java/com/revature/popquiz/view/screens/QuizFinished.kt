@@ -40,7 +40,7 @@ fun quizComplete(navController: NavController) {
     val quiz=questionVM.runningQuiz
 
     QuizScaffold(
-        sTitle = questionVM.quiz.title.uppercase(),
+        sTitle = "QUIZ COMPLETE",
         navController = navController
     )
     {
@@ -70,7 +70,7 @@ fun quizComplete(navController: NavController) {
                             )
                             {
                                 Text(
-                                    text = "Quiz Complete",
+                                    text = questionVM.quiz.title.uppercase(),
                                     fontSize = 30.sp,
                                     fontWeight = FontWeight.Medium,
                                     modifier = Modifier.padding(20.dp)
