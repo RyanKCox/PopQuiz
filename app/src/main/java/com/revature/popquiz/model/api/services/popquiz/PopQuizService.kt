@@ -17,6 +17,8 @@ import android.content.Intent
 fun setAlarm(context: Context) {
     /**
      * CURRENTLY this will set an alarm for 5000 milliseconds in the future.
+     * Allow users to set an alarm for a specific time in the day,
+     * set multiple alarms at intervals? 30 minutes?
      */
 //    val time = Calendar.getInstance().set(Calendar.HOUR_OF_DAY, 12)
     val time = System.currentTimeMillis() + 5000
