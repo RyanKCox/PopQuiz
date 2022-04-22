@@ -27,6 +27,7 @@ import com.revature.popquiz.model.api.services.QuizApiService
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodels.SearchBarViewModel
+import com.revature.popquiz.viewmodels.SearchQuizzesOverviewViewModel
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
 
 @ExperimentalAnimationApi
@@ -114,7 +115,10 @@ fun SearchQuizzesBody(navController: NavController)
                 QuizCardForLazyColumn(
                     quizTitleText = Quiz.title,
                     shortQuizDescriptionText = Quiz.shortDescription
-                ){
+                )
+                {
+                    var searchQuizzesOverviewViewModel = ViewModelProvider(context as MainActivity).get(SearchQuizzesOverviewViewModel::class.java)
+                    searchQuizzesOverviewViewModel.loadQuiz(Quiz.id)
                     navController.navigate(NavScreens.SearchQuizOverview.route)
                 }
 

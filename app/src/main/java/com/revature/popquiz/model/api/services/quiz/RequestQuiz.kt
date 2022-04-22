@@ -39,7 +39,7 @@ data class QuizPoolQuestionsResponse(
     @SerializedName("id")
     var quizPoolsQuestionsId: Int,
     @SerializedName("question")
-    var quizPoolsQuestionList: List<QuizPoolQuestionResponse>
+    var quizPoolsQuestion: QuizPoolQuestionResponse
 )
 
 data class QuizPoolQuestionResponse(

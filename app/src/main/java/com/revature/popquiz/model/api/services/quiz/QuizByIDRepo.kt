@@ -1,6 +1,8 @@
 package com.revature.popquiz.model.api.services.quiz
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.revature.popquiz.model.api.services.QuizApiService
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
@@ -10,11 +12,11 @@ class QuizByIDRepo(val quizService: QuizApiService)
 {
     sealed class Result{
         object Loading:Result()
-        data class Success(val quiz:Quiz):Result()
+        data class Success(val quiz: LiveData<QuizAPIEntity>):Result()
         data class Failure(val throwable: Throwable):Result()
     }
 
-    suspend fun fetchQuizResponse(id: Int): AllQuizRepo.Result
+    suspend fun fetchQuizResponse(id: Int): Result
     {
 
         return try {
@@ -23,18 +25,22 @@ class QuizByIDRepo(val quizService: QuizApiService)
 //                quizService.getQuizzes(RequestAllQuizzes()).quizList
 
 //            val quizList:MutableList<Quiz> = mutableListOf()
-            val quiz = Quiz()
+            val quiz = QuizAPIEntity(
+                title = "",
+                shortDesc = "",
+                longDesc = "",
+                questionIDs = arrayListOf()
+            )
+
             quiz.title = result.quizDataList.quizDataTitle
             result.quizDataList.quizPoolsList.forEach{
-                quiz.shortDescription = it.quizPoolsDescription
-                quiz.longDescription = it.quizPoolsDescription
+                quiz.shortDesc = it.quizPoolsDescription?: "null"
+                quiz.longDesc = it.quizPoolsDescription?: "null"
                 it.quizPoolQuestionsList.forEach {
-                    it.quizPoolsQuestionList.forEach {
-                        it.quizPoolQuestionResponseId
-                        var question = Question()
-                    }
+                    quiz.questionIDs.add(it.quizPoolsQuestion.quizPoolQuestionResponseId)
+
                 }
-        }
+            }
 
 //            result.forEach {
 //                quizList.add(
@@ -47,13 +53,13 @@ class QuizByIDRepo(val quizService: QuizApiService)
 //                )
 //            }
 
-            Log.d("Load Quiz", "Success " + resultList.size)
-            AllQuizRepo.Result.Success(quizList)
+            Log.d("Load Quiz", "Success " + result)
+            Result.Success(MutableLiveData(quiz))
 
         } catch (e: Exception)
         {
             Log.d("Load Quizzes","Failed: ${e.message}")
-            AllQuizRepo.Result.Failure(e)
+            Result.Failure(e)
         }
     }
 }
