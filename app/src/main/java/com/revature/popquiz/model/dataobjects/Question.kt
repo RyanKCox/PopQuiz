@@ -3,11 +3,20 @@ package com.revature.popquiz.model.dataobjects
 import androidx.room.Entity
 import com.revature.popquiz.model.QuestionInterface
 
+
+//    val nType:Int,
+//    var question:String,
+//    var answers:List<Answer>
+//    ) {
+//    companion object{
+
 data class Question(
 
-    override var nType:Int=0,
-    override var question:String="",
-    override var answers:MutableList<Answer> =mutableListOf() ) : QuestionInterface
+
+    var nType:Int=0,
+    var question:String="",
+    var answers:MutableList<Answer> =mutableListOf() )
+
 //{
 //    companion object{
 //

@@ -6,21 +6,25 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.model.room.RoomDataManager
-import com.revature.popquiz.model.room.quizroom.QuizEntity
 import com.revature.popquiz.viewmodels.QuizManager
+import kotlinx.coroutines.launch
 
 class SavedQuizVM: ViewModel() {
 
-//    private val quizService = RetrofitHelper.getAllQuizzesServices()
-//    private lateinit var quizRepo: AllQuizRepo
-
+    //Search value to filter quiz list
     var sSearchValue by mutableStateOf("")
-//    var quizList = QuizManager.usableQuizList
 
-    var sortedList = RoomDataManager.quizRepository.fetchAllQuiz//MutableLiveData<List<QuizEntity>>(QuizManager.usableQuizList.value) //QuizManager.usableQuizList
+    //Deletion Boolean
+    var bDelete = mutableStateOf(false)
+    var nDeleteID:Int?=null
 
+    //Initialize the quiz list from the room
+    var sortedList = RoomDataManager.quizRepository.fetchAllQuiz
+
+    //Sort list by search value
     fun sortBySearch()
     {
         sortedList = if(sSearchValue != "") {
@@ -28,51 +32,19 @@ class SavedQuizVM: ViewModel() {
         } else{
             RoomDataManager.quizRepository.fetchAllQuiz
         }
-
-//        var tempMasterList = mutableListOf<QuizEntity>()
-//        var tempSortedList = mutableListOf<QuizEntity>()
-//        tempMasterList.addAll(sortedList.value?: listOf())
-//        tempMasterList.sortWith(compareBy{it.title})
-//        tempMasterList.forEach()
-//        {
-//            if (
-//                it.title.contains(sSearchValue, ignoreCase = true) ||
-//                it.shortDescription.contains(sSearchValue, ignoreCase = true)
-//            )
-//            {
-//                tempSortedList.add(it)
-//            }
-//        }
-//        sortedList.
-
     }
 
-//    init
-//    {
-//        viewModelScope.launch(Dispatchers.IO)
-//        {
-//            loadQuizzes()
-//        }
-//    }
+    //Delete quiz from room database
+    fun deleteQuiz(){
+        viewModelScope.launch {
+            if(nDeleteID != null){
 
-//    private suspend fun loadQuizzes() {
-//
-////        quizRepo = AllQuizRepo(quizService)
-////
-////        when (val response = quizRepo.fetchQuizResponse()){
-////
-////            is AllQuizRepo.Result.Success->
-////            {
-////                quizList = response.quizList.toMutableList()
-////
-////                var tempList = mutableListOf<QuizEntity>()
-////                tempList.addAll(quizList)
-////                sortedList = tempList.toList()
-////            }
-////            is AllQuizRepo.Result.Failure->
-////            {
-////                Log.d("SearchVM", "Loading Failed")
-////            }
-////        }
-//    }
+                //Needs to include question and answers,
+                //Change so they dont exist
+
+                RoomDataManager.quizRepository.deleteQuiz(nDeleteID!!)
+                nDeleteID = null
+            }
+        }
+    }
 }

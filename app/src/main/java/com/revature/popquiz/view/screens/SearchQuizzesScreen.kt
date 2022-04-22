@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -114,12 +113,7 @@ fun SearchQuizzesBody(navController: NavController)
             { Quiz ->
                 QuizCardForLazyColumn(
                     quizTitleText = Quiz.title,
-                    shortQuizDescriptionText = Quiz.shortDescription,
-                    onClick =
-                    {
-                        navController.navigate(NavScreens.QuizPreviewDownloadScreen.route)
-                    }
-                )
+                    shortQuizDescriptionText = Quiz.shortDescription
             }
         }
     }
