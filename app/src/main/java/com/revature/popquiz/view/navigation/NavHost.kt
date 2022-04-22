@@ -151,5 +151,10 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.QuizFinishScreen.route){
             quizComplete(navController = navController)
         }
+        //Quiz Review
+        composable(NavScreens.ReviewQuizScreen.route)
+        {
+            reviewQuiz(navController = navController)
+        }
     }
 }

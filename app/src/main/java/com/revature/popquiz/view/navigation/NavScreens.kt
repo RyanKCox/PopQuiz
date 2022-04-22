@@ -52,5 +52,8 @@ sealed class NavScreens(val route:String) {
     //QuizFinish Screen
     object QuizFinishScreen:NavScreens("QuizFinishScreen")
 
+    //Review Quiz Screen
+    object ReviewQuizScreen:NavScreens("ReviewQuizScreen")
+
 
 }
