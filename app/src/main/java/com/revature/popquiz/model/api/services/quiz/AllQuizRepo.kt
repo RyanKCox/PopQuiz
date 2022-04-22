@@ -2,15 +2,16 @@ package com.revature.popquiz.model.api.services.quiz
 
 import android.util.Log
 import com.revature.popquiz.model.api.services.QuizApiService
-import com.revature.popquiz.model.room.quizroom.QuizEntity
+import com.revature.popquiz.model.dataobjects.Quiz
 
 import java.lang.Exception
 
-class AllQuizRepo(val quizService:QuizApiService) {
+class AllQuizRepo(val quizService:QuizApiService)
+{
 
     sealed class Result{
         object Loading:Result()
-        data class Success(val quizList:List<QuizEntity>):Result()
+        data class Success(val quizList:List<Quiz>):Result()
         data class Failure(val throwable: Throwable):Result()
     }
 
@@ -20,10 +21,10 @@ class AllQuizRepo(val quizService:QuizApiService) {
             val resultList =
                 quizService.getQuizzes(RequestAllQuizzes()).quizList
 
-            val quizList:MutableList<QuizEntity> = mutableListOf()
+            val quizList:MutableList<Quiz> = mutableListOf()
             resultList.forEach {
                 quizList.add(
-                    QuizEntity(
+                    Quiz(
                         id = it.nQuizID,
                         title = it.sTitle,
                         shortDescription = it.sCategoryName,

@@ -110,6 +110,9 @@ dependencies {
     // Optional -- Mockk framework
     testImplementation "io.mockk:mockk:1.12.3"
 
+    // Testing with Nav
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
 
 
     //Navigation

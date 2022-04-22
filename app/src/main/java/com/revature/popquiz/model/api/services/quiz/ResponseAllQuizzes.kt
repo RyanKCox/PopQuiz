@@ -15,7 +15,6 @@ data class ResponseAllQuizzes (
     @SerializedName("data")
     var quizList:List<QuizResponse>
 
-
 )
 data class QuizResponse(
 
@@ -26,3 +25,6 @@ data class QuizResponse(
     @SerializedName("categoryName")
     var sCategoryName:String
 )
+
+
+
