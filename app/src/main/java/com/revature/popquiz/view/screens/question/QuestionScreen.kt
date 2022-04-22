@@ -1,23 +1,43 @@
 package com.revature.popquiz.view.screens.question
 
 import android.widget.ProgressBar
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.toUpperCase
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.dataobjects.Answer
+import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.ui.theme.PopQuizTheme
+import com.revature.popquiz.ui.theme.revLightOrange
+import com.revature.popquiz.view.screens.answers
 import com.revature.popquiz.view.shared.QuizScaffold
+import java.util.*
 
 @Composable
 fun QuestionScreen(navController: NavController) {
+    val context= LocalContext.current
+    val questionVM =
+        ViewModelProvider(context as MainActivity)
+            .get(QuestionViewModel::class.java)
 
     val scaffoldState = rememberScaffoldState()
+    val quiz = questionVM.quiz
     QuizScaffold(
-        sTitle = "Quiz Title",
+        sTitle = quiz.title.uppercase(),
         navController = navController,
         content = {
             Column(
@@ -26,8 +46,7 @@ fun QuestionScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Top
             ) {
                 ProgressBar()
-                QuestionCard()
-                SubmitButton()
+                QuestionCard(quiz)
             }
         }
     )
@@ -45,36 +64,30 @@ fun ProgressBar() {
 }
 
 @Composable
-fun QuestionCard() {
+fun QuestionCard(quiz: Quiz) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Card(
-            shape = RoundedCornerShape(25.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(25.dp),
-            elevation = 20.dp
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(0.9f),
-                horizontalAlignment = Alignment.CenterHorizontally
+        quiz.questionList.forEach { question->
+            Card(modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .padding(10.dp),
+                shape = RoundedCornerShape(25.dp), backgroundColor = revLightOrange
             ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                Text(text = "Question #", color = Color.Black)
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(text = "This is an example of a question?", color = Color.Black)
-                Spacer(modifier = Modifier.height(50.dp))
-                AnswerButton(answer = "Answer 1")
-                Spacer(modifier = Modifier.height(10.dp))
-                AnswerButton(answer = "Answer 2")
-                Spacer(modifier = Modifier.height(10.dp))
-                AnswerButton(answer = "Answer 3")
-                Spacer(modifier = Modifier.height(10.dp))
-                AnswerButton(answer = "Answer 4")
+                Column (modifier = Modifier.padding(10.dp)){
+                    Text(text = question.question,fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium)
+                    question.answers.forEach {
+                        answerCard(answer = it)
+
+                    }
+                }
+
             }
+
         }
+        SubmitButton()
     }
 }
 
@@ -119,11 +132,29 @@ fun SubmitButton() {
     }
 }
 
-//@PreviewParameter([ provider = NavController])
+//@Preview()
 //@Composable
-//fun QuestionScreenPreview(navController: NavController) {
+//fun QuestionScreenPreview() {
+//    val navController = rememberNavController()
 //    PopQuizTheme {
 //        QuestionScreen(navController = navController)
 //    }
 //}
 
+@Composable
+fun answerCard(answer: Answer)
+{
+
+    var selectedColor by remember{mutableStateOf(Color.White)}
+    Card(modifier = Modifier
+        .fillMaxWidth(0.9F)
+        .padding(5.dp)
+        .clickable { selectedColor=Color.Gray
+                   answer.selected=true},
+        backgroundColor = selectedColor) {
+        Text(text = answer.sAnswer, modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth())
+
+    }
+}

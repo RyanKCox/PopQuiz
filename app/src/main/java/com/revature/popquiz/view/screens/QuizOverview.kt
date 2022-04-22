@@ -27,6 +27,7 @@ import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
+import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
 
 import com.revature.popquiz.view.shared.basicCard
@@ -41,6 +42,9 @@ fun quizOverView(navController: NavController)
     val quizOverviewVM =
         ViewModelProvider(context as MainActivity)
             .get(QuizOverviewVM::class.java)
+    val questionVM =
+        ViewModelProvider(context as MainActivity)
+            .get(QuestionViewModel::class.java)
     val quiz=quizOverviewVM.quiz
 
 
@@ -189,7 +193,7 @@ fun quizOverView(navController: NavController)
                                                 .fillParentMaxWidth(0.22F)
                                                 .height(50.dp), onclick = {
 
-                                                    //Send correct quiz
+                                                    questionVM.quiz=quiz?:Quiz()
                                                     navController.navigate(NavScreens.QuestionScreen.route)
                                             })
                                             quizViewButton(text = "Cards", modifier = Modifier
