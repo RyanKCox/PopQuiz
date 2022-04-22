@@ -58,7 +58,7 @@ fun EditQuizTitle(navController: NavController){
             Answer("myString.size()",false),
         )
     ))
-    QuizEditor.focusQuiz = tempQuiz
+   // QuizEditor.focusQuiz = tempQuiz
 
     val editQuizVM = ViewModelProvider(context as MainActivity).get(EditQuizVM::class.java)
 

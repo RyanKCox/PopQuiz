@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.revature.popquiz.model.api.RetrofitHelper
 import com.revature.popquiz.model.api.services.quiz.AllQuizRepo
 import com.revature.popquiz.model.dataobjects.Quiz
-import com.revature.popquiz.model.room.quizroom.QuizEntity
 
 
 import kotlinx.coroutines.Dispatchers
@@ -22,13 +21,13 @@ class SearchBarViewModel: ViewModel()
     private lateinit var quizRepo:AllQuizRepo
 
     var sSearchValue by mutableStateOf("")
-    var quizList = mutableListOf<QuizEntity>()
+    var quizList = mutableListOf<Quiz>()
 
-    var sortedList:List<QuizEntity> by mutableStateOf(listOf())
+    var sortedList:List<Quiz> by mutableStateOf(listOf())
 
     fun sortBySearch()
     {
-        var tempList = mutableListOf<QuizEntity>()
+        var tempList = mutableListOf<Quiz>()
         quizList.sortWith(compareBy{it.title})
         quizList.forEach()
         {
@@ -62,7 +61,7 @@ class SearchBarViewModel: ViewModel()
             {
                 quizList = response.quizList.toMutableList()
 
-                var tempList = mutableListOf<QuizEntity>()
+                var tempList = mutableListOf<Quiz>()
                 tempList.addAll(quizList)
                 sortedList = tempList.toList()
             }

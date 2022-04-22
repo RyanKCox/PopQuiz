@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import javax.inject.Inject
 
-
+@Entity(tableName = "quiz")
 data class Quiz(
-
+    @PrimaryKey(autoGenerate = true)
     val id:Int=0,
 
     val questionList: MutableList<Question> = mutableListOf<Question>(),

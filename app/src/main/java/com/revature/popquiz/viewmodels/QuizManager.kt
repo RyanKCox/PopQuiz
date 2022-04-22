@@ -4,7 +4,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import com.revature.popquiz.model.dataobjects.Quiz
-import com.revature.popquiz.model.room.Merge
 import com.revature.popquiz.model.room.RoomDataManager
 import javax.inject.Singleton
 
