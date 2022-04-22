@@ -1,6 +1,5 @@
 package com.revature.popquiz.view.screens.question
 
-import android.util.Log
 import android.widget.ProgressBar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.toUpperCase
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
@@ -22,13 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
-import com.revature.popquiz.model.dataobjects.Quiz
-import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.view.navigation.NavScreens
-import com.revature.popquiz.view.screens.answers
 import com.revature.popquiz.view.shared.QuizScaffold
-import java.util.*
 
 @Composable
 fun QuestionScreen(navController: NavController) {
@@ -123,9 +116,9 @@ fun AnswerButton(answer: String) {
 }
 
 @Composable
-fun SubmitButton(quiz: RunningQuiz) {
+fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
     val context= LocalContext.current
-    val navController= rememberNavController()
+
     val questionVM =
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
