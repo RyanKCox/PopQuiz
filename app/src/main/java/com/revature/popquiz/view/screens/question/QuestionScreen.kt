@@ -125,17 +125,10 @@ fun AnswerButton(answer: String) {
 @Composable
 fun SubmitButton(quiz: RunningQuiz) {
     val context= LocalContext.current
-    val navController= rememberNavController()
     val questionVM =
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
-//    Box(
-//        modifier = Modifier
-//            .height(25.dp)
-//            .fillMaxWidth(),
-//        contentAlignment = Alignment.BottomCenter,
-//    )
-//    {
+
         Button(
             onClick = {
                 quiz.score=0F
