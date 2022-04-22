@@ -15,6 +15,10 @@ class CreateQuizVM : ViewModel() {
     /**
      * Save quiz through the editor
      */
+    fun createNewQuiz(){
+        QuizEditor.createNewQuiz()
+        newQuiz = QuizEditor.focusQuiz
+    }
 
     fun saveQuiz() {
         viewModelScope.launch { QuizEditor.saveQuizToRoom() }

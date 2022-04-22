@@ -140,6 +140,15 @@ fun StartNav(navController: NavHostController)
         //PopQuizSettingsScreen
         composable(NavScreens.PopQuizSettingsScreen.route) {
             PopQuizSettingsScreen(navController = navController)
+
+        //Search quiz overview
+        composable(NavScreens.SearchQuizOverview.route){
+            QuizPreviewDownloadScreen(navController = navController)
+        }
+
+        //Quiz Finish Screen
+        composable(NavScreens.QuizFinishScreen.route){
+            quizComplete(navController = navController)
         }
     }
 }

@@ -112,8 +112,13 @@ fun EditTopic(context: Context, editQuizVM: EditQuizVM){
 
 
     var nSelected by remember { mutableStateOf(0) }
-    var sTopic by remember { mutableStateOf(editQuizVM.editQuiz.tagList[nSelected]) }
     var topicList by remember { mutableStateOf(editQuizVM.editQuiz.tagList)}
+
+    var sTopic by remember{ mutableStateOf("")}
+    if(editQuizVM.editQuiz.tagList.isNotEmpty()) {
+        sTopic = editQuizVM.editQuiz.tagList[nSelected]
+//        var sTopic by remember { mutableStateOf(editQuizVM.editQuiz.tagList[nSelected]) }
+    }
 
     //Text field for a new topic
     OutlinedTextField(
@@ -194,8 +199,12 @@ fun EditTopic(context: Context, editQuizVM: EditQuizVM){
 fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
 
     var nSelected by remember { mutableStateOf(0) }
-    var sResource by remember { mutableStateOf(editQuizVM.editQuiz.resourceList[nSelected]) }
     var resourceList by remember { mutableStateOf(editQuizVM.editQuiz.resourceList)}
+    var sResource by remember{ mutableStateOf("")}
+    if (editQuizVM.editQuiz.resourceList.isNotEmpty()){
+        sResource = editQuizVM.editQuiz.resourceList[nSelected]
+    }
+//    var sResource by remember { mutableStateOf(editQuizVM.editQuiz.resourceList[nSelected]) }
 
     //Text Field for new Link
     OutlinedTextField(
@@ -259,8 +268,9 @@ fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
         for (topic in resourceList) {
 
             Text(
-                text = topic.substringAfterLast('/'),
+                text = topic,
                 style = MaterialTheme.typography.body2,
+                maxLines = 1,
                 modifier = Modifier.clickable {
                     nSelected = editQuizVM.editQuiz.resourceList.indexOf(topic)
                     sResource = editQuizVM.editQuiz.resourceList[nSelected]

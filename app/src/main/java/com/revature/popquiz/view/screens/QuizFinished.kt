@@ -23,8 +23,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.ui.theme.Teal200
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
 
 
@@ -32,9 +34,13 @@ import com.revature.popquiz.view.shared.QuizScaffold
 fun quizComplete(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
+    val questionVM =
+        ViewModelProvider(context as MainActivity)
+            .get(QuestionViewModel::class.java)
+    val quiz=questionVM.runningQuiz
 
     QuizScaffold(
-        sTitle = "Quiz Completed",
+        sTitle = "QUIZ COMPLETE",
         navController = navController
     )
     {
@@ -64,7 +70,7 @@ fun quizComplete(navController: NavController) {
                             )
                             {
                                 Text(
-                                    text = "Quiz Complete",
+                                    text = questionVM.quiz.title.uppercase(),
                                     fontSize = 30.sp,
                                     fontWeight = FontWeight.Medium,
                                     modifier = Modifier.padding(20.dp)
@@ -83,7 +89,7 @@ fun quizComplete(navController: NavController) {
                                     // modifier = Modifier.padding(15.dp)
                                     ) {
                                         Text(
-                                            ("Congratulations! \n Your Score is \n %")
+                                            ("Your Score is \n ${quiz.finalScore}%")
                                         )
 
                                     }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -23,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodels.SearchBarViewModel
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
@@ -45,7 +45,7 @@ fun SearchQuizzesScreen(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            SearchQuizzesBody()
+            SearchQuizzesBody(navController)
         }
 
     }
@@ -54,13 +54,12 @@ fun SearchQuizzesScreen(navController: NavController)
 
 @ExperimentalAnimationApi
 @Composable
-fun SearchQuizzesBody()
+fun SearchQuizzesBody(navController: NavController)
 {
     var context = LocalContext.current
     var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
     var x = searchBarViewModel.sSearchValue
     var sSearchValue by remember { mutableStateOf(x) }
-//    sSearchValue = searchBarViewModel.sSearchValue
     val lazyState = rememberLazyListState()
 
     searchBarViewModel.sortBySearch() //sorts the list
@@ -111,7 +110,9 @@ fun SearchQuizzesBody()
                 QuizCardForLazyColumn(
                     quizTitleText = Quiz.title,
                     shortQuizDescriptionText = Quiz.shortDescription
-                )
+                ){
+                    navController.navigate(NavScreens.SearchQuizOverview.route)
+                }
             }
         }
     }
