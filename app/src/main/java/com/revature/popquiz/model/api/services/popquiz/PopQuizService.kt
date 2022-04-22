@@ -14,7 +14,7 @@ import android.content.Intent
  * then connect to actual popquiz
  */
 @SuppressLint("UnspecifiedImmutableFlag")
-private fun setAlarm(context: Context) {
+fun setAlarm(context: Context) {
     /**
      * CURRENTLY this will set an alarm for 5000 milliseconds in the future.
      */
