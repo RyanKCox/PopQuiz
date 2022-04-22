@@ -65,6 +65,34 @@ class PopQuizViewModel: ViewModel() {
             }
     }
 
+    //Function to be send Notification when PopQuiz is completed
+    private fun setCompleteNotification(): Boolean {
+        createPopQuizCompleteNotification()
+        return true
+    }
+
+    private fun createNotificationChannel(context: Context) {
+
+        //Create the NotificationChannel
+        //This is only available in SDK Version 26+
+        /**
+         * Higher notification importance: shows everywhere, makes noise and peeks. May use full screen intents.
+         */
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = "NotificationChannelName"
+            val descriptionText = "NotificationChannelDescriptionText"
+            val importance = IMPORTANCE_HIGH
+            val channel = NotificationChannel("CHANNEL_ID", notificationChannel, importance).apply {
+                description = descriptionText
+            }
+            //Register the channel with the system
+            val notificationManager: NotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     private fun createSuccessNotification() {
         val notificationId = 1
         val builder = NotificationCompat.Builder(
@@ -99,25 +127,15 @@ class PopQuizViewModel: ViewModel() {
         }
     }
 
-    private fun createNotificationChannel(context: Context) {
-
-        //Create the NotificationChannel
-        //This is only available in SDK Version 26+
-        /**
-         * Higher notification importance: shows everywhere, makes noise and peeks. May use full screen intents.
-         */
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = "NotificationChannelName"
-            val descriptionText = "NotificationChannelDescriptionText"
-            val importance = IMPORTANCE_HIGH
-            val channel = NotificationChannel("CHANNEL_ID", notificationChannel, importance).apply {
-                description = descriptionText
-            }
-            //Register the channel with the system
-            val notificationManager: NotificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+    private fun createPopQuizCompleteNotification() {
+        val notificationId = 3
+        val builder = NotificationCompat.Builder(Graph.appContext, "CHANNEL_ID")
+            .setSmallIcon(R.drawable.rev_logo_2)
+            .setContentTitle("Pop!Quiz Completed, nice job!")
+            .setContentText("Thank you for completing your Pop!Quiz today.")
+            .setPriority((NotificationCompat.PRIORITY_HIGH))
+        with(NotificationManagerCompat.from(Graph.appContext)) {
+            notify(notificationId, builder.build())
         }
     }
 }
