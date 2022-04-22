@@ -47,7 +47,8 @@ fun SearchQuizzesScreen(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            SearchQuizzesBody(navController = NavController(context))
+            SearchQuizzesBody(navController)
+
         }
 
     }
@@ -62,7 +63,6 @@ fun SearchQuizzesBody(navController: NavController)
     var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
     var x = searchBarViewModel.sSearchValue
     var sSearchValue by remember { mutableStateOf(x) }
-//    sSearchValue = searchBarViewModel.sSearchValue
     val lazyState = rememberLazyListState()
 
     searchBarViewModel.sortBySearch() //sorts the list
@@ -114,6 +114,10 @@ fun SearchQuizzesBody(navController: NavController)
                 QuizCardForLazyColumn(
                     quizTitleText = Quiz.title,
                     shortQuizDescriptionText = Quiz.shortDescription
+                ){
+                    navController.navigate(NavScreens.SearchQuizOverview.route)
+                }
+
             }
         }
     }

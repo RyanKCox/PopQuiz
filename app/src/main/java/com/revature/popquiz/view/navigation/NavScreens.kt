@@ -48,4 +48,7 @@ sealed class NavScreens(val route:String)
     //Quiz Overview
     object QuizOverviewScreen:NavScreens("QuizOverviewScreen")
 
+    //SearchQuizOverview
+    object SearchQuizOverview:NavScreens("SearchQuizOverviewScreen")
+
 }

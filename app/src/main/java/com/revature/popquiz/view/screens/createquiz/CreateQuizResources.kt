@@ -271,9 +271,11 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
         //Display all links to user
         for (topic in createQuizVM.newQuiz.resourceList) {
 
+
             Text(
-                text = topic.substringAfterLast('/'),
-                style = MaterialTheme.typography.body2
+                text = topic/*.substringAfterLast('/')*/,
+                style = MaterialTheme.typography.body2,
+                maxLines = 1
             )
         }
         Spacer(Modifier.size(10.dp))
