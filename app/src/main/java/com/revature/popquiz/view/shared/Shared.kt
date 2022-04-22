@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,8 +28,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 
 import androidx.navigation.NavController
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.ui.theme.revDarkGrey
@@ -36,6 +39,7 @@ import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.quizTags
+import com.revature.popquiz.viewmodel.CreateQuizVM
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -354,6 +358,8 @@ fun inDrawer(
 )
 {
 
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize(0.9F)
@@ -411,7 +417,11 @@ fun inDrawer(
                 scope.launch {
 
                     //Setup for Create Quiz Screen
-                    QuizEditor.createNewQuiz()
+                    //QuizEditor.createNewQuiz()
+
+                    var createQuizVM = ViewModelProvider(context as MainActivity).get(CreateQuizVM::class.java)
+
+                    createQuizVM.createNewQuiz()
 
                     navController.navigate(NavScreens.CreateQuizTitle.route)
                     scaffoldState.drawerState.close()

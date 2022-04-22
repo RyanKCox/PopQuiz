@@ -39,6 +39,8 @@ fun CreateQuizTitle(
         ViewModelProvider(context as MainActivity)
             .get(CreateQuizVM::class.java)
 
+//    createQuizVM.createNewQuiz()
+
     //Use Scaffold created for app
     QuizScaffold(
         sTitle = "Quiz Title",
