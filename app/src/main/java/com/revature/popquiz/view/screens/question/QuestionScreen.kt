@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens.question
 
+import android.util.Log
 import android.widget.ProgressBar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,9 +21,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
+import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.ui.theme.revLightOrange
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.answers
 import com.revature.popquiz.view.shared.QuizScaffold
 import java.util.*
@@ -34,8 +37,14 @@ fun QuestionScreen(navController: NavController) {
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
 
+
     val scaffoldState = rememberScaffoldState()
-    val quiz = questionVM.quiz
+    val quiz = questionVM.quiz.copy()
+    val runningQuiz=RunningQuiz()
+
+
+    runningQuiz.questions=quiz.questionList
+    runningQuiz.maxScore=runningQuiz.questions.size.toFloat()
     QuizScaffold(
         sTitle = quiz.title.uppercase(),
         navController = navController,
@@ -45,8 +54,9 @@ fun QuestionScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                ProgressBar()
-                QuestionCard(quiz)
+
+                QuestionCard(runningQuiz)
+                SubmitButton(runningQuiz)
             }
         }
     )
@@ -64,12 +74,12 @@ fun ProgressBar() {
 }
 
 @Composable
-fun QuestionCard(quiz: Quiz) {
+fun QuestionCard(quiz: RunningQuiz) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        quiz.questionList.forEach { question->
+        quiz.questions.forEach { question->
             Card(modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .padding(10.dp),
@@ -79,7 +89,8 @@ fun QuestionCard(quiz: Quiz) {
                     Text(text = question.question,fontSize = 18.sp,
                         fontWeight = FontWeight.Medium)
                     question.answers.forEach {
-                        answerCard(answer = it)
+
+                        answerCard(answer = it, question = question, quiz = quiz)
 
                     }
                 }
@@ -87,7 +98,7 @@ fun QuestionCard(quiz: Quiz) {
             }
 
         }
-        SubmitButton()
+
     }
 }
 
@@ -112,15 +123,29 @@ fun AnswerButton(answer: String) {
 }
 
 @Composable
-fun SubmitButton() {
-    Box(
-        modifier = Modifier
-            .height(25.dp)
-            .fillMaxWidth(),
-        contentAlignment = Alignment.BottomCenter,
-    ) {
+fun SubmitButton(quiz: RunningQuiz) {
+    val context= LocalContext.current
+    val navController= rememberNavController()
+    val questionVM =
+        ViewModelProvider(context as MainActivity)
+            .get(QuestionViewModel::class.java)
+//    Box(
+//        modifier = Modifier
+//            .height(25.dp)
+//            .fillMaxWidth(),
+//        contentAlignment = Alignment.BottomCenter,
+//    )
+//    {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                quiz.score=0F
+                val score = calculateScore(quiz)
+                quiz.finalScore=score*100
+                questionVM.runningQuiz=quiz
+
+                //go to finished screen
+                //navController.navigate(NavScreens.FinishedQuizScreen.route)
+                      },
             modifier = Modifier
                 .fillMaxWidth(0.7f)
                 .padding(10.dp),
@@ -129,7 +154,7 @@ fun SubmitButton() {
         ) {
             Text(text = "Submit")
         }
-    }
+   // }
 }
 
 //@Preview()
@@ -142,19 +167,41 @@ fun SubmitButton() {
 //}
 
 @Composable
-fun answerCard(answer: Answer)
+fun answerCard(quiz: RunningQuiz,question: Question, answer: Answer)
 {
 
     var selectedColor by remember{mutableStateOf(Color.White)}
     Card(modifier = Modifier
         .fillMaxWidth(0.9F)
         .padding(5.dp)
-        .clickable { selectedColor=Color.Gray
-                   answer.selected=true},
+        .clickable {
+            if (selectedColor == Color.White) {
+                selectedColor = Color.Gray
+                quiz.oneAnswerQuestion.put(question, answer)
+            } else {
+                selectedColor = Color.White
+                quiz.oneAnswerQuestion.remove(question)
+            }
+        }   ,
         backgroundColor = selectedColor) {
         Text(text = answer.sAnswer, modifier = Modifier
             .padding(5.dp)
             .fillMaxWidth())
 
     }
+}
+fun calculateScore(quiz: RunningQuiz):Float
+{
+    var finalScore:Float=0F
+
+    quiz.questions.forEach { question->
+        question.answers.forEach { answer->
+        if(answer.bCorrect&&answer==quiz.oneAnswerQuestion[question])
+        {
+            quiz.score++
+        }
+    }
+}
+    finalScore=(quiz.score/quiz.maxScore!!)
+    return finalScore
 }
