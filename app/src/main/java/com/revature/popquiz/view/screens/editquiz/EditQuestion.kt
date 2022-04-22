@@ -82,8 +82,7 @@ fun EditQuestionBody(
     for (answer in editQuizVM.editQuiz.questionList[editQuizVM.editQuestionIndex].answers) {
         list.add(answer.copy())
     }
-    var answerList:MutableList<Answer> = list
-
+    var answerList:MutableList<Answer> = remember{ list }
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
