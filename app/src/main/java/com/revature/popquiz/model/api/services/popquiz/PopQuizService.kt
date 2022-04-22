@@ -20,6 +20,7 @@ fun setAlarm(context: Context) {
      * set multiple alarms at intervals? 30 minutes?
      */
 //    val time = Calendar.getInstance().set(Calendar.HOUR_OF_DAY, 12)
+//    val time = System.currentTimeInMillis() + 5000 //5 seconds
     val time = AlarmManager.INTERVAL_HALF_HOUR
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val intent = Intent(context, PopQuizReceiver::class.java)
