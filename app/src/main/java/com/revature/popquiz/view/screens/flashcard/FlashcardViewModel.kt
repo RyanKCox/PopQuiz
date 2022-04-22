@@ -1,8 +1,10 @@
 package com.revature.popquiz.view.screens.flashcard
 
 import androidx.lifecycle.ViewModel
+import com.revature.popquiz.model.dataobjects.Quiz
 
 class FlashcardViewModel: ViewModel() {
 
-//    val apiService = RetrofitHelper.getFlashcardsService()
+    var quiz: Quiz? = null
+
 }

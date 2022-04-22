@@ -9,6 +9,7 @@ import com.revature.popquiz.model.api.services.quiz.ResponseRetrieveQuizByID
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * Service interface containing all service calls for the PopQuiz Api
@@ -26,10 +27,10 @@ interface QuizApiService {
     suspend fun getPopQuiz(@Body RequestPopQuiz: RequestPopQuiz): ResponsePopQuiz
 
     // Retrieves quiz by ID
-    @GET("/quiz/secure/1")
-    suspend fun getQuizById(): ResponseRetrieveQuizByID
+    @GET("/quiz/secure/{id}")
+    suspend fun getQuizById(@Path("id") id:Int): ResponseRetrieveQuizByID
 
     // Retrieve quiz question by ID
-    @GET("/quiz/secure/questions/1")
-    suspend fun getQuestionById() : ResponseRetrieveQuestionByID
+    @GET("/quiz/secure/questions/{id}")
+    suspend fun getQuestionById(@Path("id") id:Int) : ResponseRetrieveQuestionByID
 }
