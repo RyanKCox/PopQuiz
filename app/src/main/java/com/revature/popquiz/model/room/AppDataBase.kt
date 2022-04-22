@@ -4,19 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.revature.popquiz.model.room.answerroom.AnswerDao
-import com.revature.popquiz.model.room.answerroom.AnswerEntity
-import com.revature.popquiz.model.room.questionroom.QuestionDao
-import com.revature.popquiz.model.room.questionroom.QuestionEntity
+import androidx.room.TypeConverters
+import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.model.room.quizroom.QuizDao
-import com.revature.popquiz.model.room.quizroom.QuizEntity
 
 
-@Database(entities = [QuizEntity::class,QuestionEntity::class,AnswerEntity::class],version=2, exportSchema = false)
+
+@Database(entities = [Quiz::class],version=3, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class AppDataBase:RoomDatabase() {
     abstract fun quizDao(): QuizDao
-    abstract fun questionDao(): QuestionDao
-    abstract fun answerDao(): AnswerDao
+
     companion object{
         @Volatile
         private var INSTANCE: AppDataBase?=null
@@ -29,7 +27,7 @@ abstract class AppDataBase:RoomDatabase() {
             synchronized(this)
             {
                val tempinstance= Room.databaseBuilder(context.applicationContext,
-                    AppDataBase::class.java,"QUIZDATA").fallbackToDestructiveMigration().build()
+                    AppDataBase::class.java,"QUIZDATA1").fallbackToDestructiveMigration().build()
                 INSTANCE =tempinstance
                 return tempinstance
             }

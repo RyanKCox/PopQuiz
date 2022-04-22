@@ -16,8 +16,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
@@ -27,26 +30,18 @@ import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 
 import com.revature.popquiz.view.shared.basicCard
+import com.revature.popquiz.viewmodel.CreateQuizVM
+import com.revature.popquiz.viewmodel.QuizOverviewVM
 
 
 @Composable
 fun quizOverView(navController: NavController)
 {
-    val quiz = Quiz()
-    val quiz2 = Quiz()
-    val question = Question(question = "This is a question")
-    val question2 = Question(question = "This is another question")
-    val question3 = Question(question = "This is third question")
-    val answer = Answer(sAnswer = "This is an answer")
-    question.answers.add(answer)
-    question3.answers.add(answer)
-    quiz2.questionList.add(question3)
-    quiz.title="Arrays"
-    quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
-            " This includes properties of arrays and their usage"
-    quiz.tagList.add(0,"Index")
-    quiz.tagList.add(1,"Arrays")
-    quiz.questionList.add(question)
+    val context= LocalContext.current
+    val quizOverviewVM =
+        ViewModelProvider(context as MainActivity)
+            .get(QuizOverviewVM::class.java)
+    val quiz=quizOverviewVM.quiz
 
 
     val checkedState=remember{ mutableStateOf(false)}
@@ -82,14 +77,14 @@ fun quizOverView(navController: NavController)
                                 item {
                                     Spacer(modifier = Modifier.height(20.dp))
                                     Text(
-                                        text = "${quiz.title} Quiz",
+                                        text = "${quiz?.title} Quiz",
                                         fontSize = 30.sp,
                                         fontWeight = FontWeight.Medium,
                                         modifier = Modifier.padding(20.dp)
                                     )
                                     Spacer(modifier = Modifier.height(20.dp))
 //description
-                                    basicCard(title = "Description:", info = quiz.longDescription)
+                                    basicCard(title = "Description:", info = quiz?.longDescription?:"")
 
                                     Spacer(modifier = Modifier.height(20.dp))
 //Topics
@@ -108,7 +103,7 @@ fun quizOverView(navController: NavController)
                                             )
 
                                             Row() {
-                                                quiz.tagList.forEach { tag ->
+                                                quiz?.tagList?.forEach { tag ->
                                                     Text(
                                                         text = "-$tag",
                                                         fontSize = 15.sp,
@@ -162,13 +157,13 @@ fun quizOverView(navController: NavController)
                                     }
                                     Spacer(modifier = Modifier.height(20.dp))
 //Sample Quiz
-                                    if(quiz.questionList.isNotEmpty())
-                                    {
+
+
                                         basicCard(
                                             title = "Sample Question: ",
-                                            info = quiz.questionList[0].question
+                                            info = "Sample Question"
                                         )
-                                    }
+
 
 
 
@@ -186,7 +181,7 @@ fun quizOverView(navController: NavController)
                                                 .fillParentMaxWidth(0.22F)
                                                 .height(50.dp), onclick = {
 
-                                                    //Send Correct Quiz
+                                                    QuizEditor.focusQuiz=quiz?:Quiz()
                                                     navController.navigate(NavScreens.EditQuizTitle.route)
 
                                             })
