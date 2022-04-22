@@ -268,8 +268,9 @@ fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
         for (topic in resourceList) {
 
             Text(
-                text = topic.substringAfterLast('/'),
+                text = topic,
                 style = MaterialTheme.typography.body2,
+                maxLines = 1,
                 modifier = Modifier.clickable {
                     nSelected = editQuizVM.editQuiz.resourceList.indexOf(topic)
                     sResource = editQuizVM.editQuiz.resourceList[nSelected]
