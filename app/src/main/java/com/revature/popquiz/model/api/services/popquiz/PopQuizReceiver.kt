@@ -9,6 +9,4 @@ class PopQuizReceiver: BroadcastReceiver() {
     override fun onReceive(p0: Context?, p1: Intent?) {
         TODO("Not yet implemented")
     }
-
-
 }
