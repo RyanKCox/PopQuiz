@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -111,7 +110,9 @@ fun SearchQuizzesBody()
                 QuizCardForLazyColumn(
                     quizTitleText = Quiz.title,
                     shortQuizDescriptionText = Quiz.shortDescription
-                )
+                ){
+
+                }
             }
         }
     }
