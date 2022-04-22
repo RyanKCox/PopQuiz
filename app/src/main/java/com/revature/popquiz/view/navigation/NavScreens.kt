@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.navigation
 
-sealed class NavScreens(val route:String) {
+sealed class NavScreens(val route:String)
+{
 
     //Login
     object LoginScreen:NavScreens("LoginScreen")
@@ -22,6 +23,9 @@ sealed class NavScreens(val route:String) {
 
     // Search Quizzes Screen
     object SearchQuizzesScreen: NavScreens("SearchQuizzesScreen")
+
+    // Quiz Preview Download Screen
+    object QuizPreviewDownloadScreen: NavScreens("QuizPreviewDownloadScreen")
 
     //Quiz Question Screen
     object QuestionScreen: NavScreens("QuestionScreen")

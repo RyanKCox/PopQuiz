@@ -50,7 +50,8 @@ fun quizOverView(navController: NavController)
 
     val checkedState=remember{ mutableStateOf(false)}
 
-    QuizScaffold(sTitle = "Quiz Overview", navController = navController) {
+    QuizScaffold(sTitle = "Quiz Overview", navController = navController)
+    {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,

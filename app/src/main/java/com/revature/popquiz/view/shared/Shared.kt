@@ -223,7 +223,7 @@ fun ClickedSearchBar(
 fun QuizCardForLazyColumn(
     quizTitleText: String,
     shortQuizDescriptionText: String,
-    bRemovable:Boolean = false,
+    bRemovable: Boolean = false,
     onClick: () -> Unit = {}
 )
 {
@@ -231,7 +231,8 @@ fun QuizCardForLazyColumn(
         modifier =
         Modifier
             .clickable {
-                onClick()
+                onClick(
+                )
             }
             .height(150.dp)
             .fillMaxWidth()
@@ -298,6 +299,7 @@ fun QuizCardForLazyColumn(
         }
     }
 }
+
 
 @Composable
 fun basicCard(title: String, info: String) {

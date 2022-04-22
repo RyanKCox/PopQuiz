@@ -7,7 +7,7 @@ data class ResponseRetrieveQuizByID(
     @SerializedName("description")
     var quizDescription: String,
     @SerializedName("data")
-    var quizDataList: List<QuizDataResponse>
+    var quizDataList: QuizDataResponse
 )
 
 data class QuizDataResponse(
@@ -39,7 +39,7 @@ data class QuizPoolQuestionsResponse(
     @SerializedName("id")
     var quizPoolsQuestionsId: Int,
     @SerializedName("question")
-    var quizPoolsQuestionList: List<QuizPoolQuestionResponse>
+    var quizPoolsQuestion: QuizPoolQuestionResponse
 )
 
 data class QuizPoolQuestionResponse(
