@@ -35,6 +35,9 @@ sealed class NavScreens(val route:String) {
     //PopQuiz Screen
     object PopQuizScreen: NavScreens("PopQuizScreen")
 
+    //PopQuizSettings Screen
+    object PopQuizSettingsScreen: NavScreens("PopQuizSettingsScreen")
+
     //Profile Screen
     object ProfileScreen:NavScreens("ProfileScreen")
 
