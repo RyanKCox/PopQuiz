@@ -8,15 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import com.revature.popquiz.model.room.quizroom.QuizRepository
 import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.model.room.quizroom.QuizRepository
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
 import com.revature.popquiz.viewmodels.QuizManager
-
 import com.revature.popquiz.viewmodels.SplashScreenViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -73,6 +71,7 @@ class MainActivity : ComponentActivity()
                 )
                 {
                     //Navigation Start
+//                    PopQuizSettingsScreen(navController = navController)
                     StartNav(navController = navController)
                     //QuestionScreen()
 

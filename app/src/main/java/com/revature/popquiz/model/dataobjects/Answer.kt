@@ -4,4 +4,5 @@ data class Answer(
 
     var sAnswer:String="",
 
-   var bCorrect:Boolean=false)
+   var bCorrect:Boolean=false
+)
