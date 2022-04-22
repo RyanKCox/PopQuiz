@@ -146,5 +146,10 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.SearchQuizOverview.route){
             QuizPreviewDownloadScreen(navController = navController)
         }
+
+        //Quiz Finish Screen
+        composable(NavScreens.QuizFinishScreen.route){
+            quizComplete(navController = navController)
+        }
     }
 }
