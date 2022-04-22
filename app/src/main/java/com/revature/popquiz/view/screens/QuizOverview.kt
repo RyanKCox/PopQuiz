@@ -27,6 +27,7 @@ import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
+import com.revature.popquiz.view.screens.flashcard.FlashcardViewModel
 import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -201,8 +202,11 @@ fun quizOverView(navController: NavController)
                                                 .fillParentMaxWidth(0.22F)
                                                 .height(50.dp), onclick = {
 
-                                                    //Send Correct Quiz
-                                                    navController.navigate(NavScreens.FlashcardScreen.route)
+                                                //Send Correct Quiz
+                                                var flashVM = ViewModelProvider(context as MainActivity).get(FlashcardViewModel::class.java)
+                                                flashVM.startFlashCards(quiz?:Quiz())
+
+                                                navController.navigate(NavScreens.FlashcardScreen.route)
 
                                             })
 
