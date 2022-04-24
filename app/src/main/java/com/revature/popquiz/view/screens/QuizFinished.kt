@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.ui.theme.Teal200
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -95,7 +96,7 @@ fun quizComplete(navController: NavController) {
                                     }
                                 }
 
-                                    reviewAnswersButton()
+                                    reviewAnswersButton(navController)
                                     shareButton()
                                     shareButton()
                                     exitButton()
@@ -113,7 +114,7 @@ fun quizComplete(navController: NavController) {
 }
 
 @Composable
-fun reviewAnswersButton(/*navController: NavController*/) {
+fun reviewAnswersButton(navController: NavController) {
     Button(modifier = Modifier
         .padding(10.dp)
         .height(100.dp)
@@ -123,7 +124,7 @@ fun reviewAnswersButton(/*navController: NavController*/) {
         onClick = {
 
             //Send toy to trade request screen and navigate
-            // navController.navigate(NavScreens.AcceptTradeScreen.route)
+            navController.navigate(NavScreens.ReviewQuizScreen.route)
         })
     {
         Text(
@@ -180,7 +181,7 @@ fun exitButton(/*navController: NavController*/) {
     }
 }
 @Composable
-fun quizFinishedScreen(/*navController: NavController*/) {
+fun quizFinishedScreen(navController: NavController) {
     val context = LocalContext.current
 //    val userToysViewModel =
 //        ViewModelProvider(context as MainActivity).get(UserToysViewModel::class.java)
@@ -229,7 +230,7 @@ fun quizFinishedScreen(/*navController: NavController*/) {
                         )
                         {
                             //quizComplete()
-                            reviewAnswersButton()
+                            reviewAnswersButton(navController = navController)
                             shareButton()
                             shareButton()
                             exitButton()
