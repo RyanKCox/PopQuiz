@@ -426,6 +426,7 @@ fun questionTypeDropDown(nSelected:Int, answers:MutableList<Answer>):Int{
                     textFieldSize = it.size.toSize()
                 },
             label = {Text("Question Type")},
+            readOnly = true,
             trailingIcon = {
                 Icon(icon,"DropDown",
                     Modifier.clickable { mExpanded = !mExpanded }

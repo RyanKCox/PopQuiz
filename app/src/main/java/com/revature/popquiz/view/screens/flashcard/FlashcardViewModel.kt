@@ -10,7 +10,7 @@ import com.revature.popquiz.model.dataobjects.Quiz
  */
 class FlashcardViewModel: ViewModel() {
 
-    private var currentQuiz: Quiz? = null
+    var currentQuiz: Quiz? = null
 
     fun startFlashCards(quiz:Quiz){
         currentQuiz = quiz

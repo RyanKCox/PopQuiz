@@ -1,20 +1,25 @@
 package com.revature.popquiz.view.screens.flashcard
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 
 import androidx.navigation.NavController
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuestionInterface
+import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -23,6 +28,10 @@ fun FlashCardScreen(
 
     navController: NavController
 ) {
+
+    var lazyState = rememberLazyListState()
+    val context = LocalContext.current
+    var flashVM = ViewModelProvider(context as MainActivity).get(FlashcardViewModel::class.java)
 
     QuizScaffold(
         sTitle = "Flashcards",
@@ -49,9 +58,37 @@ fun FlashCardScreen(
                 )
                 {
 
+                    LazyColumn(
+                        state = lazyState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(.5f)
+                    ){
 
+                        items(flashVM.currentQuiz?.questionList!!.toList()){
+                            if (it.nType != QuestionInterface.QUESTION_TYPE_MULTI_ANSWER)
+                                FlashCard(it)
 
-                    FlashCard()
+                        }
+
+                    }
+//                    Divider(
+//                        color = Color.Gray,
+//                        thickness = 5.dp
+//                    )
+//
+//                    Button(
+//                        onClick = {
+//
+//                            navController.popBackStack()
+//                        }
+//                    ) {
+//                        Text(
+//                            text = "Done",
+//                            style = MaterialTheme.typography.h5
+//                        )
+//                    }
+
                 }
 
             }
@@ -60,38 +97,34 @@ fun FlashCardScreen(
 }
 
 @Composable
-fun FlashCard() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            val duration: Int by remember { mutableStateOf(400) }
-            val flipOnTouchEnabled: Boolean by remember { mutableStateOf(true) }
-            val flipEnabled: Boolean by remember { mutableStateOf(true) }
-            val autoFlipEnabled: Boolean by remember { mutableStateOf(false) }
-            val selectedAnimType: FlipAnimationType by remember { mutableStateOf(
-                FlipAnimationType.VERTICAL_ANTI_CLOCKWISE
-            ) }
-            val flipController = rememberFlipController()
+fun FlashCard(question: Question) {
 
-            Flippable(
-                frontSide = { FlashCardFrontSide(flipController = flipController) },
-                backSide = { FlashCardBackSide(flipController = flipController) },
-                flipController = flipController,
-                flipDurationMs = duration,
-                flipOnTouch = flipOnTouchEnabled,
-                flipEnabled = flipEnabled,
-                autoFlip = autoFlipEnabled,
-                autoFlipDurationMs = 2000,
-                flipAnimationType = selectedAnimType
-            )
-        }
+    val duration: Int by remember { mutableStateOf(400) }
+    val flipOnTouchEnabled: Boolean by remember { mutableStateOf(true) }
+    val flipEnabled: Boolean by remember { mutableStateOf(true) }
+    val autoFlipEnabled: Boolean by remember { mutableStateOf(false) }
+    val selectedAnimType: FlipAnimationType by remember { mutableStateOf(
+        FlipAnimationType.VERTICAL_ANTI_CLOCKWISE
+    ) }
+    val flipController = rememberFlipController()
+
+    var sAnswer = ""
+    question.answers.forEach {
+        if (it.bCorrect)
+            sAnswer = it.sAnswer
     }
+
+    Flippable(
+        frontSide = { FlashCardFrontSide(flipController = flipController, question = question.question) },
+        backSide = { FlashCardBackSide(flipController = flipController, answer = sAnswer) },
+        flipController = flipController,
+        flipDurationMs = duration,
+        flipOnTouch = flipOnTouchEnabled,
+        flipEnabled = flipEnabled,
+        autoFlip = autoFlipEnabled,
+        autoFlipDurationMs = 2000,
+        flipAnimationType = selectedAnimType
+    )
 }
 
 @Preview

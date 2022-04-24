@@ -24,4 +24,5 @@ interface QuizDao {
             "OR longDescription LIKE '%' || :search || '%' ")
     fun fetchWithSearch(search:String): LiveData<List<Quiz>>
 
+
 }

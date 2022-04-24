@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -268,6 +269,8 @@ fun EditQuizQuestionBody(
             onClick = {
 
                 //Save to Quiz and navigate
+                editQuizVM.updateQuizToRoom()
+
                 navController.popBackStack(NavScreens.EditQuizTitle.route,true)
             }
         ) {
