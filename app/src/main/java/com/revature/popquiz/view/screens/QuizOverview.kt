@@ -9,7 +9,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,8 +22,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.QuizEditor
-import com.revature.popquiz.model.dataobjects.Answer
-import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
@@ -34,7 +31,6 @@ import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
 
 import com.revature.popquiz.view.shared.basicCard
-import com.revature.popquiz.viewmodel.CreateQuizVM
 import com.revature.popquiz.viewmodel.QuizOverviewVM
 
 
@@ -46,7 +42,7 @@ fun quizOverView(navController: NavController)
         ViewModelProvider(context as MainActivity)
             .get(QuizOverviewVM::class.java)
     val questionVM =
-        ViewModelProvider(context as MainActivity)
+        ViewModelProvider(context)
             .get(QuestionViewModel::class.java)
     val quiz=quizOverviewVM.quiz
 
@@ -205,7 +201,7 @@ fun quizOverView(navController: NavController)
                                                 .height(50.dp), onclick = {
 
                                                 //Send Correct Quiz
-                                                var flashVM = ViewModelProvider(context as MainActivity).get(FlashcardViewModel::class.java)
+                                                val flashVM = ViewModelProvider(context).get(FlashcardViewModel::class.java)
                                                 flashVM.startFlashCards(quiz?:Quiz())
 
                                                 navController.navigate(NavScreens.FlashcardScreen.route)
@@ -226,7 +222,7 @@ fun quizOverView(navController: NavController)
 
                 }
                 //This is the scrollable page
-                item() {
+                item {
                     Column(modifier = Modifier.fillParentMaxWidth(0.9F)) {
                         Card(
                             shape = RoundedCornerShape(25.dp),
