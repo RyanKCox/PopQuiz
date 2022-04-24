@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -28,12 +27,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.QuestionInterface
-import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
-import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.TextEnums
+import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
 import com.revature.popquiz.viewmodels.QuizManager
 
@@ -194,8 +193,15 @@ fun questionCheck(
             "Question Field must be filled out",
             Toast.LENGTH_LONG
         ).show()
-
-    } else if (questionType == QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER) {
+    }
+    else if (sQuestionTitle.length > TextEnums.MAX_QUESTION_LENGTH){
+        Toast.makeText(
+            context,
+            "Question too long!",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+    else if (questionType == QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER) {
 
         var nCount = 0
         answerList.forEach { answer ->
@@ -244,7 +250,7 @@ fun questionCheck(
 @Composable
 fun trueFalseQuestion(answers:MutableList<Answer>):MutableList<Answer> {
 
-    var answerList:MutableList<Answer> = answers //by remember {mutableStateOf( answer)}
+    val answerList:MutableList<Answer> = answers //by remember {mutableStateOf( answer)}
 
 
     var trueCheck by remember { mutableStateOf(if(answerList.isNotEmpty()) answerList[0].bCorrect else true) }
@@ -297,13 +303,18 @@ fun trueFalseQuestion(answers:MutableList<Answer>):MutableList<Answer> {
 
 }
 @Composable
-fun questionAnswers(context:Context, answers:MutableList<Answer>):MutableList<Answer>{
+fun questionAnswers(
+    context:Context,
+    answers:MutableList<Answer>
+):MutableList<Answer>{
 
     var sAnswer by remember { mutableStateOf("")}
-    var answerList:MutableList<Answer> = answers
-//    var answerList by remember {mutableStateOf( answers.toTypedArray())}
+    val answerList:MutableList<Answer> = answers
 
 
+    if(sAnswer.length > TextEnums.MAX_ANSWER_LENGTH) {
+        TextLengthPrompt(maxLength = TextEnums.MAX_ANSWER_LENGTH)
+    }
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(.8f),
         value = sAnswer,
@@ -318,7 +329,10 @@ fun questionAnswers(context:Context, answers:MutableList<Answer>):MutableList<An
                 contentDescription = "Add Answer Icon",
                 modifier = Modifier
                     .clickable {
-                        if (sAnswer.isNotEmpty() && answerList.size <= 3) {
+                        if (sAnswer.isNotEmpty()
+                            && answerList.size <= 3
+                            && sAnswer.length <= TextEnums.MAX_ANSWER_LENGTH
+                        ) {
                             answerList.add(Answer(sAnswer,false))
                             sAnswer = ""
                         }
@@ -329,6 +343,13 @@ fun questionAnswers(context:Context, answers:MutableList<Answer>):MutableList<An
                                 Toast.LENGTH_LONG
                             ).show()
 
+                        }
+                        else if (sAnswer.length > TextEnums.MAX_ANSWER_LENGTH){
+                            Toast.makeText(
+                                context,
+                                "Answer Length too long!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                         else{
                             Toast.makeText(
@@ -381,11 +402,16 @@ fun questionAnswers(context:Context, answers:MutableList<Answer>):MutableList<An
 }
 
 @Composable
-fun getQuestionTitle(sTitle:String):String{
+fun getQuestionTitle(title:String):String{
 
-    var sTitle by remember { mutableStateOf(sTitle) }
+    var sTitle by remember { mutableStateOf(title) }
 
     //Text Field for Writing the question
+
+    if(sTitle.length > TextEnums.MAX_QUESTION_LENGTH) {
+        TextLengthPrompt(maxLength = TextEnums.MAX_QUESTION_LENGTH)
+    }
+
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth(.8f),
@@ -450,7 +476,6 @@ fun questionTypeDropDown(nSelected:Int, answers:MutableList<Answer>):Int{
                     }) {
                     Text(type)
                 }
-
             }
         }
     }

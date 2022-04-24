@@ -25,8 +25,12 @@ fun FlashCardFrontSide(flipController: FlippableController, question:String) {
             color = MaterialTheme.colors.secondaryVariant,
             elevation = 16.dp
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                ConstraintLayout(
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     val (txtShuffleWord, txtWord, IblTapToFlip) = createRefs()
                     
                     Text(

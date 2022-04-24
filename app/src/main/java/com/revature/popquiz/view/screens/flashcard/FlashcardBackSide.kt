@@ -41,13 +41,19 @@ fun FlashCardBackSide(flipController: FlippableController,answer:String) {
                     Text(
                         text = answer,
                         style = MaterialTheme.typography.h6,
-//                        maxLines = 1,
                         fontWeight = FontWeight.SemiBold,
-//                        textAlign = Alignment.Center,
                         modifier = Modifier
                             .constrainAs(txtWord) {
-                                start.linkTo(parent.start)
-                                top.linkTo(parent.top)
+                                linkTo(
+                                    start = parent.start,
+                                    end = parent.end
+                                )
+                                linkTo(
+                                    top = parent.top,
+                                    bottom = parent.bottom
+                                )
+//                                start.linkTo(parent.start)
+//                                top.linkTo(parent.top)
                             }
                             .padding(top = 16.dp, start = 16.dp)
                     )

@@ -70,27 +70,8 @@ fun FlashCardScreen(
                                 FlashCard(it)
 
                         }
-
                     }
-//                    Divider(
-//                        color = Color.Gray,
-//                        thickness = 5.dp
-//                    )
-//
-//                    Button(
-//                        onClick = {
-//
-//                            navController.popBackStack()
-//                        }
-//                    ) {
-//                        Text(
-//                            text = "Done",
-//                            style = MaterialTheme.typography.h5
-//                        )
-//                    }
-
                 }
-
             }
         }
     )
@@ -115,8 +96,14 @@ fun FlashCard(question: Question) {
     }
 
     Flippable(
-        frontSide = { FlashCardFrontSide(flipController = flipController, question = question.question) },
-        backSide = { FlashCardBackSide(flipController = flipController, answer = sAnswer) },
+        frontSide = {
+            FlashCardFrontSide(
+                flipController = flipController,
+                question = question.question) },
+        backSide = {
+            FlashCardBackSide(
+                flipController = flipController,
+                answer = sAnswer) },
         flipController = flipController,
         flipDurationMs = duration,
         flipOnTouch = flipOnTouchEnabled,
