@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -8,8 +9,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.api.services.quiz.QuizAPIEntity
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.view.shared.UniversalButton
 import com.revature.popquiz.view.shared.basicCard
@@ -53,6 +54,8 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
     val context= LocalContext.current
     var searchQuizzesOverviewViewModel = ViewModelProvider(context as MainActivity).get(SearchQuizzesOverviewViewModel::class.java)
 
+
+
 //    if (searchQuizzesOverviewViewModel.quiz != null)
 //    {
     val quiz by searchQuizzesOverviewViewModel.quiz!!.observeAsState(
@@ -64,6 +67,9 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
             APIid = 0
         )
     )
+
+    var loaded = RoomDataManager.quizRepository.checkExists(quiz.APIid).observeAsState(true)
+
     LazyRow(modifier = Modifier.fillMaxWidth())
     {
         item()
@@ -98,17 +104,22 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
                             )
                             Spacer(modifier = Modifier.height(20.dp))
 //description
-                            basicCard(title = "Description:", info = quiz.longDesc
+                            basicCard(
+                                title = "Description:", info = quiz.longDesc
                             )
 
                             Spacer(modifier = Modifier.height(20.dp))
 
                             // if statement to check if quiz is already in room database
                             // SQL query to check if quiz has that ID
+
+
                             UniversalButton(
-                                enabled = true,
+                                enabled = !loaded.value,
                                 text = "Download",
-                                onClick = {searchQuizzesOverviewViewModel.createQuiz()},
+                                onClick = {
+                                    searchQuizzesOverviewViewModel.createQuiz()
+                                    Log.d("Loaded value","${loaded.value}") },
                                 modifier = Modifier.clip(shape = RoundedCornerShape(5.dp))
                             )
                         }
@@ -117,6 +128,6 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
             }
         }
     }
+}
 //    }
 
-}

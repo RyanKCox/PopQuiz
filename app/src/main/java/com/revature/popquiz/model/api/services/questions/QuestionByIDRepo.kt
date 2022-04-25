@@ -38,7 +38,8 @@ class QuestionByIDRepo(val quizService: QuizApiService)
                     QuestionInterface.QUESTION_STRING_MULTI_ANSWER -> question.nType = QuestionInterface.QUESTION_TYPE_MULTI_ANSWER
                 }
                 question.question = result.retrieveQuestionByIDList.questionTitle
-                result.retrieveQuestionByIDList.questionAnswers.forEach {
+                result.retrieveQuestionByIDList.questionAnswers.forEach()
+                {
                     val answer = Answer()
                     answer.sAnswer = it.questionAnswer
                     answer.bCorrect = it.questionAnswerCorrect

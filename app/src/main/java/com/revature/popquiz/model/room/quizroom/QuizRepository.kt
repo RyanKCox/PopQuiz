@@ -7,7 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.model.room.AppDataBase
 
-class QuizRepository(application: Application) {
+class QuizRepository(application: Application)
+{
     private var quizDao: QuizDao
 
     init {
@@ -18,11 +19,15 @@ class QuizRepository(application: Application) {
         quizDao.deleteQuiz(id)
     }
     suspend fun insertQuiz(quiz: Quiz):Long{
-       return quizDao.insertQuiz(quiz)
+        return quizDao.insertQuiz(quiz)
         Log.d("jcstn","Inside insert quiz :$quiz")
     }
     val fetchAllQuiz: LiveData<List<Quiz>> = quizDao.fetchAllQuiz()
     fun fetchWithSearch(search:String):LiveData<List<Quiz>>{
         return quizDao.fetchWithSearch(search)
+    }
+    fun checkExists(id: Int): LiveData<Boolean>
+    {
+        return quizDao.checkExists(id)
     }
 }

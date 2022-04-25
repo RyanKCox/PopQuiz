@@ -107,7 +107,7 @@ fun LoginScreen(navController: NavController)
                         modifier = Modifier
                             .size(120.dp)
                             .clip(shape = RoundedCornerShape(10.dp)),
-                        painter = painterResource(id = R.drawable.rev_logo_2),
+                        painter = painterResource(id = R.drawable.pop_quiz_logo),
                         contentDescription = null
                     )
                     Spacer(Modifier.height(40.dp))

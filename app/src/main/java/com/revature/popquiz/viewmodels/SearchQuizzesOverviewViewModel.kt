@@ -1,6 +1,8 @@
 package com.revature.popquiz.viewmodels
 
 import android.util.Log
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,6 +23,7 @@ class SearchQuizzesOverviewViewModel: ViewModel()
     private lateinit var quizRepo: QuizByIDRepo
     var quiz: MutableLiveData<QuizAPIEntity> = MutableLiveData()
     private lateinit var questionRepo: QuestionByIDRepo
+//    var loadedVariable = MutableLiveData(false)
 
     fun loadQuiz(id: Int)
     {

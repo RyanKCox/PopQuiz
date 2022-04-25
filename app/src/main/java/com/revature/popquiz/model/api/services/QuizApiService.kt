@@ -31,6 +31,6 @@ interface QuizApiService
     suspend fun getQuizById(@Path("id") id:Int): ResponseRetrieveQuizByID
 
     // Retrieve quiz question by ID
-    @GET("/quiz/secure/questions/{id}")
+    @GET("/quiz/secure/question/{id}")
     suspend fun getQuestionById(@Path("id") id:Int) : ResponseRetrieveQuestionByID
 }

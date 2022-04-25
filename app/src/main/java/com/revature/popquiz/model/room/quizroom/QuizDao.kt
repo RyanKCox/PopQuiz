@@ -25,4 +25,6 @@ interface QuizDao {
     fun fetchWithSearch(search:String): LiveData<List<Quiz>>
 
 
+    @Query("SELECT EXISTS(SELECT * FROM quiz WHERE APIid = :id)")
+    fun checkExists(id: Int): LiveData<Boolean>
 }

@@ -119,6 +119,7 @@ fun SearchQuizzesBody(navController: NavController)
                 {
                     var searchQuizzesOverviewViewModel = ViewModelProvider(context as MainActivity).get(SearchQuizzesOverviewViewModel::class.java)
                     searchQuizzesOverviewViewModel.loadQuiz(Quiz.id)
+//                    searchQuizzesOverviewViewModel.checkExists(Quiz.id)
                     navController.navigate(NavScreens.SearchQuizOverview.route)
                 }
 
@@ -128,20 +129,20 @@ fun SearchQuizzesBody(navController: NavController)
 }
 
 
-@Composable
-fun quizTags()
-{
-    Text(
-        text = "Tags: ",
-        textAlign = TextAlign.Center
-    )
-    // Insert tags here
-
-    val tags: Set<String>
-    tags = setOf("Language", " Topic", " Quiz type")
-
-    Text(
-        text = tags.toString(),
-        textAlign = TextAlign.Center
-    )
-}
+//@Composable
+//fun quizTags()
+//{
+//    Text(
+//        text = "Tags: ",
+//        textAlign = TextAlign.Center
+//    )
+//    // Insert tags here
+//
+//    val tags: Set<String>
+//    tags = setOf("Language", " Topic", " Quiz type")
+//
+//    Text(
+//        text = tags.toString(),
+//        textAlign = TextAlign.Center
+//    )
+//}
