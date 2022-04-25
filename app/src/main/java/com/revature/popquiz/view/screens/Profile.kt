@@ -28,6 +28,7 @@ import com.revature.popquiz.R
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
 
 @Composable
@@ -40,7 +41,7 @@ fun profile(navController: NavController)
 
 
     QuizScaffold(
-        sTitle = "Profile",
+        sTitle = "",
         navController = navController
     )
     {
@@ -85,7 +86,7 @@ fun profile(navController: NavController)
                         item{
 
                             Text(
-                                text = "Profile",
+                                text = "${profile.name}",
                                 fontSize = 30.sp,
                                 fontWeight = FontWeight.Medium,
                                 modifier = Modifier.padding(20.dp)
@@ -94,7 +95,7 @@ fun profile(navController: NavController)
 
                             Card(
                                 shape = RoundedCornerShape(20.dp),
-                                backgroundColor = revBlue,
+                                backgroundColor = revOrange,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(15.dp)
@@ -116,38 +117,18 @@ fun profile(navController: NavController)
                                             contentScale = ContentScale.FillBounds
                                         )
                                         Text(
-                                            ("Name \n" +
-                                                    " Your Overall Score \n" +
-                                                    " Pop! Quiz Score \n" +
-                                                    " Quizzes Completed ")
+                                            ("Name\n")
+                                        )
+                                        Text(
+                                            ("${profile.bio}")
                                         )
                                     }
                                 }
                             }
 
+
                             Card(
-                                backgroundColor = revBlue,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(15.dp)
-                                    .clickable { },
-                                elevation = 10.dp,
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                            {
-                                Column(
-                                    modifier = Modifier.padding(15.dp))
-                                {
-                                    Text(
-                                        ("About me / subject interests \n" +
-                                                " \n" +
-                                                " \n" +
-                                                "  ")
-                                    )
-                                }
-                            }
-                            Card(
-                                backgroundColor = revBlue,
+                                backgroundColor = revOrange,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(15.dp)
@@ -167,7 +148,7 @@ fun profile(navController: NavController)
                                 }
                             }
                             Card(
-                                backgroundColor = revBlue,
+                                backgroundColor = revOrange,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(15.dp)
@@ -187,7 +168,7 @@ fun profile(navController: NavController)
                                 }
                             }
                             Card(
-                                backgroundColor = revBlue,
+                                backgroundColor = revOrange,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(15.dp)

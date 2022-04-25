@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.ui.theme.Teal200
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -81,7 +82,8 @@ fun quizComplete(navController: NavController) {
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Card(
-                            backgroundColor = revBlue,
+                            backgroundColor = revOrange,
+                            shape = RoundedCornerShape(25.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(15.dp)
@@ -92,15 +94,13 @@ fun quizComplete(navController: NavController) {
                             // modifier = Modifier.padding(15.dp)
                             ) {
                                 Text(
-                                    ("Your Score is \n ${quiz.finalScore}%")
+                                    ("Your Score is: ${quiz.finalScore}%")
                                 )
 
                             }
                         }
 
                             reviewAnswersButton(navController)
-                            shareButton()
-                            shareButton()
                             exitButton()
 
                     }
@@ -121,7 +121,6 @@ fun reviewAnswersButton(navController: NavController) {
         shape = RoundedCornerShape(25),
         onClick = {
 
-            //Send toy to trade request screen and navigate
             navController.navigate(NavScreens.ReviewQuizScreen.route)
         })
     {
@@ -144,8 +143,7 @@ fun shareButton(/*navController: NavController*/) {
         shape = RoundedCornerShape(25),
         onClick = {
 
-            //Send toy to trade request screen and navigate
-            // navController.navigate(NavScreens.AcceptTradeScreen.route)
+
         })
     {
         Text(
@@ -167,8 +165,6 @@ fun exitButton(/*navController: NavController*/) {
         shape = RoundedCornerShape(25),
         onClick = {
 
-            //Send toy to trade request screen and navigate
-            // navController.navigate(NavScreens.AcceptTradeScreen.route)
         })
     {
         Text(
@@ -181,37 +177,10 @@ fun exitButton(/*navController: NavController*/) {
 @Composable
 fun quizFinishedScreen(navController: NavController) {
     val context = LocalContext.current
-//    val userToysViewModel =
-//        ViewModelProvider(context as MainActivity).get(UserToysViewModel::class.java)
-//
-//
-//    Scaffold(
-//        bottomBar = { BottomBar(navController) },
-//        topBar = { Header(text = userToysViewModel.toy?.sName ?: "My Toy") })
-//    {
-//        Surface()
-//        {
-//            Image(
-//                painter = painterResource(id = R.drawable.minimal_blue_toy_background),
-//                contentDescription = "he",
-//                modifier = Modifier
-//                    .height(1000.dp)
-//                    .width(700.dp)
-//                    .fillMaxWidth(),
-//                contentScale = ContentScale.FillBounds
-//            )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-//                    .background(
-//                        Brush.horizontalGradient(
-//                            colors = listOf(
-//                                Teal200
-//                            )
-//                        )
-//                    ),
-//                verticalArrangement = Arrangement.Center,
-//                horizontalAlignment = Alignment.CenterHorizontally
             )
             {
 
@@ -229,8 +198,6 @@ fun quizFinishedScreen(navController: NavController) {
                         {
                             //quizComplete()
                             reviewAnswersButton(navController = navController)
-                            shareButton()
-                            shareButton()
                             exitButton()
 
                         }
