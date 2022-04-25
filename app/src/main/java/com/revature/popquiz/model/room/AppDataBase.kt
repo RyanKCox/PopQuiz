@@ -12,6 +12,7 @@ import com.revature.popquiz.model.room.quizroom.QuizDao
 
 
 
+
 @Database(entities = [Quiz::class,ProfileEntity::class],version=6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDataBase:RoomDatabase() {
@@ -29,7 +30,7 @@ abstract class AppDataBase:RoomDatabase() {
 
             synchronized(this)
             {
-               val tempinstance= Room.databaseBuilder(context.applicationContext,
+                val tempinstance= Room.databaseBuilder(context.applicationContext,
                     AppDataBase::class.java,"QUIZDATA1").fallbackToDestructiveMigration().build()
                 INSTANCE =tempinstance
                 return tempinstance

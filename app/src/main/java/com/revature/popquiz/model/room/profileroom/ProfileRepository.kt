@@ -18,7 +18,7 @@ class ProfileRepository(application: Application) {
         profileDao.insertProfile(profile)
     }
 
-    fun fetchProfileWithEmail(email:String): ProfileEntity {
+    fun fetchProfileWithEmail(email:String):LiveData<ProfileEntity> {
         return profileDao.fetchProfileWithEmail(email)
     }
 }

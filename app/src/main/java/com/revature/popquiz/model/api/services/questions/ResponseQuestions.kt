@@ -9,7 +9,7 @@ data class ResponseRetrieveQuestionByID(
     @SerializedName("description")
     var qIdDescription: String,
     @SerializedName("data")
-    var retrieveQuestionByIDList: List<QuestionsResponse>
+    var retrieveQuestionByIDList: QuestionsResponse
 )
 
 data class QuestionsResponse(
@@ -23,7 +23,7 @@ data class QuestionsResponse(
     @SerializedName("qsnAnswers")
     var questionAnswers: List<QuestionAnswersResponse>,
     @SerializedName("qsnType")
-    var questionType: List<QuestionTypeResponse>
+    var questionType: QuestionTypeResponse
 )
 
 data class QuestionAnswersResponse(
@@ -39,5 +39,7 @@ data class QuestionAnswersResponse(
 
 data class QuestionTypeResponse(
     @SerializedName("id")
-    var questionTypeResponseId: Int
+    var questionTypeResponseId: Int,
+    @SerializedName("qsnType")
+    var questionTypeResponseType: String
 )

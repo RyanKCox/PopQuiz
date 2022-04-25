@@ -14,8 +14,8 @@ import retrofit2.http.Path
 /**
  * Service interface containing all service calls for the PopQuiz Api
  */
-interface QuizApiService {
-
+interface QuizApiService
+{
     /**
      * Retrieves all quizzes from the server
      */
@@ -31,6 +31,6 @@ interface QuizApiService {
     suspend fun getQuizById(@Path("id") id:Int): ResponseRetrieveQuizByID
 
     // Retrieve quiz question by ID
-    @GET("/quiz/secure/questions/{id}")
+    @GET("/quiz/secure/question/{id}")
     suspend fun getQuestionById(@Path("id") id:Int) : ResponseRetrieveQuestionByID
 }

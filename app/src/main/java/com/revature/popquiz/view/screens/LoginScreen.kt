@@ -59,11 +59,12 @@ fun LoginScreen(navController: NavController)
         { TopAppBar(backgroundColor = revDarkGrey)
         {
             //scope.launch { dataStore.saveLoggedIn("FALSE") }
-            if(isLoggedIn.value=="TRUE")
-            {
-                RoomDataManager.userEmail=userEmail.value?:""
+            if(isLoggedIn.value=="TRUE") {
+                LaunchedEffect(Unit) {
+                    RoomDataManager.userEmail = userEmail.value ?: ""
 
-                navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                }
             }
             Text(
                 text = "Login",
@@ -109,7 +110,7 @@ fun LoginScreen(navController: NavController)
                         modifier = Modifier
                             .size(120.dp)
                             .clip(shape = RoundedCornerShape(10.dp)),
-                        painter = painterResource(id = R.drawable.rev_logo_2),
+                        painter = painterResource(id = R.drawable.pop_quiz_logo),
                         contentDescription = null
                     )
                     Spacer(Modifier.height(40.dp))

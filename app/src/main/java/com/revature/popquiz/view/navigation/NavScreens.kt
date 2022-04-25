@@ -38,6 +38,8 @@ sealed class NavScreens(val route:String)
     //CreateFlashcardScreen
     object CreateFlashcardScreen: NavScreens("CreateFlashCardScreen")
 
+    object PopQuizActivity: NavScreens("PopQuizActivity")
+
     //PopQuiz Screen
     object PopQuizScreen: NavScreens("PopQuizScreen")
 

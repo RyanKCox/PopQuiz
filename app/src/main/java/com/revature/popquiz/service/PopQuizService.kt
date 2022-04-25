@@ -4,17 +4,14 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.util.*
+
+import com.revature.popquiz.view.screens.popquiz.PopQuizActivity
+
+
 
 
 const val POP_QUIZ_NOTIFICATION_CHANNEL = "Pop!Quiz"
@@ -65,7 +62,7 @@ class PopQuizService: Service() {
 
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-        val popIntent = Intent(this,MainActivity::class.java)
+        val popIntent = Intent(this,PopQuizActivity::class.java)
         popIntent.putExtra(INTENT_COMMAND, INTENT_COMMAND_POPQUIZ)
         val pendingPop =
             PendingIntent.getService(this,0,popIntent,0)
@@ -120,7 +117,7 @@ class PopQuizService: Service() {
         //build the notification
         val notification = NotificationCompat.Builder(
             this, POP_QUIZ_NOTIFICATION_CHANNEL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_foreground_1)
             .addAction(0,"Stop",exitPendingIntent)
             .build()
 
@@ -128,7 +125,6 @@ class PopQuizService: Service() {
         startForeground(2,notification)
 
         setup()
-
 
     }
 
@@ -145,7 +141,7 @@ class PopQuizService: Service() {
 
         val popNotification = NotificationCompat.Builder(
             this, POP_QUIZ_NOTIFICATION_CHANNEL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_foreground_1)
             .setContentTitle("Pop! Quiz")
             .setContentText("It's time for a pop quiz!")
             .setContentIntent(pendingIntent)
