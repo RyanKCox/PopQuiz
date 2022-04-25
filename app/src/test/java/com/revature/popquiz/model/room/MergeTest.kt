@@ -7,23 +7,22 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 
-class MergeTest : TestCase() {
-
-@Test
-fun testTagStringToList() {
-    val string = "hello\nworld\nkotlin"
-
-    val mockmerge=Merge()
-    val list = mockmerge.stringToList(string)
-
-    assertEquals(list, listOf("hello","world","kotlin"))
-    }
-    @Test
-    fun testTagListToString() {
-        val mockmerge=Merge()
-        val list=listOf("hello","world","kotlin")
-        val string =mockmerge.listToString(list)
-        assertEquals(string,"hello\nworld\nkotlin")
-
-    }
-}
+//class MergeTest : TestCase() {
+//
+//@Test
+//fun testTagStringToList() {
+////    val string = "hello\nworld\nkotlin"
+////
+////
+////    val list = mockmerge.stringToList(string)
+////
+////    assertEquals(list, listOf("hello","world","kotlin"))
+////    }
+////    @Test
+////    fun testTagListToString() {
+////
+////        val list=listOf("hello","world","kotlin")
+////        val string =mockmerge.listToString(list)
+////        assertEquals(string,"hello\nworld\nkotlin")
+////    }
+//}

@@ -8,7 +8,10 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
+
 import com.revature.popquiz.view.screens.popquiz.PopQuizActivity
+
+
 
 
 const val POP_QUIZ_NOTIFICATION_CHANNEL = "Pop!Quiz"
@@ -114,7 +117,7 @@ class PopQuizService: Service() {
         //build the notification
         val notification = NotificationCompat.Builder(
             this, POP_QUIZ_NOTIFICATION_CHANNEL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_foreground_1)
             .addAction(0,"Stop",exitPendingIntent)
             .build()
 
@@ -138,7 +141,7 @@ class PopQuizService: Service() {
 
         val popNotification = NotificationCompat.Builder(
             this, POP_QUIZ_NOTIFICATION_CHANNEL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_foreground_1)
             .setContentTitle("Pop! Quiz")
             .setContentText("It's time for a pop quiz!")
             .setContentIntent(pendingIntent)

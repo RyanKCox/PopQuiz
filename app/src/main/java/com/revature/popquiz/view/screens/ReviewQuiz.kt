@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +24,8 @@ import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
@@ -29,6 +33,8 @@ import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.screens.question.RunningQuiz
 import com.revature.popquiz.view.shared.QuizScaffold
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun reviewQuiz(navController: NavController) {
@@ -37,6 +43,9 @@ fun reviewQuiz(navController: NavController) {
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
     val quiz = questionVM.runningQuiz
+    val dataStore= LoginDataStore(context)
+    val userEmail = dataStore.getEmail.collectAsState(initial = "")
+    val scope = rememberCoroutineScope()
 
 
     QuizScaffold(
@@ -100,7 +109,12 @@ fun reviewQuiz(navController: NavController) {
                             }
                             item{
                                 Button(onClick = {
-                                                 navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
+                                    val profile = RoomDataManager.profileRepository.fetchProfileWithEmail(userEmail.value?:"")
+                                    profile.value?.pastQuizzes?.add(quiz)
+
+                                    scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile.value!!)}
+
+                                    navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
 
                                                  }, colors = ButtonDefaults.buttonColors(
                                     revOrange)) {

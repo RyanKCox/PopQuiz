@@ -64,7 +64,7 @@ class AlarmReceiver:BroadcastReceiver() {
 
         val popNotification = NotificationCompat.Builder(
             context, POP_QUIZ_NOTIFICATION_CHANNEL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_foreground_1)
             .setContentTitle("Pop! Quiz")
             .setContentText("It's time for a pop quiz!")
 //            .addAction(0,"Stop Pop!Quiz alarm",pendingStopAlarmIntent)

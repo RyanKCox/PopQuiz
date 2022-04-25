@@ -13,7 +13,9 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import androidx.room.RoomDatabase
 import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.model.room.profileroom.ProfileRepository
 import com.revature.popquiz.model.room.quizroom.QuizRepository
 import com.revature.popquiz.service.AlarmReceiver
 import com.revature.popquiz.service.INTENT_COMMAND
@@ -47,7 +49,9 @@ class MainActivity : ComponentActivity()
         CoroutineScope(Dispatchers.IO).launch {
 
             val quizRepository = QuizRepository(app.application)
+            val profileRepository=ProfileRepository(app.application)
             RoomDataManager.quizRepository = quizRepository
+            RoomDataManager.profileRepository=profileRepository
 
             QuizManager.loadQuizzes()
         }
