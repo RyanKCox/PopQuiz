@@ -8,7 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
 import com.revature.popquiz.model.api.RetrofitHelper
+import com.revature.popquiz.model.api.services.QuizApiService
 import com.revature.popquiz.model.api.services.quiz.AllQuizRepo
 import com.revature.popquiz.model.api.services.quiz.QuizAPIEntity
 import com.revature.popquiz.model.api.services.quiz.QuizByIDRepo
@@ -24,7 +26,8 @@ class SearchQuizzesOverviewViewModel: ViewModel()
 
     fun loadQuiz(id: Int)
     {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO)
+        {
             quizRepo = QuizByIDRepo(quizService)
 
             when (val response = quizRepo.fetchQuizResponse(1))
@@ -37,6 +40,23 @@ class SearchQuizzesOverviewViewModel: ViewModel()
                 {
                     Log.d("SearchQuizzesOverviewVM", "Loading Failed")
                 }
+            }
+        }
+    }
+
+    fun createQuiz()
+    {
+        var newQuiz = Quiz(
+            APIid = quiz.value!!.APIid,
+            title = quiz.value!!.title,
+            shortDescription = quiz.value!!.shortDesc,
+            longDescription = quiz.value!!.longDesc
+        )
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            quizRepo = QuizByIDRepo(quizService)
+            quiz.value!!.questionIDs.forEach {
+                quizRepo.
             }
         }
     }

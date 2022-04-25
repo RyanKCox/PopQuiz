@@ -29,10 +29,12 @@ class QuizByIDRepo(val quizService: QuizApiService)
                 title = "",
                 shortDesc = "",
                 longDesc = "",
-                questionIDs = arrayListOf()
+                questionIDs = arrayListOf(),
+                APIid = 0
             )
 
             quiz.title = result.quizDataList.quizDataTitle
+            quiz.APIid = result.quizDataList.quizDataId
             result.quizDataList.quizPoolsList.forEach{
                 quiz.shortDesc = it.quizPoolsDescription?: "null"
                 quiz.longDesc = it.quizPoolsDescription?: "null"
