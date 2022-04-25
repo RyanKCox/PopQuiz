@@ -1,6 +1,5 @@
 package com.revature.popquiz.service
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,11 +7,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 
@@ -47,11 +43,7 @@ class AlarmReceiver:BroadcastReceiver() {
             Intent(context, MainActivity::class.java)
         notificationIntent.putExtra(INTENT_POPQUIZ_ID, INTENT_NOTIFICATION_ID)
         val pendingIntent =
-            PendingIntent.getActivity(
-                context,
-                0,
-                notificationIntent,
-                0)
+            PendingIntent.getActivity(context, 0, notificationIntent, 0)
 
 //        val stopAlarmIntent =
 //            Intent(context,MainActivity::class.java)
@@ -77,4 +69,6 @@ class AlarmReceiver:BroadcastReceiver() {
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         notificationManagerCompat.notify(INTENT_NOTIFICATION_ID, popNotification.build())
     }
+
+
 }
