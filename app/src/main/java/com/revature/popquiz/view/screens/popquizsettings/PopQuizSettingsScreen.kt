@@ -61,25 +61,34 @@ fun PopQuizSettingsScreen(navController: NavController) {
                     verticalArrangement = Arrangement.Center
                 )
                 {
-                    Text(text = "POP QUIZ", fontSize = 30.sp,
-                        fontWeight = FontWeight.Medium)
+                    Row() {
+                        Text(text = "POP QUIZ", fontSize = 30.sp,
+                            fontWeight = FontWeight.Medium)
+                    }
+
                     Spacer(modifier = Modifier.height(50.dp))
 
-                    Text(text = "Quiz Intervals", fontSize = 20.sp,
-                        fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
-                        , textAlign = TextAlign.Left)
+                    Row() {
+                        Text(text = "Quiz Intervals", fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
+                            , textAlign = TextAlign.Left)
+                    }
 
                     Spacer(modifier = Modifier.height(30.dp))
 
-                    Text(text = "Quiz Length", fontSize = 20.sp,
-                        fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
-                        , textAlign = TextAlign.Left)
+                    Row() {
+                        Text(text = "Quiz Length", fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
+                            , textAlign = TextAlign.Left)
+                    }
 
                     Spacer(modifier = Modifier.height(30.dp))
 
-                    Text(text = "Alert Type", fontSize = 20.sp,
-                        fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
-                        , textAlign = TextAlign.Left)
+                    Row() {
+                        Text(text = "Alert Type", fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
+                            , textAlign = TextAlign.Left)
+                    }
 
                     Button(onClick = {
 
@@ -115,7 +124,7 @@ fun PopQuizSettingsScreen(navController: NavController) {
                         }
 
                     }) {
-
+                        Text("Create Pop!Quiz")
                     }
                 }
             }
