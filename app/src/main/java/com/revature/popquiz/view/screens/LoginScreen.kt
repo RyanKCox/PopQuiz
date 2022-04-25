@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.R
 import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
@@ -48,9 +49,9 @@ fun LoginScreen(navController: NavController)
 
 
     //Dummy Setup
-    Log.d("Login Screen", "Login Screen Start")
+
     val isLoggedIn = dataStore.getLoggedIn.collectAsState(initial = "")
-    Log.d("jcstn",isLoggedIn.value?:"null")
+
 
     //Shared Scaffold - May not use in this screen
     Scaffold(backgroundColor = revOrange,
@@ -60,6 +61,7 @@ fun LoginScreen(navController: NavController)
             //scope.launch { dataStore.saveLoggedIn("FALSE") }
             if(isLoggedIn.value=="TRUE")
             {
+                RoomDataManager.userEmail=userEmail.value?:""
 
                 navController.navigate(NavScreens.SavedQuizzesScreen.route)
             }
@@ -160,6 +162,7 @@ fun LoginScreen(navController: NavController)
                                 }
 
                                 }
+                                RoomDataManager.userEmail=sEmail
                                 navController.navigate(NavScreens.SavedQuizzesScreen.route)
 
                             }

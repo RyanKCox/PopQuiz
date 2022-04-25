@@ -39,7 +39,7 @@ fun QuestionScreen(navController: NavController) {
     val quiz = questionVM.quiz.copy()
     val runningQuiz=RunningQuiz()
 
-
+    runningQuiz.title=quiz.title
     runningQuiz.questions=quiz.questionList
     runningQuiz.maxScore=runningQuiz.questions.size.toFloat()
     QuizScaffold(
