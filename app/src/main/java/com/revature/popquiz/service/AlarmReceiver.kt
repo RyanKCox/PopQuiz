@@ -12,6 +12,11 @@ import androidx.core.app.NotificationManagerCompat
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 
+/**
+ * Receive intent in MainActivity
+ * if intent is there, go to quiz screen with
+ */
+
 class AlarmReceiver:BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
