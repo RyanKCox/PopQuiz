@@ -1,6 +1,11 @@
 package com.revature.popquiz
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -8,10 +13,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.model.room.quizroom.QuizRepository
+import com.revature.popquiz.service.*
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.StartNav
 import com.revature.popquiz.viewmodels.QuizManager
@@ -43,9 +50,7 @@ class MainActivity : ComponentActivity()
 
             QuizManager.loadQuizzes()
         }
-
-
-
+        setupAlarm()
 
         //Used to install and modify the Splash screen -Evan
         installSplashScreen().apply {
@@ -78,5 +83,25 @@ class MainActivity : ComponentActivity()
                 }
             }
         }
+    }
+    fun setupAlarm(){
+
+        var waitTime:Long = 60_000* 30
+        var startTime = System.currentTimeMillis()
+        startTime += waitTime
+
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val popIntent = Intent(this,AlarmReceiver::class.java)
+        popIntent.putExtra(INTENT_COMMAND, INTENT_COMMAND_POPQUIZ)
+        val pendingPop =
+            PendingIntent.getBroadcast(this,0,popIntent,0)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            startTime,
+            waitTime,
+            pendingPop
+        )
     }
 }
