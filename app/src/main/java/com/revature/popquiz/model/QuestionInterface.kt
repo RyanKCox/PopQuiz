@@ -11,6 +11,10 @@ interface QuestionInterface {
         const val QUESTION_TYPE_TRUE_FALSE = 0
         const val QUESTION_TYPE_SINGLE_ANSWER = 1
         const val QUESTION_TYPE_MULTI_ANSWER = 2
+        const val QUESTION_STRING_TRUE_FALSE = "True or False"
+        const val QUESTION_STRING_SINGLE_ANSWER = "Best Choice"
+        const val QUESTION_STRING_MULTI_ANSWER = "Multiple Choice"
+
 
         fun getQuestionType(question:Question):String{
             var sType = ""
