@@ -3,10 +3,10 @@ package com.revature.popquiz.view.screens.popquiz
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-class PopQuizActivity(navController: NavController): ComponentActivity() {
+class PopQuizActivity(navController: NavHostController) : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

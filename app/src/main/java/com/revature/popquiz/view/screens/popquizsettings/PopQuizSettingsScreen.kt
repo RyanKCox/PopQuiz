@@ -2,9 +2,8 @@ package com.revature.popquiz.view.screens.popquizsettings
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
-import android.app.PendingIntent.getActivity
 import android.content.Intent
+import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Button
@@ -103,15 +102,35 @@ fun PopQuizSettingsScreen(navController: NavController) {
 
                     Button(onClick = {
 
-                        val resultIntent = Intent(context, PopQuizActivity::class.java)
-                        val pendingIntent = getActivity(context, 0, resultIntent, FLAG_UPDATE_CURRENT or PendingIntent.FLAG_CANCEL_CURRENT)
+//                        val resultIntent = Intent(context, PopQuizActivity::class.java)
+//                        val pendingIntent = getActivity(context, 0, resultIntent, FLAG_UPDATE_CURRENT or PendingIntent.FLAG_CANCEL_CURRENT)
+//
+//                        val builder = NotificationCompat.Builder(context, POP_QUIZ_NOTIFICATION_CHANNEL)
+//                            builder.setContentTitle("Pop Quiz")
+//                            builder.setContentText("Time for your Pop Quiz")
+//                            builder.setSmallIcon(com.revature.popquiz.R.drawable.ic_launcher_foreground)
+//                            builder.setContentIntent(pendingIntent)
+//                            builder.setAutoCancel(true)
+
+                        val notifyIntent = Intent(context, PopQuizActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        val notifyPendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            PendingIntent.getActivity(
+                                context, 0, notifyIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                            )
+                        } else {
+                            TODO("VERSION.SDK_INT < M")
+                        }
 
                         val builder = NotificationCompat.Builder(context, POP_QUIZ_NOTIFICATION_CHANNEL)
-                            builder.setContentTitle("Pop Quiz")
-                            builder.setContentText("Time for your Pop Quiz")
-                            builder.setSmallIcon(com.revature.popquiz.R.drawable.ic_launcher_foreground)
-                            builder.setContentIntent(pendingIntent)
-                            builder.setAutoCancel(true)
+                        builder.setContentTitle("Pop Quiz")
+                        builder.setContentText("Time for your Pop Quiz")
+                        builder.setSmallIcon(com.revature.popquiz.R.drawable.ic_launcher_foreground)
+                        builder.setContentIntent(notifyPendingIntent)
+                        builder.setAutoCancel(true)
+
 
                     }) {
                         Text("Create Pop!Quiz")
@@ -119,7 +138,6 @@ fun PopQuizSettingsScreen(navController: NavController) {
                 }
             }
         }
-
     }
 }
 
