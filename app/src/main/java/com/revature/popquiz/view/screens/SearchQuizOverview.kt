@@ -60,7 +60,8 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
             title = "",
             shortDesc = "",
             longDesc = "",
-            questionIDs = arrayListOf()
+            questionIDs = arrayListOf(),
+            APIid = 0
         )
     )
     LazyRow(modifier = Modifier.fillMaxWidth())
@@ -102,11 +103,12 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
 
                             Spacer(modifier = Modifier.height(20.dp))
 
+                            // if statement to check if quiz is already in room database
+                            // SQL query to check if quiz has that ID
                             UniversalButton(
                                 enabled = true,
                                 text = "Download",
-                                onClick = { /*TODO*/ },
-                                // create a dummy quiz in VM and save to room
+                                onClick = {searchQuizzesOverviewViewModel.createQuiz()},
                                 modifier = Modifier.clip(shape = RoundedCornerShape(5.dp))
                             )
                         }
