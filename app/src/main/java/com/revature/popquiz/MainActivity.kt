@@ -8,11 +8,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.core.app.NotificationCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.room.RoomDataManager
@@ -20,10 +18,8 @@ import com.revature.popquiz.model.room.quizroom.QuizRepository
 import com.revature.popquiz.service.AlarmReceiver
 import com.revature.popquiz.service.INTENT_COMMAND
 import com.revature.popquiz.service.INTENT_COMMAND_POPQUIZ
-import com.revature.popquiz.service.POP_QUIZ_NOTIFICATION_CHANNEL
 import com.revature.popquiz.ui.theme.PopQuizTheme
-import com.revature.popquiz.view.navigation.StartNav
-import com.revature.popquiz.view.screens.popquiz.PopQuizActivity
+import com.revature.popquiz.view.screens.popquizsettings.PopQuizSettingsScreen
 import com.revature.popquiz.viewmodels.QuizManager
 import com.revature.popquiz.viewmodels.SplashScreenViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -83,8 +79,8 @@ class MainActivity : ComponentActivity()
                 )
                 {
                     //Navigation Start
-//                    PopQuizSettingsScreen(navController = navController)
-                    StartNav(navController = navController)
+                    PopQuizSettingsScreen(navController = navController)
+//                    StartNav(navController = navController)
 //                    Button(onClick = { createAlarm() }) {
 
                     }
@@ -93,7 +89,6 @@ class MainActivity : ComponentActivity()
                 }
             }
         }
-    }
     fun setupAlarm(){
 
         var waitTime:Long = 60_000* 1
