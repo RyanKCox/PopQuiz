@@ -30,13 +30,13 @@ fun StartNav(navController: NavHostController)
 {
 
     Log.d("Start Nav", "Start Nav Started")
-    
+
     NavHost(
         navController = navController,
         startDestination = NavScreens.LoginScreen.route
     )
     {
-        
+
         //Login Screen
         composable (NavScreens.LoginScreen.route)
         {
@@ -46,7 +46,7 @@ fun StartNav(navController: NavHostController)
         {
             Register(navController=navController)
         }
-        
+
         //Create Quiz Screens
         composable(NavScreens.CreateQuizTitle.route)
         {
@@ -107,7 +107,7 @@ fun StartNav(navController: NavHostController)
         {
             CreateQuizQuestions(navController = navController)
         }
-        
+
         //Question Screen
         composable(NavScreens.QuestionScreen.route) {
             QuestionScreen(navController = navController)
@@ -127,7 +127,7 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.QuizOverviewScreen.route){
             quizOverView(navController = navController)
         }
-        
+
         //Create Flashcard Screen
         composable(NavScreens.CreateFlashcardScreen.route) {
             CreateFlashcardScreen(navController = navController)
@@ -142,10 +142,11 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.PopQuizScreen.route) {
             PopQuizScreen(navController = navController)
         }
-        
+
         //PopQuizSettingsScreen
         composable(NavScreens.PopQuizSettingsScreen.route) {
             PopQuizSettingsScreen(navController = navController)
+        }
 
         //Search quiz overview
         composable(NavScreens.SearchQuizOverview.route){
@@ -156,5 +157,11 @@ fun StartNav(navController: NavHostController)
         composable(NavScreens.QuizFinishScreen.route){
             quizComplete(navController = navController)
         }
+        //Quiz Review
+        composable(NavScreens.ReviewQuizScreen.route)
+        {
+            reviewQuiz(navController = navController)
+        }
     }
 }
+

@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -11,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +29,7 @@ import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
+import com.revature.popquiz.view.screens.flashcard.FlashcardViewModel
 import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -201,8 +204,11 @@ fun quizOverView(navController: NavController)
                                                 .fillParentMaxWidth(0.22F)
                                                 .height(50.dp), onclick = {
 
-                                                    //Send Correct Quiz
-                                                    navController.navigate(NavScreens.FlashcardScreen.route)
+                                                //Send Correct Quiz
+                                                var flashVM = ViewModelProvider(context as MainActivity).get(FlashcardViewModel::class.java)
+                                                flashVM.startFlashCards(quiz?:Quiz())
+
+                                                navController.navigate(NavScreens.FlashcardScreen.route)
 
                                             })
 
@@ -228,7 +234,9 @@ fun quizOverView(navController: NavController)
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(
-                                modifier = Modifier.fillMaxSize(fraction = 0.9F),
+                                modifier = Modifier
+                                    .fillMaxSize(fraction = 0.9F)
+                                    .padding(10.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Top
                             )
@@ -240,6 +248,23 @@ fun quizOverView(navController: NavController)
                                     modifier = Modifier.padding(20.dp)
                                 )
                                 Spacer(modifier = Modifier.height(50.dp))
+
+                                quiz?.resourceList!!.forEach {
+                                    resource ->
+                                    Text(
+                                        text = resource,
+                                        maxLines = 2,
+                                        style = MaterialTheme.typography.body1,
+                                        color = Color.Blue,
+                                        modifier = Modifier.clickable {
+                                            quizOverviewVM.loadWebpage(context,resource)
+                                        }
+                                    )
+
+                                    Spacer(modifier = Modifier.height(20.dp))
+
+                                }
+
 
                             }
 
