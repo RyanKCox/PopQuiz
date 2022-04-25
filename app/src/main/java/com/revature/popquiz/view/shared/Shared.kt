@@ -22,18 +22,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 import com.revature.popquiz.model.QuizEditor
+import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
@@ -422,7 +426,8 @@ fun inDrawer(
                     //Setup for Create Quiz Screen
                     //QuizEditor.createNewQuiz()
 
-                    var createQuizVM = ViewModelProvider(context as MainActivity).get(CreateQuizVM::class.java)
+                    var createQuizVM =
+                        ViewModelProvider(context as MainActivity).get(CreateQuizVM::class.java)
 
                     createQuizVM.createNewQuiz()
 
@@ -473,6 +478,14 @@ fun inDrawer(
             }
 
         }
+        Spacer(modifier = Modifier.height(50.dp))
+        Text(text = "Log out", fontSize = 20.sp, fontStyle = FontStyle.Italic, modifier = Modifier.clickable {
+
+            val dataStore= LoginDataStore(context)
+            scope.launch {dataStore.saveLoggedIn("FALSE")  }
+            scope.launch { navController.navigate(NavScreens.LoginScreen.route) }
+
+        })
     }
 }
 @Composable
