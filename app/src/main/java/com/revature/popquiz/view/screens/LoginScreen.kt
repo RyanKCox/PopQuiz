@@ -59,11 +59,12 @@ fun LoginScreen(navController: NavController)
         { TopAppBar(backgroundColor = revDarkGrey)
         {
             //scope.launch { dataStore.saveLoggedIn("FALSE") }
-            if(isLoggedIn.value=="TRUE")
-            {
-                RoomDataManager.userEmail=userEmail.value?:""
+            if(isLoggedIn.value=="TRUE") {
+                LaunchedEffect(Unit) {
+                    RoomDataManager.userEmail = userEmail.value ?: ""
 
-                navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                }
             }
             Text(
                 text = "Login",
