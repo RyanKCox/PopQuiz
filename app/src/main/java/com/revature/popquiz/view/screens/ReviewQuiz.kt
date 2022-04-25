@@ -3,6 +3,7 @@ package com.revature.popquiz.view.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
+import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.screens.question.RunningQuiz
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -48,13 +50,20 @@ fun reviewQuiz(navController: NavController) {
             verticalArrangement = Arrangement.SpaceAround
         )
         {
+            Spacer(Modifier.size(10.dp))
             Card(
-                shape = RoundedCornerShape(25.dp),
-                elevation = 50.dp,
                 modifier = Modifier
-                    .fillMaxSize(0.9F)
-
+                    .fillMaxSize()
+                    .absolutePadding(
+                        top = 5.dp,
+                    ),
+                shape = AbsoluteRoundedCornerShape(
+                    topLeft = 20.dp,
+                    topRight = 20.dp
+                ),
+                elevation = 10.dp
             )
+
             {
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -90,7 +99,10 @@ fun reviewQuiz(navController: NavController) {
                                 }
                             }
                             item{
-                                Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+                                Button(onClick = {
+                                                 navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
+
+                                                 }, colors = ButtonDefaults.buttonColors(
                                     revOrange)) {
                                     Text(text = "Done")
                                 }

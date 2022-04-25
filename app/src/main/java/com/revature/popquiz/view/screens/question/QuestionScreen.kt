@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -48,13 +49,36 @@ fun QuestionScreen(navController: NavController) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.Center
             ) {
+                Spacer(Modifier.size(10.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .absolutePadding(
+                            top = 5.dp,
+                        ),
+                    shape = AbsoluteRoundedCornerShape(
+                        topLeft = 20.dp,
+                        topRight = 20.dp
+                    ),
+                    elevation = 10.dp
+                )
+                {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = "${quiz.title.uppercase()} QUIZ",
+                            fontSize = 40.sp,
+                            modifier = Modifier.padding(20.dp)
+                        )
 
-                Text(text="${quiz.title.uppercase()} QUIZ", fontSize = 40.sp, modifier = Modifier.padding(20.dp))
-
-                QuestionCard(runningQuiz,navController)
-
+                        QuestionCard(runningQuiz, navController)
+                    }
+                }
 
             }
         }

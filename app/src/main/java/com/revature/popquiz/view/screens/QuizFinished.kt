@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -48,68 +50,64 @@ fun quizComplete(navController: NavController) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround
         )
         {
-            LazyRow(modifier = Modifier.fillMaxWidth()) {
-                item() {
-                    Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
-                    Column(modifier = Modifier.fillParentMaxWidth(0.9F)) {
+            Spacer(Modifier.size(10.dp))
 
+                Card(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .absolutePadding(
+                            top = 5.dp,
+                        ),
+                    shape = AbsoluteRoundedCornerShape(
+                        topLeft = 20.dp,
+                        topRight = 20.dp
+                    ),
+                    elevation = 10.dp
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(fraction = 0.9F),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Top
+                    )
+                    {
+                        Text(
+                            text = questionVM.quiz.title.uppercase(),
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(20.dp)
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
 
                         Card(
-                            shape = RoundedCornerShape(25.dp),
-                            elevation = 50.dp,
+                            backgroundColor = revBlue,
                             modifier = Modifier
-                                .fillMaxHeight(0.9F)
                                 .fillMaxWidth()
+                                .padding(15.dp)
+                                .clickable { },
+                            elevation = 10.dp
                         ) {
                             Column(
-                                modifier = Modifier.fillMaxSize(fraction = 0.9F),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Top
-                            )
-                            {
+                            // modifier = Modifier.padding(15.dp)
+                            ) {
                                 Text(
-                                    text = questionVM.quiz.title.uppercase(),
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(20.dp)
+                                    ("Your Score is \n ${quiz.finalScore}%")
                                 )
-                                Spacer(modifier = Modifier.height(20.dp))
-
-                                Card(
-                                    backgroundColor = revBlue,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(15.dp)
-                                        .clickable { },
-                                    elevation = 10.dp
-                                ) {
-                                    Column(
-                                    // modifier = Modifier.padding(15.dp)
-                                    ) {
-                                        Text(
-                                            ("Your Score is \n ${quiz.finalScore}%")
-                                        )
-
-                                    }
-                                }
-
-                                    reviewAnswersButton(navController)
-                                    shareButton()
-                                    shareButton()
-                                    exitButton()
 
                             }
-
                         }
+
+                            reviewAnswersButton(navController)
+                            shareButton()
+                            shareButton()
+                            exitButton()
 
                     }
 
                 }
+
             }
-        }
     }
 }
 
