@@ -10,7 +10,7 @@ import com.revature.popquiz.model.dataobjects.Quiz
 @Dao
 interface ProfileDao {
     @Query("SELECT * FROM profile WHERE email=:email")
-    fun fetchProfileWithEmail(email:String): ProfileEntity
+    fun fetchProfileWithEmail(email:String):LiveData<ProfileEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProfile(profile: ProfileEntity)

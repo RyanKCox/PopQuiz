@@ -110,9 +110,9 @@ fun reviewQuiz(navController: NavController) {
                             item{
                                 Button(onClick = {
                                     val profile = RoomDataManager.profileRepository.fetchProfileWithEmail(userEmail.value?:"")
-                                    profile?.pastQuizzes?.add(quiz)
+                                    profile.value?.pastQuizzes?.add(quiz)
 
-                                    scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile)}
+                                    scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile.value!!)}
 
                                     navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
 
