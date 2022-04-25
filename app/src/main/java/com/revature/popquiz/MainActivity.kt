@@ -63,6 +63,17 @@ class MainActivity : ComponentActivity()
             }
         }
 
+//        val intent = Intent(applicationContext, PopQuizActivity::class.java)
+//        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+//        if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//                pendingIntent.isActivity
+//            } else {
+//                TODO("VERSION.SDK_INT < S")
+//            }
+//        ) {
+//            startActivity(intent)
+//        }
+
         setContent {
 
             //Create the navigation controller
