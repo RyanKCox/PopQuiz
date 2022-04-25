@@ -23,7 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.room.Room
 import com.revature.popquiz.R
+import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -32,6 +35,10 @@ fun profile(navController: NavController)
 {
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
+    val dataStore= LoginDataStore(context)
+    val userEmail = RoomDataManager.userEmail
+
+
 
     QuizScaffold(
         sTitle = "Profile",
@@ -44,6 +51,7 @@ fun profile(navController: NavController)
             verticalArrangement = Arrangement.SpaceAround
         )
         {
+            val profile= RoomDataManager.profileRepository.fetchProfileWithEmail(userEmail)
             Spacer(Modifier.size(10.dp))
             Card(
                 modifier = Modifier

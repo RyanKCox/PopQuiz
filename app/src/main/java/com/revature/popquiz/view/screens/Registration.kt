@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.model.room.profileroom.ProfileEntity
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revOrange
@@ -122,6 +124,9 @@ fun Register(navController: NavController)
                                         dataStore.saveEmail(sEmail)
                                         dataStore.saveName(sName)
                                         dataStore.savePassword(sPass)
+                                        RoomDataManager.profileRepository.insertProfile(
+                                            ProfileEntity(email = sEmail, name = sName)
+                                        )
                                         navController.navigate(NavScreens.LoginScreen.route)
                                     }
 

@@ -6,14 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.model.room.profileroom.ProfileDao
+import com.revature.popquiz.model.room.profileroom.ProfileEntity
 import com.revature.popquiz.model.room.quizroom.QuizDao
 
 
 
-@Database(entities = [Quiz::class],version=3, exportSchema = false)
+@Database(entities = [Quiz::class,ProfileEntity::class],version=6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDataBase:RoomDatabase() {
     abstract fun quizDao(): QuizDao
+    abstract fun profileDao():ProfileDao
 
     companion object{
         @Volatile

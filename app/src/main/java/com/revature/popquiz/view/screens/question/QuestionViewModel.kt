@@ -13,6 +13,7 @@ class QuestionViewModel: ViewModel() {
 
 class RunningQuiz
 {
+ var title=""
  var questions: List<Question> =listOf<Question>()
  val answers= listOf<Answer>()
  var progress=0
