@@ -1,8 +1,8 @@
 package com.revature.popquiz.view.screens.popquizsettings
 
 import android.app.PendingIntent
+import android.app.Service
 import android.content.Intent
-import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Button
@@ -17,12 +17,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.revature.popquiz.service.INTENT_NOTIFICATION_ID
-import com.revature.popquiz.service.POP_QUIZ_NOTIFICATION_CHANNEL
+import com.revature.popquiz.service.AlarmReceiver
+import com.revature.popquiz.service.PopQuizService
 import com.revature.popquiz.view.screens.popquiz.PopQuizActivity
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -69,59 +67,90 @@ fun PopQuizSettingsScreen(navController: NavController) {
                     Spacer(modifier = Modifier.height(50.dp))
 
                     Row() {
-                        Text(text = "Quiz Intervals", fontSize = 20.sp,
-                            fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
-                            , textAlign = TextAlign.Left)
+                        Text(
+                            text = "Quiz Intervals",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.fillMaxWidth(0.9F),
+                            textAlign = TextAlign.Left
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(30.dp))
 
                     Row() {
-                        Text(text = "Quiz Length", fontSize = 20.sp,
-                            fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
-                            , textAlign = TextAlign.Left)
+                        Text(
+                            text = "Quiz Length",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F),
+                            textAlign = TextAlign.Left
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(30.dp))
 
                     Row() {
-                        Text(text = "Alert Type", fontSize = 20.sp,
-                            fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth(0.9F)
-                            , textAlign = TextAlign.Left)
+                        Text(
+                            text = "Alert Type", fontSize = 20.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.fillMaxWidth(0.9F),
+                            textAlign = TextAlign.Left
+                        )
                     }
 
                     Button(onClick = {
 
-                        val notifyIntent = Intent(
-                            context,
-                            PopQuizActivity::class.java
-                        ).apply {
+                        val popQuizService = PopQuizService()
+                        val alarmReceiver = AlarmReceiver()
 
-                            var flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        }
+                        val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 
-                        val notifyPendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            PendingIntent.getActivity(
-                                context,
-                                INTENT_NOTIFICATION_ID,
-                                notifyIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                            )
-                        } else {
-                            TODO("VERSION.SDK_INT < M")
-                        }
+                        val notifyIntent = Intent(context, PopQuizActivity::class.java)
 
-                        val builder = NotificationCompat.Builder(
-                            context,
-                            POP_QUIZ_NOTIFICATION_CHANNEL
-                        ).apply {
+//                        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                            PendingIntent.getActivity(
+//                                context,
+//                                INTENT_NOTIFICATION_ID,
+//                                notifyIntent,
+//                                flags
+//                            )
+//                        } else {
+//                            TODO("VERSION.SDK_INT < M")
+//                        }
 
-                            setContentIntent(notifyPendingIntent)
-                        }
+//                        popQuizService.registerReceiver(alarmReceiver, IntentFilter())
+                        popQuizService.onStartCommand(notifyIntent, Service.START_FLAG_RETRY, 0)
 
-                        with(NotificationManagerCompat.from(context)) {
-                            notify(INTENT_NOTIFICATION_ID, builder.build())
-                        }
+//                        val notifyIntent = Intent(
+//                            context,
+//                            PopQuizActivity::class.java
+//                        ).apply {
+//
+//                            var flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                        }
+//
+//                        val notifyPendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                            PendingIntent.getActivity(
+//                                context,
+//                                INTENT_NOTIFICATION_ID,
+//                                notifyIntent,
+//                                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+//                            )
+//                        } else {
+//                            TODO("VERSION.SDK_INT < M")
+//                        }
+//
+//                        val builder = NotificationCompat.Builder(
+//                            context,
+//                            POP_QUIZ_NOTIFICATION_CHANNEL
+//                        ).apply {
+//
+//                            setContentIntent(notifyPendingIntent)
+//                        }
+//
+//                        with(NotificationManagerCompat.from(context)) {
+//                            notify(INTENT_NOTIFICATION_ID, builder.build())
+//                        }
 
                     }) {
                         Text("Create Pop!Quiz")
