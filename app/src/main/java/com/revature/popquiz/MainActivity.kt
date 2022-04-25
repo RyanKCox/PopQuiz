@@ -19,7 +19,7 @@ import com.revature.popquiz.service.AlarmReceiver
 import com.revature.popquiz.service.INTENT_COMMAND
 import com.revature.popquiz.service.INTENT_COMMAND_POPQUIZ
 import com.revature.popquiz.ui.theme.PopQuizTheme
-import com.revature.popquiz.view.screens.popquizsettings.PopQuizSettingsScreen
+import com.revature.popquiz.view.navigation.StartNav
 import com.revature.popquiz.viewmodels.QuizManager
 import com.revature.popquiz.viewmodels.SplashScreenViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -79,8 +79,8 @@ class MainActivity : ComponentActivity()
                 )
                 {
                     //Navigation Start
-                    PopQuizSettingsScreen(navController = navController)
-//                    StartNav(navController = navController)
+//                    PopQuizSettingsScreen(navController = navController)
+                    StartNav(navController = navController)
 //                    Button(onClick = { createAlarm() }) {
 
                     }
