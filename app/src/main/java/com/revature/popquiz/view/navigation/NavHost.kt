@@ -19,6 +19,7 @@ import com.revature.popquiz.view.screens.editquiz.EditQuizQuestionSelect
 import com.revature.popquiz.view.screens.editquiz.EditQuizResources
 import com.revature.popquiz.view.screens.editquiz.EditQuizTitle
 import com.revature.popquiz.view.screens.flashcard.FlashCardScreen
+import com.revature.popquiz.view.screens.popquiz.PopQuizActivity
 import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
 import com.revature.popquiz.view.screens.popquizsettings.PopQuizSettingsScreen
 import com.revature.popquiz.view.screens.question.QuestionScreen
@@ -136,6 +137,10 @@ fun StartNav(navController: NavHostController)
         //Flashcard Screen
         composable(NavScreens.FlashcardScreen.route) {
             FlashCardScreen(navController = navController)
+        }
+
+        composable(NavScreens.PopQuizActivity.route) {
+            PopQuizActivity(navController = navController)
         }
 
         //PopQuiz Screen
