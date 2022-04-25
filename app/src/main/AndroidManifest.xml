@@ -24,6 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.screens.popquiz.PopQuizActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
+        </activity>
         <receiver android:name=".model.api.services.popquiz.PopQuizReceiver"
             android:exported="false">
             <intent-filter>
