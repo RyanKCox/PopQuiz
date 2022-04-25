@@ -35,7 +35,6 @@ fun profile(navController: NavController)
 {
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
-    val dataStore= LoginDataStore(context)
     val userEmail = RoomDataManager.userEmail
 
 
