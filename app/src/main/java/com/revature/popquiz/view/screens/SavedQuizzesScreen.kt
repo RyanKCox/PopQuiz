@@ -177,7 +177,8 @@ fun SavedQuizzesBody(navController: NavController)
                             .absolutePadding(bottom = 10.dp)
                             .padding(horizontal = 5.dp),
 
-                        shape = RoundedCornerShape(25.dp)
+                        shape = RoundedCornerShape(25.dp),
+                        elevation = 10.dp
                     )
                     {
                         Column(
@@ -206,15 +207,15 @@ fun SavedQuizzesBody(navController: NavController)
                             )
                         }
 
-                        Row(
-                            verticalAlignment = Alignment.Bottom,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.absolutePadding(bottom = 10.dp)
-                        )
-                        {
-                            //Quiz Tags
-                            quizTags()
-                        }
+//                        Row(
+//                            verticalAlignment = Alignment.Bottom,
+//                            horizontalArrangement = Arrangement.Center,
+//                            modifier = Modifier.absolutePadding(bottom = 10.dp)
+//                        )
+//                        {
+//                            //Quiz Tags
+//                            quizTags()
+//                        }
 
                             Box(
                                 modifier = Modifier

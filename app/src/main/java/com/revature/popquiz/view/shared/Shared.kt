@@ -42,7 +42,7 @@ import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
-import com.revature.popquiz.view.screens.quizTags
+//import com.revature.popquiz.view.screens.quizTags
 import com.revature.popquiz.viewmodel.CreateQuizVM
 
 import kotlinx.coroutines.CoroutineScope
@@ -243,7 +243,8 @@ fun QuizCardForLazyColumn(
             .absolutePadding(bottom = 10.dp)
             .padding(horizontal = 5.dp),
 
-        shape = RoundedCornerShape(25.dp)
+        shape = RoundedCornerShape(25.dp),
+        elevation = 10.dp
     )
     {
         Column(
@@ -272,15 +273,15 @@ fun QuizCardForLazyColumn(
             )
         }
 
-        Row(
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.absolutePadding(bottom = 10.dp)
-        )
-        {
-            //Quiz Tags
-            quizTags()
-        }
+//        Row(
+//            verticalAlignment = Alignment.Bottom,
+//            horizontalArrangement = Arrangement.Center,
+//            modifier = Modifier.absolutePadding(bottom = 10.dp)
+//        )
+//        {
+//            //Quiz Tags
+//            quizTags()
+//        }
 
         //Remove Quiz Button
         if(bRemovable) {
