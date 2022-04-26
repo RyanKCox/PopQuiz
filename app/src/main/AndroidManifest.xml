@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.revature.popquiz">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -28,7 +29,8 @@
             android:name=".view.screens.popquiz.PopQuizActivity"
             android:launchMode="singleTask"
             android:taskAffinity=""
-            android:excludeFromRecents="true">
+            android:excludeFromRecents="true"
+            tools:ignore="Instantiatable">
         </activity>
         <receiver android:name=".model.api.services.popquiz.PopQuizReceiver"
             android:exported="false">

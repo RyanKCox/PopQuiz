@@ -12,6 +12,11 @@ import androidx.core.app.NotificationManagerCompat
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 
+/**
+ * Receive intent in MainActivity
+ * if intent is there, go to quiz screen with
+ */
+
 class AlarmReceiver:BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
@@ -43,11 +48,7 @@ class AlarmReceiver:BroadcastReceiver() {
             Intent(context, MainActivity::class.java)
         notificationIntent.putExtra(INTENT_POPQUIZ_ID, INTENT_NOTIFICATION_ID)
         val pendingIntent =
-            PendingIntent.getActivity(
-                context,
-                0,
-                notificationIntent,
-                0)
+            PendingIntent.getActivity(context, 0, notificationIntent, 0)
 
 //        val stopAlarmIntent =
 //            Intent(context,MainActivity::class.java)
@@ -73,4 +74,6 @@ class AlarmReceiver:BroadcastReceiver() {
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         notificationManagerCompat.notify(INTENT_NOTIFICATION_ID, popNotification.build())
     }
+
+
 }

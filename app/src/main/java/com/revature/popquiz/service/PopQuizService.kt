@@ -9,6 +9,10 @@ import androidx.core.app.NotificationCompat
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 
+import com.revature.popquiz.view.screens.popquiz.PopQuizActivity
+
+
+
 
 const val POP_QUIZ_NOTIFICATION_CHANNEL = "Pop!Quiz"
 const val INTENT_COMMAND = "Command"
@@ -58,7 +62,7 @@ class PopQuizService: Service() {
 
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
 
-        val popIntent = Intent(this,MainActivity::class.java)
+        val popIntent = Intent(this,PopQuizActivity::class.java)
         popIntent.putExtra(INTENT_COMMAND, INTENT_COMMAND_POPQUIZ)
         val pendingPop =
             PendingIntent.getService(this,0,popIntent,0)
@@ -121,7 +125,6 @@ class PopQuizService: Service() {
         startForeground(2,notification)
 
         setup()
-
 
     }
 
