@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
@@ -111,9 +112,13 @@ fun reviewQuiz(navController: NavController) {
                             item{
                                 Button(onClick = {
 
-                                   // profile.value?.pastQuizzes?.add(quiz)
+                                  val profile = RoomDataManager.profile.value
 
-                                    //scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile.value?: ProfileEntity())}
+                                    scope.launch(Dispatchers.IO) {
+                                        if (profile != null) {
+                                            RoomDataManager.profileRepository.insertProfile(profile = profile)
+                                        }
+                                    }
 
                                     navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
 
