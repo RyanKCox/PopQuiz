@@ -1,6 +1,7 @@
 package com.revature.popquiz.model.room
 
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.LiveData
@@ -20,5 +21,6 @@ object RoomDataManager
     lateinit var profile : LiveData<ProfileEntity>
     fun SetProfile(){
         profile = profileRepository.fetchProfileWithEmail(userEmail.value!!)
+
     }
 }

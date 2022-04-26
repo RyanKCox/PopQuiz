@@ -33,9 +33,9 @@ import com.revature.popquiz.view.shared.QuizScaffold
 @Composable
 fun profile(navController: NavController)
 {
-    val context = LocalContext.current
+
     val lazyState = rememberLazyListState()
-    val userEmail = RoomDataManager.userEmail
+
     val profile= RoomDataManager.profile.observeAsState(
         ProfileEntity()
     )
@@ -127,8 +127,7 @@ fun profile(navController: NavController)
                         items(profile.value.pastQuizzes){runningQuiz ->
                             Card() {
                                 Row(modifier = Modifier.padding(5.dp)){
-                                    Text(text = runningQuiz.title )
-                                    Text(text = runningQuiz.finalScore.toString() )
+                                    Text(text = runningQuiz )
                                 }
                             }
                         }
