@@ -98,7 +98,9 @@ fun ProgressBar() {
 
 @Composable
 fun QuestionCard(quiz: RunningQuiz,navController: NavController) {
+
     val scrollState= rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -116,7 +118,11 @@ fun QuestionCard(quiz: RunningQuiz,navController: NavController) {
                         fontWeight = FontWeight.Medium)
                     question.answers.forEach {
 
-                        answerCard(answer = it, question = question, quiz = quiz)
+                        answerCard(
+                            answer = it,
+                            question = question,
+                            quiz = quiz
+                        )
 
                     }
                 }
@@ -195,20 +201,33 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
 fun answerCard(quiz: RunningQuiz,question: Question, answer: Answer)
 {
 
-    var selectedColor by remember{mutableStateOf(Color.White)}
+    var color  = Color.White
+    if(quiz.oneAnswerQuestion.containsKey(question)){
+        if(quiz.oneAnswerQuestion[question] == answer){
+            color = Color.Green
+        }
+    }
+
     Card(modifier = Modifier
         .fillMaxWidth(0.9F)
         .padding(5.dp)
         .clickable {
-            if (selectedColor == Color.White) {
-                selectedColor = Color.Gray
-                quiz.oneAnswerQuestion.put(question, answer)
-            } else {
-                selectedColor = Color.White
-                quiz.oneAnswerQuestion.remove(question)
+            if (quiz.oneAnswerQuestion.containsKey(question))
+            {
+                if (quiz.oneAnswerQuestion[question]==answer)
+                {
+                    quiz.oneAnswerQuestion.remove(question)
+                }
+                else{
+                    quiz.oneAnswerQuestion.put(question,answer)
+                }
+            }else
+            {
+                quiz.oneAnswerQuestion.put(question,answer)
             }
+
         }   ,
-        backgroundColor = selectedColor) {
+        backgroundColor = color) {
         Text(text = answer.sAnswer, modifier = Modifier
             .padding(5.dp)
             .fillMaxWidth())
