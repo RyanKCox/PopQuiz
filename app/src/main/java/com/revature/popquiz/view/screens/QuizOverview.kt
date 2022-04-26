@@ -125,41 +125,8 @@ fun quizOverView(navController: NavController)
 
 
 //Subscribe
-//                                    Card(
-//                                        modifier = Modifier
-//                                            .padding(10.dp)
-//                                            .fillMaxWidth(0.95F),
-//                                        elevation = 50.dp,
-//                                        shape = RoundedCornerShape(25.dp),
-//                                        backgroundColor = revLightOrange
-//                                    ) {
-//                                        Column(modifier = Modifier.padding()) {
-//                                            Row(
-//                                                modifier = Modifier.padding(horizontal = 20.dp),
-//                                                verticalAlignment = Alignment.CenterVertically
-//                                            ) {
-//                                                Text(
-//                                                    text = "Subscribe",
-//                                                    fontSize = 20.sp,
-//                                                    fontWeight = FontWeight.Medium,
-//                                                    modifier = Modifier
-//                                                        .fillMaxWidth(0.95F)
-//                                                        .padding(horizontal = 0.dp)
-//                                                )
-//                                                Switch(
-//                                                    checked = checkedState.value,
-//                                                    onCheckedChange = { checkedState.value = it },
-//                                                    colors = SwitchDefaults.colors(
-//                                                        revOrange
-//                                                    )
-//                                                )
-//
-//
-//                                            }
-//
-//                                        }
-//                                    }
-//                                    Spacer(modifier = Modifier.height(20.dp))
+
+                                    Spacer(modifier = Modifier.height(20.dp))
 //Sample Quiz
 
 

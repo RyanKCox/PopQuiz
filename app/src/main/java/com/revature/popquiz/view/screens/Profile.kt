@@ -27,6 +27,7 @@ import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.model.room.profileroom.ProfileEntity
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
 
@@ -38,9 +39,10 @@ fun profile(navController: NavController)
 
     val profile= RoomDataManager.profile.observeAsState(
         ProfileEntity()
+
     )
 
-
+    val checkedState=remember{ mutableStateOf(false)}
 
     QuizScaffold(
         sTitle = "",
@@ -85,6 +87,43 @@ fun profile(navController: NavController)
                     )
                     {
                         item{
+                            Card(
+                                modifier = Modifier
+                                    .padding(10.dp)
+                                    .fillMaxWidth(0.95F),
+                                elevation = 50.dp,
+                                shape = RoundedCornerShape(25.dp),
+                                backgroundColor = revLightOrange
+                            ) {
+                                Column(modifier = Modifier.padding()) {
+                                    Row(
+                                        modifier = Modifier.padding(horizontal = 20.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            text = "Subscribe",
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            modifier = Modifier
+                                                .fillMaxWidth(0.95F)
+                                                .padding(horizontal = 0.dp)
+                                        )
+                                        Switch(
+                                            checked = checkedState.value,
+                                            onCheckedChange = {
+                                                checkedState.value = it
+                                                //Create if else for on /off
+                                                              },
+                                            colors = SwitchDefaults.colors(
+                                                revOrange
+                                            )
+                                        )
+
+
+                                    }
+
+                                }
+                            }
 
                             Text(
                                 text = profile.value.name,
