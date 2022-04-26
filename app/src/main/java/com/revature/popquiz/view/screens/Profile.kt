@@ -20,8 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.room.Room
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
@@ -30,12 +32,14 @@ import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodel.ProfileViewModel
 
 @Composable
 fun profile(navController: NavController)
 {
 
     val lazyState = rememberLazyListState()
+    val context = LocalContext.current
 
     val profile= RoomDataManager.profile.observeAsState(
         ProfileEntity()
@@ -43,6 +47,7 @@ fun profile(navController: NavController)
     )
 
     val checkedState=remember{ mutableStateOf(false)}
+    val profileVM = ViewModelProvider(context as MainActivity).get(ProfileViewModel::class.java)
 
     QuizScaffold(
         sTitle = "",
@@ -123,6 +128,13 @@ fun profile(navController: NavController)
                                             onCheckedChange = {
                                                 checkedState.value = it
                                                 //Create if else for on /off
+
+                                                if(checkedState.value){
+                                                    profileVM.setupAlarm(context)
+                                                } else{
+                                                    profileVM.stopAlarm(context)
+                                                }
+
                                             },
                                             colors = SwitchDefaults.colors(
                                                 revOrange

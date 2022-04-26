@@ -16,7 +16,7 @@ class ProfileViewModel:ViewModel() {
 
     fun setupAlarm(context: Context){
 
-        var waitTime:Long = 60_000* 60
+        var waitTime:Long = 60_000* 1
         var startTime = System.currentTimeMillis()
         startTime += waitTime
 
