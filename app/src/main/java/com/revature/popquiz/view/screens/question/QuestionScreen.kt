@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuestionInterface
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.ui.theme.revLightOrange
@@ -118,11 +119,25 @@ fun QuestionCard(quiz: RunningQuiz,navController: NavController) {
                         fontWeight = FontWeight.Medium)
                     question.answers.forEach {
 
-                        answerCard(
-                            answer = it,
-                            question = question,
-                            quiz = quiz
-                        )
+//                        answerCardMultiAnswer(
+//                            answer = it,
+//                            question = question,
+//                            quiz = quiz
+//                        )
+                        if(question.nType != QuestionInterface.QUESTION_TYPE_MULTI_ANSWER) {
+                            answerCardSingleAnswer(
+                                answer = it,
+                                question = question,
+                                quiz = quiz
+                            )
+                        } else{
+                            answerCardMultiAnswer(
+                                answer = it,
+                                question = question,
+                                quiz = quiz
+                            )
+
+                        }
 
                     }
                 }
@@ -198,12 +213,12 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
 //}
 
 @Composable
-fun answerCard(quiz: RunningQuiz,question: Question, answer: Answer)
+fun answerCardSingleAnswer(quiz: RunningQuiz,question: Question, answer: Answer)
 {
 
     var color  = Color.White
     if(quiz.oneAnswerQuestion.containsKey(question)){
-        if(quiz.oneAnswerQuestion[question] == answer){
+        if(quiz.oneAnswerQuestion[question]!!.contains(answer) /*== answer*/){
             color = Color.Green
         }
     }
@@ -214,16 +229,60 @@ fun answerCard(quiz: RunningQuiz,question: Question, answer: Answer)
         .clickable {
             if (quiz.oneAnswerQuestion.containsKey(question))
             {
-                if (quiz.oneAnswerQuestion[question]==answer)
+                if (quiz.oneAnswerQuestion[question]!!.contains(answer)/*==answer*/)
                 {
                     quiz.oneAnswerQuestion.remove(question)
                 }
                 else{
-                    quiz.oneAnswerQuestion.put(question,answer)
+                    quiz.oneAnswerQuestion.get(question)!!.clear()
+                    quiz.oneAnswerQuestion[question]!!.add(answer)
+//                    quiz.oneAnswerQuestion.put(question,answer)
                 }
             }else
             {
-                quiz.oneAnswerQuestion.put(question,answer)
+                quiz.oneAnswerQuestion.put(question, mutableStateListOf( answer))
+            }
+
+        }   ,
+        backgroundColor = color) {
+        Text(text = answer.sAnswer, modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth())
+
+    }
+}
+@Composable
+fun answerCardMultiAnswer(quiz: RunningQuiz,question: Question, answer: Answer)
+{
+
+    var color  = Color.White
+    if(quiz.oneAnswerQuestion.containsKey(question)){
+        if(quiz.oneAnswerQuestion[question]!!.contains(answer)){
+            color = Color.Green
+        }
+    }
+
+    Card(modifier = Modifier
+        .fillMaxWidth(0.9F)
+        .padding(5.dp)
+        .clickable {
+            if (quiz.oneAnswerQuestion.containsKey(question))
+            {
+                if (quiz.oneAnswerQuestion[question]!!.contains(answer))
+                {
+                    quiz.oneAnswerQuestion[question]!!.remove(answer)
+                    if (quiz.oneAnswerQuestion[question]!!.isEmpty()){
+                        quiz.oneAnswerQuestion.remove(question)
+                    }
+                }
+                else{
+                    quiz.oneAnswerQuestion[question]?.add(answer)
+//                    quiz.oneAnswerQuestion.put(question,answer)
+                }
+            }else
+            {
+                var answerList = mutableStateListOf<Answer>(answer)
+                quiz.oneAnswerQuestion.put(question,answerList)
             }
 
         }   ,
@@ -239,13 +298,24 @@ fun calculateScore(quiz: RunningQuiz):Float
     var finalScore:Float=0F
 
     quiz.questions.forEach { question->
+
+        var bCorrect = true
         question.answers.forEach { answer->
-        if(answer.bCorrect&&answer==quiz.oneAnswerQuestion[question])
-        {
-            quiz.score++
+
+            // if a wrong answer is selected
+            if(!answer.bCorrect&&quiz.oneAnswerQuestion[question]!!.contains(answer))
+            {
+                bCorrect = false
+            //            quiz.score++
+            }
+            //if a right answer is not selected
+            else if (answer.bCorrect && !quiz.oneAnswerQuestion[question]!!.contains(answer)){
+                bCorrect = false
+            }
         }
+        if (bCorrect)
+            quiz.score++
     }
-}
-    finalScore=(quiz.score/quiz.maxScore!!)
-    return finalScore
+        finalScore=(quiz.score/quiz.maxScore!!)
+        return finalScore
 }

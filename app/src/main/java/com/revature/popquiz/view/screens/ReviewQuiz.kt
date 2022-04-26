@@ -145,7 +145,7 @@ fun answers(answer: Answer,quiz: RunningQuiz,question: Question)
         backgroundColor =
         when{
             answer.bCorrect -> Color.Green
-            !answer.bCorrect&&answer==quiz.oneAnswerQuestion[question] -> Color.Red
+            !answer.bCorrect&&/*answer==*/quiz.oneAnswerQuestion[question]!!.contains(answer) -> Color.Red
             else -> Color.White
         }
 
