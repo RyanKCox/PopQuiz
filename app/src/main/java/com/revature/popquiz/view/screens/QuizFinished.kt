@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -23,8 +25,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.ui.theme.Teal200
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.view.navigation.NavScreens
+import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
 
 
@@ -32,82 +37,82 @@ import com.revature.popquiz.view.shared.QuizScaffold
 fun quizComplete(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
+    val questionVM =
+        ViewModelProvider(context as MainActivity)
+            .get(QuestionViewModel::class.java)
+    val quiz=questionVM.runningQuiz
 
     QuizScaffold(
-        sTitle = "Quiz Completed",
+        sTitle = "QUIZ COMPLETE",
         navController = navController
     )
     {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround
         )
         {
-            LazyRow(modifier = Modifier.fillMaxWidth()) {
-                item() {
-                    Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
-                    Column(modifier = Modifier.fillParentMaxWidth(0.9F)) {
+            Spacer(Modifier.size(10.dp))
 
+                Card(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .absolutePadding(
+                            top = 5.dp,
+                        ),
+                    shape = AbsoluteRoundedCornerShape(
+                        topLeft = 20.dp,
+                        topRight = 20.dp
+                    ),
+                    elevation = 10.dp
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(fraction = 0.9F),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Top
+                    )
+                    {
+                        Text(
+                            text = questionVM.quiz.title.uppercase(),
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(20.dp)
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
 
                         Card(
-                            shape = RoundedCornerShape(25.dp),
-                            elevation = 50.dp,
+                            backgroundColor = revBlue,
                             modifier = Modifier
-                                .fillMaxHeight(0.9F)
                                 .fillMaxWidth()
+                                .padding(15.dp)
+                                .clickable { },
+                            elevation = 10.dp
                         ) {
                             Column(
-                                modifier = Modifier.fillMaxSize(fraction = 0.9F),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Top
-                            )
-                            {
+                            // modifier = Modifier.padding(15.dp)
+                            ) {
                                 Text(
-                                    text = "Quiz Complete",
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(20.dp)
+                                    ("Your Score is \n ${quiz.finalScore}%")
                                 )
-                                Spacer(modifier = Modifier.height(20.dp))
-
-                                Card(
-                                    backgroundColor = revBlue,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(15.dp)
-                                        .clickable { },
-                                    elevation = 10.dp
-                                ) {
-                                    Column(
-                                    // modifier = Modifier.padding(15.dp)
-                                    ) {
-                                        Text(
-                                            ("Congratulations! \n Your Score is \n %")
-                                        )
-
-                                    }
-                                }
-
-                                    reviewAnswersButton()
-                                    shareButton()
-                                    shareButton()
-                                    exitButton()
 
                             }
-
                         }
+
+                            reviewAnswersButton(navController)
+                            shareButton()
+                            shareButton()
+                            exitButton()
 
                     }
 
                 }
+
             }
-        }
     }
 }
 
 @Composable
-fun reviewAnswersButton(/*navController: NavController*/) {
+fun reviewAnswersButton(navController: NavController) {
     Button(modifier = Modifier
         .padding(10.dp)
         .height(100.dp)
@@ -117,7 +122,7 @@ fun reviewAnswersButton(/*navController: NavController*/) {
         onClick = {
 
             //Send toy to trade request screen and navigate
-            // navController.navigate(NavScreens.AcceptTradeScreen.route)
+            navController.navigate(NavScreens.ReviewQuizScreen.route)
         })
     {
         Text(
@@ -174,7 +179,7 @@ fun exitButton(/*navController: NavController*/) {
     }
 }
 @Composable
-fun quizFinishedScreen(/*navController: NavController*/) {
+fun quizFinishedScreen(navController: NavController) {
     val context = LocalContext.current
 //    val userToysViewModel =
 //        ViewModelProvider(context as MainActivity).get(UserToysViewModel::class.java)
@@ -223,7 +228,7 @@ fun quizFinishedScreen(/*navController: NavController*/) {
                         )
                         {
                             //quizComplete()
-                            reviewAnswersButton()
+                            reviewAnswersButton(navController = navController)
                             shareButton()
                             shareButton()
                             exitButton()

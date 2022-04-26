@@ -1,15 +1,15 @@
 package com.revature.popquiz.view.shared
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
-import androidx.compose.material.SnackbarDefaults.primaryActionColor
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 
 import androidx.compose.runtime.Composable
@@ -19,25 +19,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import androidx.lifecycle.ViewModelProvider
 
 import androidx.navigation.NavController
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 import com.revature.popquiz.model.QuizEditor
-import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
-import com.revature.popquiz.view.screens.quizTags
+//import com.revature.popquiz.view.screens.quizTags
+import com.revature.popquiz.viewmodel.CreateQuizVM
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -221,8 +227,8 @@ fun ClickedSearchBar(
 fun QuizCardForLazyColumn(
     quizTitleText: String,
     shortQuizDescriptionText: String,
-    onClick: () -> Unit = {},
-//    onClickNextScreen: String
+    bRemovable: Boolean = false,
+    onClick: () -> Unit = {}
 )
 {
     Card(
@@ -236,20 +242,9 @@ fun QuizCardForLazyColumn(
             .fillMaxWidth()
             .absolutePadding(bottom = 10.dp)
             .padding(horizontal = 5.dp),
-//            .border(
-//                BorderStroke(
-//                    3.dp,
-//                    brush = Brush.horizontalGradient(
-//                        colors = listOf(
-//                            PurpleVariant,
-//                            BluishGreen
-//                        )
-//                    )
-//                ),
-//                shape = RoundedCornerShape(25.dp)
-//            ),
 
-        shape = RoundedCornerShape(25.dp)
+        shape = RoundedCornerShape(25.dp),
+        elevation = 10.dp
     )
     {
         Column(
@@ -258,6 +253,7 @@ fun QuizCardForLazyColumn(
             modifier = Modifier.absolutePadding(top = 10.dp)
         )
         {
+            //Quiz Title Text
             Text(
                 text = quizTitleText,
                 textAlign = TextAlign.Center,
@@ -270,21 +266,42 @@ fun QuizCardForLazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
+            //Quiz short Description text
             Text(
                 text = shortQuizDescriptionText,
                 textAlign = TextAlign.Center
             )
         }
 
-        Row(
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.absolutePadding(bottom = 10.dp)
-        )
-        {
-            quizTags()
-        }
+//        Row(
+//            verticalAlignment = Alignment.Bottom,
+//            horizontalArrangement = Arrangement.Center,
+//            modifier = Modifier.absolutePadding(bottom = 10.dp)
+//        )
+//        {
+//            //Quiz Tags
+//            quizTags()
+//        }
 
+        //Remove Quiz Button
+        if(bRemovable) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.TopEnd
+            ) {
+                Image(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = "Remove Quiz Icon",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clickable {
+
+
+                        }
+                )
+            }
+        }
     }
 }
 
@@ -348,8 +365,12 @@ fun inDrawer(
 )
 {
 
+    val context = LocalContext.current
+
     Column(
-        modifier = Modifier.fillMaxSize(0.9F).padding(10.dp),
+        modifier = Modifier
+            .fillMaxSize(0.9F)
+            .padding(10.dp),
         horizontalAlignment = Alignment.Start
     )
     {
@@ -403,7 +424,12 @@ fun inDrawer(
                 scope.launch {
 
                     //Setup for Create Quiz Screen
-                    QuizEditor.createNewQuiz()
+                    //QuizEditor.createNewQuiz()
+
+                    var createQuizVM =
+                        ViewModelProvider(context as MainActivity).get(CreateQuizVM::class.java)
+
+                    createQuizVM.createNewQuiz()
 
                     navController.navigate(NavScreens.CreateQuizTitle.route)
                     scaffoldState.drawerState.close()
@@ -452,6 +478,14 @@ fun inDrawer(
             }
 
         }
+        Spacer(modifier = Modifier.height(50.dp))
+        Text(text = "Log out", fontSize = 20.sp, fontStyle = FontStyle.Italic, modifier = Modifier.clickable {
+
+            val dataStore= LoginDataStore(context)
+            scope.launch {dataStore.saveLoggedIn("FALSE")  }
+            scope.launch { navController.navigate(NavScreens.LoginScreen.route) }
+
+        })
     }
 }
 @Composable

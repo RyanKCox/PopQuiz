@@ -36,10 +36,10 @@ class AllQuizRepo(val quizService:QuizApiService)
             Log.d("Load Quizzes", "Success " + resultList.size)
             Result.Success(quizList)
 
-        } catch (e:Exception){
+        } catch (e:Exception)
+        {
             Log.d("Load Quizzes","Failed: ${e.message}")
             Result.Failure(e)
-
         }
     }
 }

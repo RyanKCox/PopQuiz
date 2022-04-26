@@ -3,13 +3,15 @@
     package="com.revature.popquiz">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
         android:name=".PopQuizApp"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/pop_quiz_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/pop_quiz_logo_circle"
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Starting">
         <activity
@@ -22,6 +24,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.screens.popquiz.PopQuizActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
+        </activity>
+        <receiver android:name=".model.api.services.popquiz.PopQuizReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.revature.popquiz"/>
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.PopQuizService"/>
+        <receiver android:name=".service.AlarmReceiver"/>
     </application>
 
 </manifest>

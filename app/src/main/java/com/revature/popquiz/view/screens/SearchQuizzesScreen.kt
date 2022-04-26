@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -28,6 +27,7 @@ import com.revature.popquiz.model.api.services.QuizApiService
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodels.SearchBarViewModel
+import com.revature.popquiz.viewmodels.SearchQuizzesOverviewViewModel
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn as QuizCardForLazyColumn
 
 @ExperimentalAnimationApi
@@ -48,7 +48,8 @@ fun SearchQuizzesScreen(navController: NavController)
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            SearchQuizzesBody(navController = NavController(context))
+            SearchQuizzesBody(navController)
+
         }
 
     }
@@ -63,7 +64,6 @@ fun SearchQuizzesBody(navController: NavController)
     var searchBarViewModel = ViewModelProvider(context as MainActivity).get(SearchBarViewModel::class.java)
     var x = searchBarViewModel.sSearchValue
     var sSearchValue by remember { mutableStateOf(x) }
-//    sSearchValue = searchBarViewModel.sSearchValue
     val lazyState = rememberLazyListState()
 
     searchBarViewModel.sortBySearch() //sorts the list
@@ -114,32 +114,35 @@ fun SearchQuizzesBody(navController: NavController)
             { Quiz ->
                 QuizCardForLazyColumn(
                     quizTitleText = Quiz.title,
-                    shortQuizDescriptionText = Quiz.shortDescription,
-                    onClick =
-                    {
-                        navController.navigate(NavScreens.QuizPreviewDownloadScreen.route)
-                    }
+                    shortQuizDescriptionText = Quiz.shortDescription
                 )
+                {
+                    var searchQuizzesOverviewViewModel = ViewModelProvider(context as MainActivity).get(SearchQuizzesOverviewViewModel::class.java)
+                    searchQuizzesOverviewViewModel.loadQuiz(Quiz.id)
+//                    searchQuizzesOverviewViewModel.checkExists(Quiz.id)
+                    navController.navigate(NavScreens.SearchQuizOverview.route)
+                }
+
             }
         }
     }
 }
 
 
-@Composable
-fun quizTags()
-{
-    Text(
-        text = "Tags: ",
-        textAlign = TextAlign.Center
-    )
-    // Insert tags here
-
-    val tags: Set<String>
-    tags = setOf("Language", " Topic", " Quiz type")
-
-    Text(
-        text = tags.toString(),
-        textAlign = TextAlign.Center
-    )
-}
+//@Composable
+//fun quizTags()
+//{
+//    Text(
+//        text = "Tags: ",
+//        textAlign = TextAlign.Center
+//    )
+//    // Insert tags here
+//
+//    val tags: Set<String>
+//    tags = setOf("Language", " Topic", " Quiz type")
+//
+//    Text(
+//        text = tags.toString(),
+//        textAlign = TextAlign.Center
+//    )
+//}

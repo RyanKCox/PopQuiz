@@ -3,40 +3,49 @@ package com.revature.popquiz.view.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
+import com.revature.popquiz.view.navigation.NavScreens
+import com.revature.popquiz.view.screens.question.QuestionViewModel
+import com.revature.popquiz.view.screens.question.RunningQuiz
 import com.revature.popquiz.view.shared.QuizScaffold
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun reviewQuiz(navController: NavController) {
-    val quiz = Quiz()
-    quiz.title="Arrays"
-
-    quiz.longDescription="This quiz reviews the basics of arrays in Kotlin." +
-            " This includes properties of arrays and their usage"
-    quiz.tagList.add(0,"Index")
-    quiz.tagList.add(1,"Arrays")
-    val answer1=Answer(sAnswer = "A programming Language", bCorrect = true)
-    val answer2=Answer(sAnswer = "Easy", bCorrect = false)
-    val answerList= mutableListOf<Answer>(answer1,answer2)
-    val q=Question(1,"What is Kotlin?",answerList)
-    quiz.questionList.add(0,q)
+    val context= LocalContext.current
+    val questionVM =
+        ViewModelProvider(context as MainActivity)
+            .get(QuestionViewModel::class.java)
+    val quiz = questionVM.runningQuiz
+    val dataStore= LoginDataStore(context)
+    val userEmail = dataStore.getEmail.collectAsState(initial = "")
+    val scope = rememberCoroutineScope()
 
 
     QuizScaffold(
@@ -50,20 +59,27 @@ fun reviewQuiz(navController: NavController) {
             verticalArrangement = Arrangement.SpaceAround
         )
         {
+            Spacer(Modifier.size(10.dp))
             Card(
-                shape = RoundedCornerShape(25.dp),
-                elevation = 50.dp,
                 modifier = Modifier
-                    .fillMaxSize(0.9F)
-
+                    .fillMaxSize()
+                    .absolutePadding(
+                        top = 5.dp,
+                    ),
+                shape = AbsoluteRoundedCornerShape(
+                    topLeft = 20.dp,
+                    topRight = 20.dp
+                ),
+                elevation = 10.dp
             )
+
             {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "${quiz.title} Quiz",
+                        text = "${questionVM.quiz.title.uppercase()} QUIZ",
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.padding(10.dp)
@@ -75,7 +91,7 @@ fun reviewQuiz(navController: NavController) {
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
-                            items(quiz.questionList){question->
+                            items(quiz.questions){question->
                                 Card(modifier = Modifier
                                     .fillMaxWidth(0.9f)
                                     .padding(10.dp),
@@ -84,7 +100,7 @@ fun reviewQuiz(navController: NavController) {
                                         Text(text = question.question,fontSize = 18.sp,
                                         fontWeight = FontWeight.Medium)
                                         question.answers.forEach {
-                                            answers(answer = it)
+                                            answers(answer = it, quiz = quiz, question = question)
 
                                         }
                                     }
@@ -92,7 +108,15 @@ fun reviewQuiz(navController: NavController) {
                                 }
                             }
                             item{
-                                Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+                                Button(onClick = {
+                                    val profile = RoomDataManager.profileRepository.fetchProfileWithEmail(userEmail.value?:"")
+                                    profile.value?.pastQuizzes?.add(quiz)
+
+                                    scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile.value!!)}
+
+                                    navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
+
+                                                 }, colors = ButtonDefaults.buttonColors(
                                     revOrange)) {
                                     Text(text = "Done")
                                 }
@@ -113,12 +137,21 @@ fun reviewQuiz(navController: NavController) {
 //-----------------------------------------Composables and preview---------------------//
 
 @Composable
-fun answers(answer: Answer)
+fun answers(answer: Answer,quiz: RunningQuiz,question: Question)
 {
     Card(modifier = Modifier
         .fillMaxWidth(0.9F)
         .padding(5.dp),
-        backgroundColor = if (answer.bCorrect)Color.Green else Color.White) {
+        backgroundColor =
+        when{
+            answer.bCorrect -> Color.Green
+            !answer.bCorrect&&answer==quiz.oneAnswerQuestion[question] -> Color.Red
+            else -> Color.White
+        }
+
+    )
+
+    {
         Text(text = answer.sAnswer, modifier = Modifier
             .padding(5.dp)
             .fillMaxWidth())

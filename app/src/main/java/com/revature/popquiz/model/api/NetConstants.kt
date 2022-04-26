@@ -7,7 +7,7 @@ class NetConstants {
 
     companion object {
         /**
-         * Base URL for mock API (temporary)
+         * Base URL for mock API
          */
         const val BASE_URL = "https://private-b4b5b1-popquiz1.apiary-mock.com"
     }

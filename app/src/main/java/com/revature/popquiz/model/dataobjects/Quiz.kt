@@ -10,6 +10,8 @@ data class Quiz(
     @PrimaryKey(autoGenerate = true)
     val id:Int=0,
 
+    var APIid: Int = 0,
+
     val questionList: MutableList<Question> = mutableListOf<Question>(),
 
     val resourceList: MutableList<String> = mutableListOf<String>(),

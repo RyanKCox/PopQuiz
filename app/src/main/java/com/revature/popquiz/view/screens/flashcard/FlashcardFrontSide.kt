@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
-fun FlashCardFrontSide(flipController: FlippableController) {
+fun FlashCardFrontSide(flipController: FlippableController, question:String) {
     Box(modifier = Modifier) {
         Surface(
             modifier = Modifier
@@ -25,12 +25,16 @@ fun FlashCardFrontSide(flipController: FlippableController) {
             color = MaterialTheme.colors.secondaryVariant,
             elevation = 16.dp
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                ConstraintLayout(
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     val (txtShuffleWord, txtWord, IblTapToFlip) = createRefs()
                     
                     Text(
-                        text = "This is an example of Flashcard text.",
+                        text = question,
                         style = MaterialTheme.typography.h5,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier
@@ -46,38 +50,38 @@ fun FlashCardFrontSide(flipController: FlippableController) {
                             }
 
                     )
-                    Text(
-                        text = "Tap to flip",
-                        style = MaterialTheme.typography.subtitle2,
-                        color = Color.DarkGray,
-                        maxLines = 1,
-                        modifier = Modifier
-                            .constrainAs(IblTapToFlip) {
-                                linkTo(
-                                    start = parent.start,
-                                    end = parent.end
-                                )
-                                bottom.linkTo(parent.bottom)
-                            }
-                            .padding(bottom = 8.dp)
-                    )
-
-                    Button(
-                        onClick = { flipController.flip() },
-                        modifier = Modifier
-                            .constrainAs(txtShuffleWord) {
-                                top.linkTo(parent.top)
-                                end.linkTo(parent.end)
-                            }
-                            .padding(end = 8.dp)
-                    ) {
-                        Text(
-                            text = "Show definition",
-                            style = MaterialTheme.typography.subtitle2,
-                            color = Color.Black,
-                            maxLines = 1
-                        )
-                    }
+//                    Text(
+//                        text = "Tap to flip",
+//                        style = MaterialTheme.typography.subtitle2,
+//                        color = Color.DarkGray,
+//                        maxLines = 1,
+//                        modifier = Modifier
+//                            .constrainAs(IblTapToFlip) {
+//                                linkTo(
+//                                    start = parent.start,
+//                                    end = parent.end
+//                                )
+//                                bottom.linkTo(parent.bottom)
+//                            }
+//                            .padding(bottom = 8.dp)
+//                    )
+//
+//                    Button(
+//                        onClick = { flipController.flip() },
+//                        modifier = Modifier
+//                            .constrainAs(txtShuffleWord) {
+//                                top.linkTo(parent.top)
+//                                end.linkTo(parent.end)
+//                            }
+//                            .padding(end = 8.dp)
+//                    ) {
+//                        Text(
+//                            text = "Show definition",
+//                            style = MaterialTheme.typography.subtitle2,
+//                            color = Color.Black,
+//                            maxLines = 1
+//                        )
+//                    }
                 }
 
             }

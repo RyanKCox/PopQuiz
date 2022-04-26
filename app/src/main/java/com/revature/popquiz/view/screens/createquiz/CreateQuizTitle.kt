@@ -4,7 +4,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,11 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 //import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
-import com.revature.popquiz.model.QuizEditor
-import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.view.shared.TextEnums
@@ -38,6 +34,8 @@ fun CreateQuizTitle(
     val createQuizVM =
         ViewModelProvider(context as MainActivity)
             .get(CreateQuizVM::class.java)
+
+//    createQuizVM.createNewQuiz()
 
     //Use Scaffold created for app
     QuizScaffold(
@@ -103,10 +101,11 @@ fun CreateQuizTitleBody(
                 Spacer(Modifier.size(40.dp))
 
                 //Text field for Quiz Title
-                if(sQuizTitle.length > TextEnums.MAX_TEXT_LENGTH) {
+                if(sQuizTitle.length > TextEnums.MAX_TITLE_LENGTH) {
                     bTitleTooLong = true
-                    TextLengthPrompt(maxLength = TextEnums.MAX_TEXT_LENGTH)
+                    TextLengthPrompt(maxLength = TextEnums.MAX_TITLE_LENGTH)
                 } else {bTitleTooLong = false}
+
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(.8f),
                     value = sQuizTitle,
@@ -118,10 +117,10 @@ fun CreateQuizTitleBody(
                 Spacer(Modifier.size(40.dp))
 
                 //Text Field for the short Description
-                if(sShortDesc.length > TextEnums.MAX_TEXT_LENGTH)
+                if(sShortDesc.length > TextEnums.MAX_TITLE_LENGTH)
                 {
                     bShortTooLong = true
-                    TextLengthPrompt(maxLength = TextEnums.MAX_TEXT_LENGTH)
+                    TextLengthPrompt(maxLength = TextEnums.MAX_TITLE_LENGTH)
                 }
                 else {bShortTooLong = false}
                 OutlinedTextField(

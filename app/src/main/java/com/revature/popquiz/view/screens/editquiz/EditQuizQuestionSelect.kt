@@ -20,8 +20,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.QuestionInterface
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -77,7 +79,7 @@ fun EditQuizQuestionBody(
     editQuizVM: EditQuizVM){
 
     var showDialog by remember { mutableStateOf(false)}
-    var removeIndex  = 0
+    var removeIndex by remember { mutableStateOf(0) }
 
     //Delete question if returning from a cancel add question
     if(editQuizVM.nDeleteQuestionIndex != null){
@@ -178,7 +180,7 @@ fun EditQuizQuestionBody(
                         Row {
 
                             Text(
-                                text = question.nType.toString(),
+                                text = QuestionInterface.getQuestionType(question),// question.nType.toString(),
                                 style = MaterialTheme.typography.h6
                             )
 
@@ -268,6 +270,8 @@ fun EditQuizQuestionBody(
             onClick = {
 
                 //Save to Quiz and navigate
+                editQuizVM.updateQuizToRoom()
+
                 navController.popBackStack(NavScreens.EditQuizTitle.route,true)
             }
         ) {

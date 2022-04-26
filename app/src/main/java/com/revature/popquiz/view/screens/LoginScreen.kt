@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.revature.popquiz.R
 import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
@@ -44,14 +45,27 @@ fun LoginScreen(navController: NavController)
     val userPass = dataStore.getPass.collectAsState(initial = "")
     var sEmail by rememberSaveable { mutableStateOf("") }
     var sPass by rememberSaveable { mutableStateOf("") }
-    
+    val checkedState=remember{ mutableStateOf(false)}
+
+
     //Dummy Setup
-    Log.d("Login Screen", "Login Screen Start")
+
+    val isLoggedIn = dataStore.getLoggedIn.collectAsState(initial = "")
+
+
     //Shared Scaffold - May not use in this screen
     Scaffold(backgroundColor = revOrange,
         topBar =
         { TopAppBar(backgroundColor = revDarkGrey)
         {
+            //scope.launch { dataStore.saveLoggedIn("FALSE") }
+            if(isLoggedIn.value=="TRUE") {
+                LaunchedEffect(Unit) {
+                    RoomDataManager.userEmail = userEmail.value ?: ""
+
+                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                }
+            }
             Text(
                 text = "Login",
                 fontSize = 18.sp,
@@ -96,7 +110,7 @@ fun LoginScreen(navController: NavController)
                         modifier = Modifier
                             .size(120.dp)
                             .clip(shape = RoundedCornerShape(10.dp)),
-                        painter = painterResource(id = R.drawable.rev_logo_2),
+                        painter = painterResource(id = R.drawable.pop_quiz_logo),
                         contentDescription = null
                     )
                     Spacer(Modifier.height(40.dp))
@@ -138,10 +152,19 @@ fun LoginScreen(navController: NavController)
                             if (sPass==userPass.value && sEmail==userEmail.value)
                             {
                                 scope.launch {
-//                                    quizRepository.insertQuiz(QuizEntity(id = 20, title = "title"))
-                                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                                    if (checkedState.value)
+                                {
+                                     dataStore.saveLoggedIn("TRUE")
 
                                 }
+                                else
+                                {
+                                   dataStore.saveLoggedIn("FALSE")
+                                }
+
+                                }
+                                RoomDataManager.userEmail=sEmail
+                                navController.navigate(NavScreens.SavedQuizzesScreen.route)
 
                             }
                         },
@@ -157,6 +180,20 @@ fun LoginScreen(navController: NavController)
 
                     Spacer(modifier = Modifier.height(10.dp))
 
+                    Row{
+                        Text(
+                            text = "Stay signed in?",
+                            fontSize = 15.sp,)
+                        Switch(
+                            checked = checkedState.value,
+                            onCheckedChange = {
+                                checkedState.value = it },
+                            colors = SwitchDefaults.colors(
+                                revOrange
+                            )
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "New user?: Register",
                         fontSize = 15.sp,
@@ -165,6 +202,7 @@ fun LoginScreen(navController: NavController)
                             .clickable
                             {navController.navigate(NavScreens.RegistrationScreen.route)},
                         color = revBlue)
+
                 }
             }
         }

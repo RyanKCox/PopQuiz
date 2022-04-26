@@ -30,6 +30,8 @@ sealed class NavScreens(val route:String)
     //Quiz Question Screen
     object QuestionScreen: NavScreens("QuestionScreen")
 
+
+
     //Flashcard Screen
     object FlashcardScreen: NavScreens("FlashcardScreen")
 
@@ -39,6 +41,9 @@ sealed class NavScreens(val route:String)
     //PopQuiz Screen
     object PopQuizScreen: NavScreens("PopQuizScreen")
 
+    //PopQuizSettings Screen
+    object PopQuizSettingsScreen: NavScreens("PopQuizSettingsScreen")
+
     //Profile Screen
     object ProfileScreen:NavScreens("ProfileScreen")
 
@@ -47,5 +52,15 @@ sealed class NavScreens(val route:String)
 
     //Quiz Overview
     object QuizOverviewScreen:NavScreens("QuizOverviewScreen")
+
+    //SearchQuizOverview
+    object SearchQuizOverview:NavScreens("SearchQuizOverviewScreen")
+
+    //QuizFinish Screen
+    object QuizFinishScreen:NavScreens("QuizFinishScreen")
+
+    //Review Quiz Screen
+    object ReviewQuizScreen:NavScreens("ReviewQuizScreen")
+
 
 }
