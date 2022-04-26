@@ -58,7 +58,6 @@ class MainActivity : ComponentActivity()
 
 
 
-        setupAlarm()
 
         //Used to install and modify the Splash screen -Evan
         installSplashScreen().apply {
@@ -104,26 +103,6 @@ class MainActivity : ComponentActivity()
                 }
             }
         }
-    fun setupAlarm(){
-
-        var waitTime:Long = 60_000* 1
-        var startTime = System.currentTimeMillis()
-        startTime += waitTime
-
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-
-        val popIntent = Intent(this,AlarmReceiver::class.java)
-        popIntent.putExtra(INTENT_COMMAND, INTENT_COMMAND_POPQUIZ)
-        val pendingPop =
-            PendingIntent.getBroadcast(this,0,popIntent,0)
-
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            startTime,
-            waitTime,
-            pendingPop
-        )
-    }
 //    fun createAlarm() {
 //        val intent = Intent(this, PopQuizActivity::class.java)
 //        val flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
