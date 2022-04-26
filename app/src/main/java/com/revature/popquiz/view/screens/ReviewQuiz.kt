@@ -26,6 +26,7 @@ import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.model.room.profileroom.ProfileEntity
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
@@ -109,10 +110,10 @@ fun reviewQuiz(navController: NavController) {
                             }
                             item{
                                 Button(onClick = {
-                                    val profile = RoomDataManager.profileRepository.fetchProfileWithEmail(userEmail.value?:"")
-                                    profile.value?.pastQuizzes?.add(quiz)
 
-                                    scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile.value!!)}
+                                   // profile.value?.pastQuizzes?.add(quiz)
+
+                                    //scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile.value?: ProfileEntity())}
 
                                     navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
 

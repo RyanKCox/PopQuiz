@@ -114,7 +114,6 @@ fun LoginScreen(navController: NavController)
                         contentDescription = null
                     )
                     Spacer(Modifier.height(40.dp))
-
                     TextField(
                         shape = CircleShape,
                         value = sEmail,
