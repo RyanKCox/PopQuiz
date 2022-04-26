@@ -444,24 +444,24 @@ fun inDrawer(
             }
 
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        Card(backgroundColor = revLightOrange, modifier = Modifier
-            .fillMaxWidth(0.9F)
-            .padding(10.dp)
-            .clickable {
-                scope.launch {
-                    // navController.navigate(NavScreens..route)
-                    navController.navigate(NavScreens.PopQuizSettingsScreen.route)
-                    scaffoldState.drawerState.close()
-                }
-            }) {
-            Row() {
-                Text(text = "Pop! Quiz Settings", fontSize = 20.sp, fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(10.dp))
-
-            }
-
-        }
+//        Spacer(modifier = Modifier.height(20.dp))
+//        Card(backgroundColor = revLightOrange, modifier = Modifier
+//            .fillMaxWidth(0.9F)
+//            .padding(10.dp)
+//            .clickable {
+//                scope.launch {
+//                    // navController.navigate(NavScreens..route)
+//                    navController.navigate(NavScreens.PopQuizSettingsScreen.route)
+//                    scaffoldState.drawerState.close()
+//                }
+//            }) {
+//            Row() {
+//                Text(text = "Pop! Quiz Settings", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+//                    modifier = Modifier.padding(10.dp))
+//
+//            }
+//
+//        }
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
