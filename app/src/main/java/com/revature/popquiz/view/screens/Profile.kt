@@ -86,7 +86,7 @@ fun profile(navController: NavController)
                         item{
 
                             Text(
-                                text = "${profile.name}",
+                                text = "${profile.value?.name}",
                                 fontSize = 30.sp,
                                 fontWeight = FontWeight.Medium,
                                 modifier = Modifier.padding(20.dp)
@@ -117,10 +117,7 @@ fun profile(navController: NavController)
                                             contentScale = ContentScale.FillBounds
                                         )
                                         Text(
-                                            ("Name\n")
-                                        )
-                                        Text(
-                                            ("${profile.bio}")
+                                            ("${profile.value?.bio}")
                                         )
                                     }
                                 }

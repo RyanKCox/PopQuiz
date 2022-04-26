@@ -79,7 +79,7 @@ fun quizComplete(navController: NavController) {
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.padding(20.dp)
                         )
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(50.dp))
 
                         Card(
                             backgroundColor = revOrange,
@@ -91,11 +91,10 @@ fun quizComplete(navController: NavController) {
                             elevation = 10.dp
                         ) {
                             Column(
-                            // modifier = Modifier.padding(15.dp)
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text(
-                                    ("Your Score is: ${quiz.finalScore}%")
-                                )
+                                Text("Your Score is: ${quiz.finalScore}%")
 
                             }
                         }
