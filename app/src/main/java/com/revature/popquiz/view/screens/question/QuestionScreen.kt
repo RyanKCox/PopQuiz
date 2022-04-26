@@ -180,16 +180,37 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
 
+    //Check if all questions were answered
+    var bCompleted by remember{ mutableStateOf(true)}
+    bCompleted = true
+
+    quiz.questions.forEach {  question ->
+        if (quiz.oneAnswerQuestion.containsKey(question)){
+
+            if (quiz.oneAnswerQuestion.isEmpty())
+                bCompleted = false
+
+        } else{
+            bCompleted = false
+        }
+    }
+
         Button(
+            enabled = bCompleted,
             onClick = {
-                quiz.score=0F
-                val score = calculateScore(quiz)
-                quiz.finalScore=score*100
-                questionVM.runningQuiz=quiz
 
                 //go to finished screen
-                //navController.navigate(NavScreens.FinishedQuizScreen.route)
-                navController.navigate(NavScreens.QuizFinishScreen.route)
+
+                //Only navigate if all questions completed
+                if(bCompleted){
+
+                    quiz.score=0F
+                    val score = calculateScore(quiz)
+                    quiz.finalScore=score*100
+                    questionVM.runningQuiz=quiz
+
+                    navController.navigate(NavScreens.QuizFinishScreen.route)
+                }
 
                       },
             modifier = Modifier
