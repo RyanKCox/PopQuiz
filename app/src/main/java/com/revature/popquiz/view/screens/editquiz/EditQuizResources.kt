@@ -114,11 +114,12 @@ fun EditTopic(context: Context, editQuizVM: EditQuizVM){
     var nSelected by remember { mutableStateOf(0) }
     var topicList by remember { mutableStateOf(editQuizVM.editQuiz.tagList)}
 
-    var sTopic by remember{ mutableStateOf("")}
-    if(editQuizVM.editQuiz.tagList.isNotEmpty()) {
-        sTopic = editQuizVM.editQuiz.tagList[nSelected]
-//        var sTopic by remember { mutableStateOf(editQuizVM.editQuiz.tagList[nSelected]) }
-    }
+    var sTopic by remember{ mutableStateOf(
+        if (editQuizVM.editQuiz.tagList.isNotEmpty())
+            editQuizVM.editQuiz.tagList[nSelected]
+    else
+        ""
+    )}
 
     //Text field for a new topic
     OutlinedTextField(
@@ -141,7 +142,12 @@ fun EditTopic(context: Context, editQuizVM: EditQuizVM){
 
                         //if topic isnt empty and we havnt reached max topics
                         if (sTopic != "" || editQuizVM.editQuiz.tagList.size <= 5) {
-                            editQuizVM.editQuiz.tagList[nSelected] = sTopic
+
+                            if(editQuizVM.editQuiz.tagList.isEmpty())
+                                editQuizVM.editQuiz.tagList.add(sTopic)
+                            else
+                                editQuizVM.editQuiz.tagList[nSelected] = sTopic
+
                             topicList = mutableListOf()
                             topicList.addAll(editQuizVM.editQuiz.tagList)
                         }
@@ -200,10 +206,13 @@ fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
 
     var nSelected by remember { mutableStateOf(0) }
     var resourceList by remember { mutableStateOf(editQuizVM.editQuiz.resourceList)}
-    var sResource by remember{ mutableStateOf("")}
-    if (editQuizVM.editQuiz.resourceList.isNotEmpty()){
-        sResource = editQuizVM.editQuiz.resourceList[nSelected]
-    }
+
+    var sResource by remember{ mutableStateOf(
+        if (editQuizVM.editQuiz.resourceList.isNotEmpty())
+            editQuizVM.editQuiz.resourceList[nSelected]
+        else
+            ""
+    )}
 //    var sResource by remember { mutableStateOf(editQuizVM.editQuiz.resourceList[nSelected]) }
 
     //Text Field for new Link
@@ -226,7 +235,11 @@ fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
                         //If link is not empty and max links hasnt been reached
                         if (sResource != "" || editQuizVM.editQuiz.resourceList.size <= 5) {
 
-                            editQuizVM.editQuiz.resourceList[nSelected] = sResource
+                            if (editQuizVM.editQuiz.resourceList.isEmpty())
+                                editQuizVM.editQuiz.resourceList.add(sResource)
+                            else
+                                editQuizVM.editQuiz.resourceList[nSelected] = sResource
+
                             resourceList = mutableListOf()
                             resourceList.addAll(editQuizVM.editQuiz.resourceList)
                         }
