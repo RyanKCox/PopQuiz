@@ -43,6 +43,7 @@ class QuestionByIDRepo(val quizService: QuizApiService)
                     val answer = Answer()
                     answer.sAnswer = it.questionAnswer
                     answer.bCorrect = it.questionAnswerCorrect
+                    question.answers.add(answer)
                 }
 
                 Result.Success(MutableLiveData(question))
