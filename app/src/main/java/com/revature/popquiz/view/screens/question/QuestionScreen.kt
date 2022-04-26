@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +44,7 @@ fun QuestionScreen(navController: NavController) {
     runningQuiz.title=quiz.title
     runningQuiz.questions=quiz.questionList
     runningQuiz.maxScore=runningQuiz.questions.size.toFloat()
+
     QuizScaffold(
         sTitle = "TAKE QUIZ",
         navController = navController,
@@ -77,7 +79,7 @@ fun QuestionScreen(navController: NavController) {
                             modifier = Modifier.padding(20.dp)
                         )
 
-                        QuestionCard(runningQuiz, navController)
+                        QuestionCard(runningQuiz, navController,questionVM)
                     }
                 }
 
@@ -98,7 +100,7 @@ fun ProgressBar() {
 }
 
 @Composable
-fun QuestionCard(quiz: RunningQuiz,navController: NavController) {
+fun QuestionCard(quiz: RunningQuiz,navController: NavController,viewModel: QuestionViewModel) {
 
     val scrollState= rememberScrollState()
 
@@ -128,13 +130,15 @@ fun QuestionCard(quiz: RunningQuiz,navController: NavController) {
                             answerCardSingleAnswer(
                                 answer = it,
                                 question = question,
-                                quiz = quiz
+                                quiz = quiz,
+                                viewModel = viewModel
                             )
                         } else{
                             answerCardMultiAnswer(
                                 answer = it,
                                 question = question,
-                                quiz = quiz
+                                quiz = quiz,
+                                viewModel = viewModel
                             )
 
                         }
@@ -180,16 +184,49 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
 
+    //Check if all questions were answered
+    var bCompleted by remember{ mutableStateOf(true)}
+    bCompleted = true
+
+    quiz.questions.forEach {  question ->
+        if (questionVM.questionAnswer.containsKey(question)){
+
+            if (questionVM.questionAnswer.isEmpty())
+                bCompleted = false
+
+        } else{
+            bCompleted = false
+        }
+    }
+
         Button(
+            enabled = bCompleted,
             onClick = {
-                quiz.score=0F
-                val score = calculateScore(quiz)
-                quiz.finalScore=score*100
-                questionVM.runningQuiz=quiz
 
                 //go to finished screen
-                //navController.navigate(NavScreens.FinishedQuizScreen.route)
-                navController.navigate(NavScreens.QuizFinishScreen.route)
+
+                //Only navigate if all questions completed
+                if(bCompleted){
+
+
+                    quiz.oneAnswerQuestion.clear()
+                    questionVM.questionAnswer.forEach { question->
+
+                        var list = mutableListOf<Answer>()
+                        question.value.forEach { answer ->
+                            list.add(answer)
+                        }
+                        quiz.oneAnswerQuestion.put(question.key,list)
+
+                    }
+
+                    quiz.score=0F
+                    val score = calculateScore(quiz)
+                    quiz.finalScore=score*100
+                    questionVM.runningQuiz=quiz
+
+                    navController.navigate(NavScreens.QuizFinishScreen.route)
+                }
 
                       },
             modifier = Modifier
@@ -213,35 +250,58 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
 //}
 
 @Composable
-fun answerCardSingleAnswer(quiz: RunningQuiz,question: Question, answer: Answer)
+fun answerCardSingleAnswer(quiz: RunningQuiz,question: Question, answer: Answer, viewModel:QuestionViewModel)
 {
 
     var color  = Color.White
-    if(quiz.oneAnswerQuestion.containsKey(question)){
-        if(quiz.oneAnswerQuestion[question]!!.contains(answer) /*== answer*/){
+
+    if (viewModel.questionAnswer.containsKey(question)){
+        if (viewModel.questionAnswer[question]!!.contains(answer)){
             color = Color.Green
         }
     }
+
+//    if(quiz.oneAnswerQuestion.containsKey(question)){
+//        if(quiz.oneAnswerQuestion[question]!!.contains(answer) /*== answer*/){
+//            color = Color.Green
+//        }
+//    }
 
     Card(modifier = Modifier
         .fillMaxWidth(0.9F)
         .padding(5.dp)
         .clickable {
-            if (quiz.oneAnswerQuestion.containsKey(question))
-            {
-                if (quiz.oneAnswerQuestion[question]!!.contains(answer)/*==answer*/)
-                {
-                    quiz.oneAnswerQuestion.remove(question)
-                }
-                else{
-                    quiz.oneAnswerQuestion.get(question)!!.clear()
-                    quiz.oneAnswerQuestion[question]!!.add(answer)
+
+            if (viewModel.questionAnswer.containsKey(question)) {
+                if (viewModel.questionAnswer[question]!!.contains(answer)/*==answer*/) {
+                    viewModel.questionAnswer.remove(question)
+                } else {
+                    viewModel.questionAnswer.get(question)!!.clear()
+                    viewModel.questionAnswer[question]!!.add(answer)
+
+//                    viewModel.questionAnswer.remove(question)
 //                    quiz.oneAnswerQuestion.put(question,answer)
                 }
-            }else
-            {
-                quiz.oneAnswerQuestion.put(question, mutableStateListOf( answer))
+            } else {
+                viewModel.questionAnswer.put(question, mutableStateListOf(answer))
             }
+
+//            if (quiz.oneAnswerQuestion.containsKey(question)) {
+//                if (quiz.oneAnswerQuestion[question]!!.contains(answer)/*==answer*/) {
+//                    quiz.oneAnswerQuestion.remove(question)
+//                    viewModel.questionAnswer.remove(question)
+//                } else {
+//                    quiz.oneAnswerQuestion
+//                        .get(question)!!
+//                        .clear()
+//                    quiz.oneAnswerQuestion[question]!!.add(answer)
+//
+//                    viewModel.questionAnswer.remove(question)
+////                    quiz.oneAnswerQuestion.put(question,answer)
+//                }
+//            } else {
+//                quiz.oneAnswerQuestion.put(question, mutableStateListOf(answer))
+//            }
 
         }   ,
         backgroundColor = color) {
@@ -252,38 +312,65 @@ fun answerCardSingleAnswer(quiz: RunningQuiz,question: Question, answer: Answer)
     }
 }
 @Composable
-fun answerCardMultiAnswer(quiz: RunningQuiz,question: Question, answer: Answer)
+fun answerCardMultiAnswer(quiz: RunningQuiz,question: Question, answer: Answer,viewModel: QuestionViewModel)
 {
 
     var color  = Color.White
-    if(quiz.oneAnswerQuestion.containsKey(question)){
-        if(quiz.oneAnswerQuestion[question]!!.contains(answer)){
+
+
+    if (viewModel.questionAnswer.containsKey(question)){
+        if (viewModel.questionAnswer[question]!!.contains(answer)){
             color = Color.Green
         }
     }
+
+//    if(quiz.oneAnswerQuestion.containsKey(question)){
+//        if(quiz.oneAnswerQuestion[question]!!.contains(answer)){
+//            color = Color.Green
+//        }
+//    }
 
     Card(modifier = Modifier
         .fillMaxWidth(0.9F)
         .padding(5.dp)
         .clickable {
-            if (quiz.oneAnswerQuestion.containsKey(question))
+            if (viewModel.questionAnswer.containsKey(question))
             {
-                if (quiz.oneAnswerQuestion[question]!!.contains(answer))
+                if (viewModel.questionAnswer[question]!!.contains(answer))
                 {
-                    quiz.oneAnswerQuestion[question]!!.remove(answer)
-                    if (quiz.oneAnswerQuestion[question]!!.isEmpty()){
-                        quiz.oneAnswerQuestion.remove(question)
+                    viewModel.questionAnswer[question]!!.remove(answer)
+                    if (viewModel.questionAnswer[question]!!.isEmpty()){
+                        viewModel.questionAnswer.remove(question)
                     }
                 }
                 else{
-                    quiz.oneAnswerQuestion[question]?.add(answer)
+                    viewModel.questionAnswer[question]?.add(answer)
 //                    quiz.oneAnswerQuestion.put(question,answer)
                 }
             }else
             {
                 var answerList = mutableStateListOf<Answer>(answer)
-                quiz.oneAnswerQuestion.put(question,answerList)
+                viewModel.questionAnswer.put(question,answerList)
             }
+
+//            if (quiz.oneAnswerQuestion.containsKey(question))
+//            {
+//                if (quiz.oneAnswerQuestion[question]!!.contains(answer))
+//                {
+//                    quiz.oneAnswerQuestion[question]!!.remove(answer)
+//                    if (quiz.oneAnswerQuestion[question]!!.isEmpty()){
+//                        quiz.oneAnswerQuestion.remove(question)
+//                    }
+//                }
+//                else{
+//                    quiz.oneAnswerQuestion[question]?.add(answer)
+////                    quiz.oneAnswerQuestion.put(question,answer)
+//                }
+//            }else
+//            {
+//                var answerList = mutableStateListOf<Answer>(answer)
+//                quiz.oneAnswerQuestion.put(question,answerList)
+//            }
 
         }   ,
         backgroundColor = color) {

@@ -12,6 +12,7 @@ class QuestionViewModel: ViewModel() {
 
  var quiz= Quiz()
  var runningQuiz=RunningQuiz()
+ var questionAnswer = mutableStateMapOf<Question,SnapshotStateList<Answer>>()
 }
 
 class RunningQuiz
@@ -20,7 +21,8 @@ class RunningQuiz
  var questions: List<Question> =listOf<Question>()
  val answers= listOf<Answer>()
  var progress=0
- var oneAnswerQuestion = mutableStateMapOf<Question,SnapshotStateList<Answer>>()
+ //var oneAnswerQuestion = mutableStateMapOf<Question,SnapshotStateList<Answer>>()
+ var oneAnswerQuestion = mutableMapOf<Question,MutableList<Answer>>()
  var score:Float =0F
  var maxScore:Float?=null
  var finalScore:Float?=null

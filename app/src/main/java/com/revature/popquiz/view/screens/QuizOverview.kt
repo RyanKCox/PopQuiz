@@ -125,41 +125,41 @@ fun quizOverView(navController: NavController)
 
 
 //Subscribe
-                                    Card(
-                                        modifier = Modifier
-                                            .padding(10.dp)
-                                            .fillMaxWidth(0.95F),
-                                        elevation = 50.dp,
-                                        shape = RoundedCornerShape(25.dp),
-                                        backgroundColor = revLightOrange
-                                    ) {
-                                        Column(modifier = Modifier.padding()) {
-                                            Row(
-                                                modifier = Modifier.padding(horizontal = 20.dp),
-                                                verticalAlignment = Alignment.CenterVertically
-                                            ) {
-                                                Text(
-                                                    text = "Subscribe",
-                                                    fontSize = 20.sp,
-                                                    fontWeight = FontWeight.Medium,
-                                                    modifier = Modifier
-                                                        .fillMaxWidth(0.95F)
-                                                        .padding(horizontal = 0.dp)
-                                                )
-                                                Switch(
-                                                    checked = checkedState.value,
-                                                    onCheckedChange = { checkedState.value = it },
-                                                    colors = SwitchDefaults.colors(
-                                                        revOrange
-                                                    )
-                                                )
-
-
-                                            }
-
-                                        }
-                                    }
-                                    Spacer(modifier = Modifier.height(20.dp))
+//                                    Card(
+//                                        modifier = Modifier
+//                                            .padding(10.dp)
+//                                            .fillMaxWidth(0.95F),
+//                                        elevation = 50.dp,
+//                                        shape = RoundedCornerShape(25.dp),
+//                                        backgroundColor = revLightOrange
+//                                    ) {
+//                                        Column(modifier = Modifier.padding()) {
+//                                            Row(
+//                                                modifier = Modifier.padding(horizontal = 20.dp),
+//                                                verticalAlignment = Alignment.CenterVertically
+//                                            ) {
+//                                                Text(
+//                                                    text = "Subscribe",
+//                                                    fontSize = 20.sp,
+//                                                    fontWeight = FontWeight.Medium,
+//                                                    modifier = Modifier
+//                                                        .fillMaxWidth(0.95F)
+//                                                        .padding(horizontal = 0.dp)
+//                                                )
+//                                                Switch(
+//                                                    checked = checkedState.value,
+//                                                    onCheckedChange = { checkedState.value = it },
+//                                                    colors = SwitchDefaults.colors(
+//                                                        revOrange
+//                                                    )
+//                                                )
+//
+//
+//                                            }
+//
+//                                        }
+//                                    }
+//                                    Spacer(modifier = Modifier.height(20.dp))
 //Sample Quiz
 
 
@@ -224,53 +224,55 @@ fun quizOverView(navController: NavController)
 
                 }
                 //This is the scrollable page
-                item {
-                    Column(modifier = Modifier.fillParentMaxWidth(0.9F)) {
-                        Card(
-                            shape = RoundedCornerShape(25.dp),
-                            elevation = 50.dp,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize(fraction = 0.9F)
-                                    .padding(10.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Top
-                            )
-                            {
-                                Text(
-                                    text = "Resources",
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    modifier = Modifier.padding(20.dp)
+
+                if(quiz?.resourceList!!.isNotEmpty()) {
+                    item {
+                        Column(modifier = Modifier.fillParentMaxWidth(0.9F)) {
+                            Card(
+                                shape = RoundedCornerShape(25.dp),
+                                elevation = 50.dp,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxSize(fraction = 0.9F)
+                                        .padding(10.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Top
                                 )
-                                Spacer(modifier = Modifier.height(50.dp))
-
-                                quiz?.resourceList!!.forEach {
-                                    resource ->
+                                {
                                     Text(
-                                        text = resource,
-                                        maxLines = 2,
-                                        style = MaterialTheme.typography.body1,
-                                        color = Color.Blue,
-                                        modifier = Modifier.clickable {
-                                            quizOverviewVM.loadWebpage(context,resource)
-                                        }
+                                        text = "Resources",
+                                        fontSize = 30.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.padding(20.dp)
                                     )
+                                    Spacer(modifier = Modifier.height(50.dp))
 
-                                    Spacer(modifier = Modifier.height(20.dp))
+                                    quiz?.resourceList!!.forEach { resource ->
+                                        Text(
+                                            text = resource,
+                                            maxLines = 2,
+                                            style = MaterialTheme.typography.body1,
+                                            color = Color.Blue,
+                                            modifier = Modifier.clickable {
+                                                quizOverviewVM.loadWebpage(context, resource)
+                                            }
+                                        )
+
+                                        Spacer(modifier = Modifier.height(20.dp))
+
+                                    }
+
 
                                 }
-
 
                             }
 
                         }
+                        Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
 
                     }
-                    Spacer(modifier = Modifier.fillParentMaxWidth(0.05F))
-
                 }
 
             }
