@@ -20,12 +20,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.model.room.profileroom.ProfileEntity
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
@@ -109,10 +111,14 @@ fun reviewQuiz(navController: NavController) {
                             }
                             item{
                                 Button(onClick = {
-                                    val profile = RoomDataManager.profileRepository.fetchProfileWithEmail(userEmail.value?:"")
-                                    profile.value?.pastQuizzes?.add(quiz)
 
-                                    scope.launch(Dispatchers.IO) {RoomDataManager.profileRepository.insertProfile(profile = profile.value!!)}
+                                  val profile = RoomDataManager.profile.value
+
+                                    scope.launch(Dispatchers.IO) {
+                                        if (profile != null) {
+                                            RoomDataManager.profileRepository.insertProfile(profile = profile)
+                                        }
+                                    }
 
                                     navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
 
@@ -145,7 +151,7 @@ fun answers(answer: Answer,quiz: RunningQuiz,question: Question)
         backgroundColor =
         when{
             answer.bCorrect -> Color.Green
-            !answer.bCorrect&&answer==quiz.oneAnswerQuestion[question] -> Color.Red
+            !answer.bCorrect&&/*answer==*/quiz.oneAnswerQuestion[question]!!.contains(answer) -> Color.Red
             else -> Color.White
         }
 

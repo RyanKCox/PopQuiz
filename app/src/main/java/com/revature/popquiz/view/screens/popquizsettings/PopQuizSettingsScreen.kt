@@ -127,7 +127,7 @@ fun PopQuizSettingsScreen(navController: NavController) {
                         val builder = NotificationCompat.Builder(context, POP_QUIZ_NOTIFICATION_CHANNEL)
                         builder.setContentTitle("Pop Quiz")
                         builder.setContentText("Time for your Pop Quiz")
-                        builder.setSmallIcon(com.revature.popquiz.R.drawable.ic_launcher_foreground)
+                        builder.setSmallIcon(com.revature.popquiz.R.drawable.ic_launcher_foreground_1)
                         builder.setContentIntent(notifyPendingIntent)
                         builder.setAutoCancel(true)
 

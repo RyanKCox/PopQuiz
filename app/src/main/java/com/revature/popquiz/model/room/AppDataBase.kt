@@ -13,7 +13,7 @@ import com.revature.popquiz.model.room.quizroom.QuizDao
 
 
 
-@Database(entities = [Quiz::class,ProfileEntity::class],version=6, exportSchema = false)
+@Database(entities = [Quiz::class,ProfileEntity::class],version=7, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDataBase:RoomDatabase() {
     abstract fun quizDao(): QuizDao
