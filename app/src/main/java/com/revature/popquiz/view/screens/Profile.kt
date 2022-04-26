@@ -87,13 +87,23 @@ fun profile(navController: NavController)
                     )
                     {
                         item{
+
+
+                            Text(
+                                text = profile.value.name.uppercase(),
+                                fontSize = 30.sp,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier.padding(20.dp)
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+
                             Card(
                                 modifier = Modifier
                                     .padding(10.dp)
                                     .fillMaxWidth(0.95F),
                                 elevation = 50.dp,
                                 shape = RoundedCornerShape(25.dp),
-                                backgroundColor = revLightOrange
+                                backgroundColor = revOrange
                             ) {
                                 Column(modifier = Modifier.padding()) {
                                     Row(
@@ -101,7 +111,7 @@ fun profile(navController: NavController)
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
-                                            text = "Subscribe",
+                                            text = "Subscribe To Pop Quizzes",
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.Medium,
                                             modifier = Modifier
@@ -113,7 +123,7 @@ fun profile(navController: NavController)
                                             onCheckedChange = {
                                                 checkedState.value = it
                                                 //Create if else for on /off
-                                                              },
+                                            },
                                             colors = SwitchDefaults.colors(
                                                 revOrange
                                             )
@@ -122,44 +132,6 @@ fun profile(navController: NavController)
 
                                     }
 
-                                }
-                            }
-
-                            Text(
-                                text = profile.value.name,
-                                fontSize = 30.sp,
-                                fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(20.dp)
-                            )
-                            Spacer(modifier = Modifier.height(20.dp))
-
-                            Card(
-                                shape = RoundedCornerShape(20.dp),
-                                backgroundColor = revOrange,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(15.dp)
-                                    .clickable { },
-                                elevation = 10.dp,
-                            )
-                            {
-                                Column(modifier = Modifier.padding(15.dp))
-                                {
-                                    Row()
-                                    {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.clipart_3418189__340),
-                                            contentDescription = "",
-                                            modifier = Modifier
-                                                .height(150.dp)
-                                                .width(150.dp)
-                                                .fillMaxWidth(),
-                                            contentScale = ContentScale.FillBounds
-                                        )
-                                        Text(
-                                            profile.value.name
-                                        )
-                                    }
                                 }
                             }
                         }
