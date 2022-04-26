@@ -16,10 +16,15 @@ class LoginDataStore(val context: Context) {
         val USER_PASSWORD_KEY= stringPreferencesKey("user_password") //key name to retrieve data
         val USER_NAME_KEY= stringPreferencesKey("name")//key to retrieve name
         val STAY_LOGGED_IN= stringPreferencesKey("stay_logged_in")
+        val SUBSCRIBED= stringPreferencesKey("subscribed")
     }
     val getLoggedIn: Flow<String?> =context.myDataStore.data
         .map{preferences->
             preferences[STAY_LOGGED_IN]?:"FALSE" // this allows a return or a default email to be returned
+        }
+    val getSubsribed: Flow<String?> = context.myDataStore.data
+        .map{preferences->
+            preferences[SUBSCRIBED]?:"FALSE"
         }
     val getEmail: Flow<String?> =context.myDataStore.data
         .map{preferences->
@@ -55,6 +60,12 @@ class LoginDataStore(val context: Context) {
     {
         context.myDataStore.edit { preferences->
             preferences[STAY_LOGGED_IN]=loggedInState
+        }
+    }
+    suspend fun saveSubscribed(subscribed:String)
+    {
+        context.myDataStore.edit {preferences->
+            preferences[SUBSCRIBED]=subscribed
         }
     }
 }
