@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.revature.popquiz.R
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
@@ -63,7 +64,7 @@ fun LoginScreen(navController: NavController)
             if(isLoggedIn.value=="TRUE") {
                 LaunchedEffect(Unit) {
                     RoomDataManager.userEmail = userEmail
-
+                    Log.d("jcstn",RoomDataManager.userEmail.value?:"it is null")
                     navController.navigate(NavScreens.SavedQuizzesScreen.route)
                 }
             }
@@ -155,7 +156,7 @@ fun LoginScreen(navController: NavController)
                                     if (checkedState.value)
                                 {
                                      dataStore.saveLoggedIn("TRUE")
-                                    RoomDataManager.profile = RoomDataManager.profileRepository.fetchProfileWithEmail(sEmail)
+
                                 }
                                 else
                                 {
@@ -164,6 +165,7 @@ fun LoginScreen(navController: NavController)
 
                                 }
                                 RoomDataManager.userEmail= mutableStateOf(sEmail)
+                                Log.d("jcstn",RoomDataManager.userEmail.value?:"it is null in login")
                                 navController.navigate(NavScreens.SavedQuizzesScreen.route)
 
                             }

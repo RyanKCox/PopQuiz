@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens.question
 
+import android.util.Log
 import android.widget.ProgressBar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
@@ -10,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,9 +27,12 @@ import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.QuestionInterface
 import com.revature.popquiz.model.dataobjects.Answer
 import com.revature.popquiz.model.dataobjects.Question
+import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun QuestionScreen(navController: NavController) {
@@ -44,6 +49,7 @@ fun QuestionScreen(navController: NavController) {
     runningQuiz.title=quiz.title
     runningQuiz.questions=quiz.questionList
     runningQuiz.maxScore=runningQuiz.questions.size.toFloat()
+
 
     QuizScaffold(
         sTitle = "TAKE QUIZ",
@@ -179,6 +185,8 @@ fun AnswerButton(answer: String) {
 @Composable
 fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
     val context= LocalContext.current
+    val scope= rememberCoroutineScope()
+    val profile=RoomDataManager.profile.observeAsState()
 
     val questionVM =
         ViewModelProvider(context as MainActivity)
@@ -224,7 +232,14 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
                     val score = calculateScore(quiz)
                     quiz.finalScore=score*100
                     questionVM.runningQuiz=quiz
+                    RoomDataManager.profile.value?.pastQuizzes?.add("${quiz.title}: ${quiz.finalScore.toString()}")
 
+
+                    scope.launch(Dispatchers.IO) {
+                        Log.d("jcstn","Profile ${profile.value}")
+                        RoomDataManager.profileRepository.insertProfile(profile = profile.value!!)
+
+                    }
                     navController.navigate(NavScreens.QuizFinishScreen.route)
                 }
 
@@ -276,7 +291,9 @@ fun answerCardSingleAnswer(quiz: RunningQuiz,question: Question, answer: Answer,
                 if (viewModel.questionAnswer[question]!!.contains(answer)/*==answer*/) {
                     viewModel.questionAnswer.remove(question)
                 } else {
-                    viewModel.questionAnswer.get(question)!!.clear()
+                    viewModel.questionAnswer
+                        .get(question)!!
+                        .clear()
                     viewModel.questionAnswer[question]!!.add(answer)
 
 //                    viewModel.questionAnswer.remove(question)
@@ -334,23 +351,19 @@ fun answerCardMultiAnswer(quiz: RunningQuiz,question: Question, answer: Answer,v
         .fillMaxWidth(0.9F)
         .padding(5.dp)
         .clickable {
-            if (viewModel.questionAnswer.containsKey(question))
-            {
-                if (viewModel.questionAnswer[question]!!.contains(answer))
-                {
+            if (viewModel.questionAnswer.containsKey(question)) {
+                if (viewModel.questionAnswer[question]!!.contains(answer)) {
                     viewModel.questionAnswer[question]!!.remove(answer)
-                    if (viewModel.questionAnswer[question]!!.isEmpty()){
+                    if (viewModel.questionAnswer[question]!!.isEmpty()) {
                         viewModel.questionAnswer.remove(question)
                     }
-                }
-                else{
+                } else {
                     viewModel.questionAnswer[question]?.add(answer)
 //                    quiz.oneAnswerQuestion.put(question,answer)
                 }
-            }else
-            {
+            } else {
                 var answerList = mutableStateListOf<Answer>(answer)
-                viewModel.questionAnswer.put(question,answerList)
+                viewModel.questionAnswer.put(question, answerList)
             }
 
 //            if (quiz.oneAnswerQuestion.containsKey(question))

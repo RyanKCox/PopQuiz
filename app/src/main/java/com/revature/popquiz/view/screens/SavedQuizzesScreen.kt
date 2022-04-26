@@ -46,6 +46,7 @@ import com.revature.popquiz.viewmodel.SavedQuizVM
 fun SavedQuizzesScreen(navController: NavController)
 {
     RoomDataManager.SetProfile()
+
     QuizScaffold(
         sTitle = "Saved Quizzes",
         navController = navController
