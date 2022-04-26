@@ -17,7 +17,7 @@ import com.revature.popquiz.view.screens.question.RunningQuiz
 
         var popQuizIntervals:Int=1,
 
-        var pastQuizzes:MutableList<RunningQuiz> = mutableListOf()
+        var pastQuizzes:MutableList<String> = mutableListOf()
 
 
     )

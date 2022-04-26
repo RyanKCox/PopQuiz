@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,9 +47,9 @@ fun reviewQuiz(navController: NavController) {
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
     val quiz = questionVM.runningQuiz
-    val dataStore= LoginDataStore(context)
-    val userEmail = dataStore.getEmail.collectAsState(initial = "")
-    val scope = rememberCoroutineScope()
+
+
+
 
 
     QuizScaffold(
@@ -112,13 +114,7 @@ fun reviewQuiz(navController: NavController) {
                             item{
                                 Button(onClick = {
 
-                                  val profile = RoomDataManager.profile.value
 
-                                    scope.launch(Dispatchers.IO) {
-                                        if (profile != null) {
-                                            RoomDataManager.profileRepository.insertProfile(profile = profile)
-                                        }
-                                    }
 
                                     navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
 

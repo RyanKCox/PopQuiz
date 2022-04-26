@@ -20,7 +20,7 @@ class QuizRepository(application: Application)
     }
     suspend fun insertQuiz(quiz: Quiz):Long{
         return quizDao.insertQuiz(quiz)
-        Log.d("jcstn","Inside insert quiz :$quiz")
+
     }
     val fetchAllQuiz: LiveData<List<Quiz>> = quizDao.fetchAllQuiz()
     fun fetchWithSearch(search:String):LiveData<List<Quiz>>{
