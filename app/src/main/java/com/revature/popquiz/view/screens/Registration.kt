@@ -1,5 +1,6 @@
 package com.revature.popquiz
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
@@ -126,7 +127,9 @@ fun Register(navController: NavController)
                                         dataStore.savePassword(sPass)
                                         RoomDataManager.profileRepository.insertProfile(
                                             ProfileEntity(email = sEmail, name = sName)
+
                                         )
+                                        Log.d("jcstn","${ProfileEntity(email = sEmail, name = sName)}")
                                         navController.navigate(NavScreens.LoginScreen.route)
                                     }
 

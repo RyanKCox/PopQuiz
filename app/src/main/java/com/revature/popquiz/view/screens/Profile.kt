@@ -20,27 +20,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.room.Room
+import com.revature.popquiz.MainActivity
 import com.revature.popquiz.R
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.model.room.profileroom.ProfileEntity
 import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodel.ProfileViewModel
 
 @Composable
 fun profile(navController: NavController)
 {
-    val context = LocalContext.current
+
     val lazyState = rememberLazyListState()
-    val userEmail = RoomDataManager.userEmail
+    val context = LocalContext.current
+
     val profile= RoomDataManager.profile.observeAsState(
         ProfileEntity()
+
     )
 
-
+    val checkedState=remember{ mutableStateOf(false)}
+    val profileVM = ViewModelProvider(context as MainActivity).get(ProfileViewModel::class.java)
 
     QuizScaffold(
         sTitle = "",
@@ -86,8 +93,9 @@ fun profile(navController: NavController)
                     {
                         item{
 
+
                             Text(
-                                text = profile.value.name,
+                                text = profile.value.name.uppercase(),
                                 fontSize = 30.sp,
                                 fontWeight = FontWeight.Medium,
                                 modifier = Modifier.padding(20.dp)
@@ -95,40 +103,54 @@ fun profile(navController: NavController)
                             Spacer(modifier = Modifier.height(20.dp))
 
                             Card(
-                                shape = RoundedCornerShape(20.dp),
-                                backgroundColor = revOrange,
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(15.dp)
-                                    .clickable { },
-                                elevation = 10.dp,
-                            )
-                            {
-                                Column(modifier = Modifier.padding(15.dp))
-                                {
-                                    Row()
-                                    {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.clipart_3418189__340),
-                                            contentDescription = "",
-                                            modifier = Modifier
-                                                .height(150.dp)
-                                                .width(150.dp)
-                                                .fillMaxWidth(),
-                                            contentScale = ContentScale.FillBounds
-                                        )
+                                    .padding(10.dp)
+                                    .fillMaxWidth(0.95F),
+                                elevation = 50.dp,
+                                shape = RoundedCornerShape(25.dp),
+                                backgroundColor = revOrange
+                            ) {
+                                Column(modifier = Modifier.padding()) {
+                                    Row(
+                                        modifier = Modifier.padding(horizontal = 20.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
                                         Text(
-                                            profile.value.name
+                                            text = "Subscribe To Pop Quizzes",
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            modifier = Modifier
+                                                .fillMaxWidth(0.95F)
+                                                .padding(horizontal = 0.dp)
                                         )
+                                        Switch(
+                                            checked = checkedState.value,
+                                            onCheckedChange = {
+                                                checkedState.value = it
+                                                //Create if else for on /off
+
+                                                if(checkedState.value){
+                                                    profileVM.setupAlarm(context)
+                                                } else{
+                                                    profileVM.stopAlarm(context)
+                                                }
+
+                                            },
+                                            colors = SwitchDefaults.colors(
+                                                revOrange
+                                            )
+                                        )
+
+
                                     }
+
                                 }
                             }
                         }
                         items(profile.value.pastQuizzes){runningQuiz ->
                             Card() {
                                 Row(modifier = Modifier.padding(5.dp)){
-                                    Text(text = runningQuiz.title )
-                                    Text(text = runningQuiz.finalScore.toString() )
+                                    Text(text = runningQuiz )
                                 }
                             }
                         }
