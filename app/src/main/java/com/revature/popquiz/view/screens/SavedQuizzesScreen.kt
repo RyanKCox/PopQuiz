@@ -30,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
 import com.revature.popquiz.MainActivity
+import com.revature.popquiz.model.room.RoomDataManager
 
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
@@ -44,6 +45,7 @@ import com.revature.popquiz.viewmodel.SavedQuizVM
 @Composable
 fun SavedQuizzesScreen(navController: NavController)
 {
+    RoomDataManager.SetProfile()
     QuizScaffold(
         sTitle = "Saved Quizzes",
         navController = navController

@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +62,7 @@ fun LoginScreen(navController: NavController)
             //scope.launch { dataStore.saveLoggedIn("FALSE") }
             if(isLoggedIn.value=="TRUE") {
                 LaunchedEffect(Unit) {
-                    RoomDataManager.userEmail = userEmail.value ?: ""
+                    RoomDataManager.userEmail = userEmail
 
                     navController.navigate(NavScreens.SavedQuizzesScreen.route)
                 }
@@ -155,7 +156,7 @@ fun LoginScreen(navController: NavController)
                                     if (checkedState.value)
                                 {
                                      dataStore.saveLoggedIn("TRUE")
-
+                                    RoomDataManager.profile = RoomDataManager.profileRepository.fetchProfileWithEmail(sEmail)
                                 }
                                 else
                                 {
@@ -163,7 +164,7 @@ fun LoginScreen(navController: NavController)
                                 }
 
                                 }
-                                RoomDataManager.userEmail=sEmail
+                                RoomDataManager.userEmail= mutableStateOf(sEmail)
                                 navController.navigate(NavScreens.SavedQuizzesScreen.route)
 
                             }

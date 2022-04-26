@@ -4,14 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +25,7 @@ import androidx.room.Room
 import com.revature.popquiz.R
 import com.revature.popquiz.model.datastore.LoginDataStore
 import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.model.room.profileroom.ProfileEntity
 import com.revature.popquiz.ui.theme.revBlue
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
@@ -37,6 +36,9 @@ fun profile(navController: NavController)
     val context = LocalContext.current
     val lazyState = rememberLazyListState()
     val userEmail = RoomDataManager.userEmail
+    val profile= RoomDataManager.profile.observeAsState(
+        ProfileEntity()
+    )
 
 
 
@@ -51,7 +53,6 @@ fun profile(navController: NavController)
             verticalArrangement = Arrangement.SpaceAround
         )
         {
-            val profile= RoomDataManager.profileRepository.fetchProfileWithEmail(userEmail)
             Spacer(Modifier.size(10.dp))
             Card(
                 modifier = Modifier
@@ -86,7 +87,7 @@ fun profile(navController: NavController)
                         item{
 
                             Text(
-                                text = "${profile.value?.name}",
+                                text = profile.value.name,
                                 fontSize = 30.sp,
                                 fontWeight = FontWeight.Medium,
                                 modifier = Modifier.padding(20.dp)
@@ -117,71 +118,17 @@ fun profile(navController: NavController)
                                             contentScale = ContentScale.FillBounds
                                         )
                                         Text(
-                                            ("${profile.value?.bio}")
+                                            profile.value.name
                                         )
                                     }
                                 }
                             }
-
-
-                            Card(
-                                backgroundColor = revOrange,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(15.dp)
-                                    .clickable { },
-                                elevation = 10.dp,
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                            {
-                                Column(modifier = Modifier.padding(15.dp))
-                                {
-                                    Text(
-                                        ("C Quiz \n" +
-                                                " % \n" +
-                                                " \n" +
-                                                "  ")
-                                    )
-                                }
-                            }
-                            Card(
-                                backgroundColor = revOrange,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(15.dp)
-                                    .clickable { },
-                                elevation = 10.dp,
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                            {
-                                Column(modifier = Modifier.padding(15.dp))
-                                {
-                                    Text(
-                                        ("C++ Quiz \n" +
-                                                " % \n" +
-                                                " \n" +
-                                                "  ")
-                                    )
-                                }
-                            }
-                            Card(
-                                backgroundColor = revOrange,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(15.dp)
-                                    .clickable { },
-                                elevation = 10.dp,
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                            {
-                                Column(modifier = Modifier.padding(15.dp))
-                                {
-                                    Text(
-                                        ("Kotlin \n" +
-                                                " % \n" +
-                                                " \n" +
-                                                "  ")
-                                    )
+                        }
+                        items(profile.value.pastQuizzes){runningQuiz ->
+                            Card() {
+                                Row(modifier = Modifier.padding(5.dp)){
+                                    Text(text = runningQuiz.title )
+                                    Text(text = runningQuiz.finalScore.toString() )
                                 }
                             }
                         }
