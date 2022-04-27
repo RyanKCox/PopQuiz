@@ -6,12 +6,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.revature.popquiz.service.AlarmReceiver
 import com.revature.popquiz.service.INTENT_COMMAND
 import com.revature.popquiz.service.INTENT_COMMAND_POPQUIZ
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewModel:ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor():ViewModel(), LifecycleObserver {
 
 
     fun setupAlarm(context: Context){

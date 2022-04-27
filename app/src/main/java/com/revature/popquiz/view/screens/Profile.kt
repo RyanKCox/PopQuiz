@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.room.Room
@@ -37,7 +38,7 @@ import com.revature.popquiz.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun profile(navController: NavController)
+fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewModel())
 {
 
     val lazyState = rememberLazyListState()
@@ -54,7 +55,7 @@ fun profile(navController: NavController)
     var boolForSwitch= subscribed.value== "TRUE"
     Log.d("jcstn", "bool for switch${boolForSwitch.toString()}")
 
-    val profileVM = ViewModelProvider(context as MainActivity).get(ProfileViewModel::class.java)
+
     val scope= rememberCoroutineScope()
 
     QuizScaffold(
