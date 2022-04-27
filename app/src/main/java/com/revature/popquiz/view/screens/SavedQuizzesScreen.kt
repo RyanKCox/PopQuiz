@@ -3,6 +3,7 @@ package com.revature.popquiz.view.screens
 
 import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,12 +27,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.room.RoomDataManager
+import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.revOrange
 
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizCardForLazyColumn
@@ -177,11 +181,13 @@ fun SavedQuizzesBody(navController: NavController,quizOverviewVM: QuizOverviewVM
                             }
                             .height(150.dp)
                             .fillMaxWidth()
-                            .absolutePadding(bottom = 10.dp)
-                            .padding(horizontal = 5.dp),
+                            .absolutePadding(bottom = 20.dp)
+                            .padding(horizontal = 10.dp),
 
                         shape = RoundedCornerShape(25.dp),
-                        elevation = 10.dp
+                        elevation = 10.dp,
+//                        backgroundColor = revBlue,
+                        border = BorderStroke(width = 2.dp, color = revOrange)
                     )
                     {
                         Column(
@@ -191,10 +197,13 @@ fun SavedQuizzesBody(navController: NavController,quizOverviewVM: QuizOverviewVM
                         )
                         {
                             //Quiz Title Text
+                            Spacer(modifier = Modifier.height(10.dp))
                             Text(
                                 text = Quiz.title,
                                 textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 30.sp,
+//                                color = Color.White
                             )
                         }
 
@@ -203,10 +212,13 @@ fun SavedQuizzesBody(navController: NavController,quizOverviewVM: QuizOverviewVM
                             horizontalAlignment = Alignment.CenterHorizontally
                         )
                         {
+                            Spacer(modifier = Modifier.height(35.dp))
                             //Quiz short Description text
                             Text(
                                 text = Quiz.shortDescription,
-                                textAlign = TextAlign.Center
+                                textAlign = TextAlign.Center,
+                                fontSize = 20.sp,
+//                                color = Color.White
                             )
                         }
 
