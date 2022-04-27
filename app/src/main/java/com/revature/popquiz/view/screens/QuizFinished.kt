@@ -100,7 +100,7 @@ fun quizComplete(navController: NavController) {
                         }
 
                             reviewAnswersButton(navController)
-                            exitButton()
+                            exitButton(navController)
 
                     }
 
@@ -155,7 +155,7 @@ fun shareButton(/*navController: NavController*/) {
 
 
 @Composable
-fun exitButton(/*navController: NavController*/) {
+fun exitButton(navController: NavController) {
     Button(modifier = Modifier
         .padding(10.dp)
         .height(100.dp)
@@ -163,7 +163,7 @@ fun exitButton(/*navController: NavController*/) {
         .wrapContentHeight(),
         shape = RoundedCornerShape(25),
         onClick = {
-
+            navController.popBackStack(NavScreens.SavedQuizzesScreen.route,inclusive = false)
         })
     {
         Text(
@@ -197,7 +197,7 @@ fun quizFinishedScreen(navController: NavController) {
                         {
                             //quizComplete()
                             reviewAnswersButton(navController = navController)
-                            exitButton()
+                            exitButton(navController)
 
                         }
 
