@@ -105,7 +105,7 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
 
                             Text(
                                 text = profile.value.name.uppercase(),
-                                fontSize = 30.sp,
+                                fontSize = 40.sp,
                                 fontWeight = FontWeight.Medium,
                                 modifier = Modifier.padding(20.dp)
                             )
@@ -161,13 +161,16 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                             }
                         }
                         items(profile.value.pastQuizzes){runningQuiz ->
-                            Card(        modifier = Modifier.padding(10.dp),
+                            Card(        modifier = Modifier.padding(10.dp)
+                                .fillMaxWidth(0.8F),
                                 elevation = 50.dp,
                                 shape = RoundedCornerShape(25.dp),
                                 backgroundColor = revLightOrange)
+
                             {
                                 Row(modifier = Modifier.padding(5.dp)){
-                                    Text(text = runningQuiz )
+                                    Text(text = runningQuiz,
+                                        fontSize = 20.sp,)
                                 }
                             }
                         }
