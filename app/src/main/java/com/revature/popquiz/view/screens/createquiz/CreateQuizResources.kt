@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -196,12 +197,14 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
     Spacer(Modifier.size(20.dp))
 
     val state = rememberLazyListState()
+    val config = LocalConfiguration.current
+
     LazyColumn(
         state = state,
         modifier = Modifier
             .fillMaxWidth(.8f)
             .border(2.dp, Color.Gray)
-            .height(150.dp),
+            .height((config.screenHeightDp/6).dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -297,13 +300,14 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
     Spacer(Modifier.size(20.dp))
 
     val state = rememberLazyListState()
+    val config = LocalConfiguration.current
 
     LazyColumn(
         state= state,
         modifier = Modifier
             .fillMaxWidth(.8f)
             .border(2.dp, Color.Gray)
-            .height(150.dp),
+            .height((config.screenHeightDp/6).dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 

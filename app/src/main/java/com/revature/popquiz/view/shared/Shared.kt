@@ -503,7 +503,7 @@ fun ResourceCard(
         elevation = 10.dp,
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
-            .padding(horizontal = 10.dp, vertical = 1.dp)
+            .padding(3.dp)
             .border(
                 2.dp,
                 color = MaterialTheme.colors.secondary,
@@ -515,7 +515,7 @@ fun ResourceCard(
             style = MaterialTheme.typography.body1,
             color = if (bSelected) Color.Black else Color.White ,//Color.White,
             modifier = modifier
-                .padding(horizontal = 5.dp),
+                .padding(10.dp),
             maxLines = 2
         )
     }
