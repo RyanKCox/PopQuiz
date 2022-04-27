@@ -25,7 +25,7 @@ class ProfileViewModel @Inject constructor():ViewModel(), LifecycleObserver {
     }
 
     fun getMostTakenQuiz(list:MutableList<String>):String{
-        var templist = list.groupingBy { it }.eachCount().filterValues { it>1 }.keys
+        var templist = list.groupingBy { it }.eachCount().filterValues { it>0 }.keys
         return if(templist.isEmpty()){
             "None"
         }else
