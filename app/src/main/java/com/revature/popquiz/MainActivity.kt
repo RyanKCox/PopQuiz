@@ -27,11 +27,10 @@ import com.revature.popquiz.viewmodels.SplashScreenViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
-//import dagger.hilt.android.AndroidEntryPoint
-//
-//
-//@AndroidEntryPoint
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity()
 {
 

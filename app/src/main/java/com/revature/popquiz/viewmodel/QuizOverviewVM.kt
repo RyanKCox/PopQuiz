@@ -7,10 +7,12 @@ import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import com.revature.popquiz.model.dataobjects.Quiz
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.Exception
+import javax.inject.Inject
 
-
-class QuizOverviewVM():ViewModel() {
+@HiltViewModel
+class QuizOverviewVM @Inject constructor():ViewModel() {
 
     var quiz:Quiz?=null
 

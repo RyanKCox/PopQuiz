@@ -1,7 +1,7 @@
 package com.revature.popquiz.view.navigation
 
 
-//import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 
 import android.util.Log
