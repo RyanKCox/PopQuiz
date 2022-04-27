@@ -5,6 +5,9 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -23,6 +26,7 @@ import com.revature.popquiz.MainActivity
 import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.ResourceCard
 import com.revature.popquiz.view.shared.TextEnums
 import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
@@ -180,25 +184,38 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
 
     Spacer(Modifier.size(20.dp))
 
-    Column(
+    val state = rememberLazyListState()
+    LazyColumn(
+        state = state,
         modifier = Modifier
             .fillMaxWidth(.8f)
             .border(2.dp, Color.Gray)
-            .height(110.dp),
+            .height(150.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(Modifier.size(10.dp))
-
-        //Display each topic thats been added
-        for (topic in createQuizVM.newQuiz.tagList) {
-
-            Text(
-                text = topic,
-                style = MaterialTheme.typography.body2
-            )
+        item {
+            Spacer(Modifier.size(10.dp))
         }
-        Spacer(Modifier.size(10.dp))
+        items(createQuizVM.newQuiz.tagList){
+            ResourceCard(sText = it)
+        }
+        item {
+            Spacer(Modifier.size(10.dp))
+        }
+
+//        Spacer(Modifier.size(10.dp))
+//
+//        //Display each topic thats been added
+//        for (topic in createQuizVM.newQuiz.tagList) {
+//
+//            ResourceCard(sText = topic)
+////            Text(
+////                text = topic,
+////                style = MaterialTheme.typography.body2
+////            )
+//        }
+//        Spacer(Modifier.size(10.dp))
 
     }
 
@@ -258,27 +275,38 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
 
     Spacer(Modifier.size(20.dp))
 
-    Column(
+    val state = rememberLazyListState()
+
+    LazyColumn(
+        state= state,
         modifier = Modifier
             .fillMaxWidth(.8f)
             .border(2.dp, Color.Gray)
-            .height(110.dp),
+            .height(150.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(Modifier.size(10.dp))
-
-        //Display all links to user
-        for (topic in createQuizVM.newQuiz.resourceList) {
-
-
-            Text(
-                text = topic/*.substringAfterLast('/')*/,
-                style = MaterialTheme.typography.body2,
-                maxLines = 1
-            )
+        item {
+            Spacer(Modifier.size(10.dp))
         }
-        Spacer(Modifier.size(10.dp))
+        items(createQuizVM.newQuiz.resourceList){
+            ResourceCard(sText = it)
+        }
+        item {
+            Spacer(Modifier.size(10.dp))
+        }
+
+//        //Display all links to user
+//        for (topic in createQuizVM.newQuiz.resourceList) {
+//
+//            ResourceCard(sText = topic)
+////            Text(
+////                text = topic/*.substringAfterLast('/')*/,
+////                style = MaterialTheme.typography.body2,
+////                maxLines = 1
+////            )
+//        }
+//        Spacer(Modifier.size(10.dp))
 
     }
 

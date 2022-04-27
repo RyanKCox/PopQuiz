@@ -5,6 +5,9 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -21,6 +24,7 @@ import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.view.shared.ResourceCard
 import com.revature.popquiz.viewmodel.EditQuizVM
 
 @Composable
@@ -175,29 +179,55 @@ fun EditTopic(context: Context, editQuizVM: EditQuizVM){
 
     Spacer(Modifier.size(20.dp))
 
-    Column(
+    val state = rememberLazyListState()
+
+    LazyColumn(
+        state = state,
         modifier = Modifier
             .fillMaxWidth(.8f)
             .border(2.dp, Color.Gray)
-            .height(110.dp),
+            .height(150.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Spacer(Modifier.size(10.dp))
-
-        //Display each topic thats been added
-        for (topic in topicList) {
-
-            Text(
-                text = topic,
-                style = MaterialTheme.typography.body2,
+        item {
+            Spacer(Modifier.size(10.dp))
+        }
+        items(topicList/*editQuizVM.editQuiz.tagList*/){
+            ResourceCard(sText = it,
                 modifier = Modifier.clickable {
-                    nSelected = editQuizVM.editQuiz.tagList.indexOf(topic)
+                    nSelected = editQuizVM.editQuiz.tagList.indexOf(it)
+                    if(nSelected < 0 || nSelected >= editQuizVM.editQuiz.tagList.size)
+                        nSelected = 0
                     sTopic = editQuizVM.editQuiz.tagList[nSelected]
                 }
             )
         }
-        Spacer(Modifier.size(10.dp))
+        item {
+            Spacer(Modifier.size(10.dp))
+        }
+
+//        Spacer(Modifier.size(10.dp))
+//
+//        //Display each topic thats been added
+//        for (topic in topicList) {
+//
+//            ResourceCard(
+//                sText = topic,
+//                modifier = Modifier.clickable {
+//                    nSelected = editQuizVM.editQuiz.tagList.indexOf(topic)
+//                    sTopic = editQuizVM.editQuiz.tagList[nSelected]
+//                }
+//            )
+////            Text(
+////                text = topic,
+////                style = MaterialTheme.typography.body2,
+////                modifier = Modifier.clickable {
+////                    nSelected = editQuizVM.editQuiz.tagList.indexOf(topic)
+////                    sTopic = editQuizVM.editQuiz.tagList[nSelected]
+////                }
+////            )
+//        }
+//        Spacer(Modifier.size(10.dp))
     }
 }
 
@@ -267,30 +297,55 @@ fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
 
     Spacer(Modifier.size(20.dp))
 
-    Column(
+    val state = rememberLazyListState()
+
+    LazyColumn(
+        state = state,
         modifier = Modifier
             .fillMaxWidth(.8f)
             .border(2.dp, Color.Gray)
-            .height(110.dp),
+            .height(150.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Spacer(Modifier.size(10.dp))
-
-        //Display all links to user
-        for (topic in resourceList) {
-
-            Text(
-                text = topic,
-                style = MaterialTheme.typography.body2,
-                maxLines = 1,
-                modifier = Modifier.clickable {
-                    nSelected = editQuizVM.editQuiz.resourceList.indexOf(topic)
-                    sResource = editQuizVM.editQuiz.resourceList[nSelected]
-                }
-            )
+        item {
+            Spacer(Modifier.size(10.dp))
         }
-        Spacer(Modifier.size(10.dp))
+        items(/*editQuizVM.editQuiz.*/resourceList){
+            ResourceCard(sText = it,
+                modifier = Modifier.clickable {
+                    nSelected = editQuizVM.editQuiz.tagList.indexOf(it)
+                    if(nSelected < 0 || nSelected >= editQuizVM.editQuiz.resourceList.size)
+                        nSelected = 0
+                    sResource = editQuizVM.editQuiz.resourceList[nSelected]
+                })
+        }
+        item {
+            Spacer(Modifier.size(10.dp))
+        }
+
+//        Spacer(Modifier.size(10.dp))
+//
+//        //Display all links to user
+//        for (topic in resourceList) {
+//
+//            ResourceCard(
+//                sText = topic,
+//                modifier = Modifier.clickable {
+//                    nSelected = editQuizVM.editQuiz.resourceList.indexOf(topic)
+//                    sResource = editQuizVM.editQuiz.resourceList[nSelected]
+//                }
+//            )
+////            Text(
+////                text = topic,
+////                style = MaterialTheme.typography.body2,
+////                maxLines = 1,
+////                modifier = Modifier.clickable {
+////                    nSelected = editQuizVM.editQuiz.resourceList.indexOf(topic)
+////                    sResource = editQuizVM.editQuiz.resourceList[nSelected]
+////                }
+////            )
+//        }
+//        Spacer(Modifier.size(10.dp))
 
     }
 

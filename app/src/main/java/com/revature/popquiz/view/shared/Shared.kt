@@ -41,11 +41,8 @@ import com.revature.popquiz.R
 
 import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.datastore.LoginDataStore
-import com.revature.popquiz.ui.theme.revBlue
+import com.revature.popquiz.ui.theme.*
 
-import com.revature.popquiz.ui.theme.revDarkGrey
-import com.revature.popquiz.ui.theme.revLightOrange
-import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 //import com.revature.popquiz.view.screens.quizTags
 import com.revature.popquiz.viewmodel.CreateQuizVM
@@ -455,24 +452,6 @@ fun inDrawer(
             }
 
         }
-//        Spacer(modifier = Modifier.height(20.dp))
-//        Card(backgroundColor = revLightOrange, modifier = Modifier
-//            .fillMaxWidth(0.9F)
-//            .padding(10.dp)
-//            .clickable {
-//                scope.launch {
-//                    // navController.navigate(NavScreens..route)
-//                    navController.navigate(NavScreens.PopQuizSettingsScreen.route)
-//                    scaffoldState.drawerState.close()
-//                }
-//            }) {
-//            Row() {
-//                Text(text = "Pop! Quiz Settings", fontSize = 20.sp, fontWeight = FontWeight.Medium,
-//                    modifier = Modifier.padding(10.dp))
-//
-//            }
-//
-//        }
         Spacer(modifier = Modifier.height(20.dp))
         Card(backgroundColor = revLightOrange, modifier = Modifier
             .fillMaxWidth(0.9F)
@@ -508,4 +487,29 @@ fun TextLengthPrompt(maxLength:Int){
         fontSize = 10.sp,
         color = Color.Red
     )
+}
+@Composable
+fun ResourceCard(sText : String, modifier: Modifier = Modifier){
+    Card(
+        backgroundColor = MaterialTheme.colors.secondary,
+        elevation = 10.dp,
+        shape = RoundedCornerShape(10.dp),
+        modifier = Modifier.padding(horizontal =10.dp, vertical = 1.dp)
+    ) {
+        Text(
+            text = sText,
+            style = MaterialTheme.typography.body1,
+            color = Color.White,
+            modifier = modifier
+                .padding(horizontal = 5.dp),
+            maxLines = 2
+        )
+    }
+}
+@Preview
+@Composable
+fun ResourceCardPreview(){
+    PopQuizTheme() {
+        ResourceCard(sText = "Test")
+    }
 }
