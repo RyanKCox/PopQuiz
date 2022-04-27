@@ -246,8 +246,8 @@ fun QuizCardForLazyColumn(
 
         shape = RoundedCornerShape(25.dp),
         elevation = 10.dp,
-        backgroundColor = revBlue
-//        border = BorderStroke(width = 2.dp, color = revDarkGrey)
+//        backgroundColor = revBlue
+        border = BorderStroke(width = 2.dp, color = revOrange)
     )
     {
         Column(
@@ -264,7 +264,7 @@ fun QuizCardForLazyColumn(
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
-                color = Color.White
+//                color = Color.White
             )
         }
 
@@ -279,7 +279,7 @@ fun QuizCardForLazyColumn(
                 text = shortQuizDescriptionText,
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
-                color = Color.White
+//                color = Color.White
             )
         }
 
