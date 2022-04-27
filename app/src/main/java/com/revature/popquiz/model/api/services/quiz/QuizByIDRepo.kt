@@ -36,24 +36,13 @@ class QuizByIDRepo(val quizService: QuizApiService)
             quiz.title = result.quizDataList.quizDataTitle
             quiz.APIid = result.quizDataList.quizDataId
             result.quizDataList.quizPoolsList.forEach{
-                quiz.shortDesc = it.quizPoolsDescription?: "null"
-                quiz.longDesc = it.quizPoolsDescription?: "null"
+                quiz.shortDesc = it.quizPoolsDescription?: "No Description"
+                quiz.longDesc = it.quizPoolsDescription?: "No Description"
                 it.quizPoolQuestionsList.forEach {
                     quiz.questionIDs.add(it.quizPoolsQuestion.quizPoolQuestionResponseId)
 
                 }
             }
-
-//            result.forEach {
-//                quizList.add(
-//                    Quiz(
-//                        id = it.nQuizID,
-//                        title = it.sTitle,
-//                        shortDescription = it.sCategoryName,
-//                        longDescription = it.sCategoryName
-//                    )
-//                )
-//            }
 
             Log.d("Load Quiz", "Success " + result)
             Result.Success(MutableLiveData(quiz))
