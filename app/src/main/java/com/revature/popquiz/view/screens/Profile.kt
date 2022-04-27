@@ -165,7 +165,7 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                                                 style = MaterialTheme.typography.body1
                                             )
                                             Text(
-                                                text = averageScore,
+                                                text = "$averageScore%",
                                                 style = MaterialTheme.typography.body1
                                             )
                                         }
