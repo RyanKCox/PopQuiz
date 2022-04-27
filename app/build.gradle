@@ -113,6 +113,8 @@ dependencies {
     testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
     // Optional -- Mockk framework
     testImplementation "io.mockk:mockk:1.12.3"
+    //mockito android
+    androidTestImplementation "org.mockito:mockito-android:4.5.1"
 
     // Testing with Nav
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"

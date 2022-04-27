@@ -78,7 +78,6 @@ fun TextSearchBar(
 fun quizBarSearch(
 )
 {
-
     val quizzes = listOf(
         Quiz(
             name = "Java",
@@ -97,7 +96,7 @@ fun quizBarSearch(
             description = "Intro to using Jetpack Compose in Android Studio"
         ),
     )
-    val names = quizzes.map { it.name }
+    val names = quizzes.map {it.name}
 
     Column(
         modifier = Modifier
@@ -108,7 +107,6 @@ fun quizBarSearch(
     )
     {
         AutoCompleteValueSample(autoCompleteItems = names)
-
     }
 
 }
