@@ -92,7 +92,8 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                     LazyColumn(
                         state = lazyState,
                         modifier = Modifier
-                            .fillMaxWidth()
+//                            .fillMaxWidth()
+                            .fillMaxSize()
                             .background(
                                 color = Color.Transparent
                             ),

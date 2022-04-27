@@ -70,7 +70,7 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
 
     var loaded = RoomDataManager.quizRepository.checkExists(quiz.APIid).observeAsState(true)
 
-    LazyRow(modifier = Modifier.fillMaxWidth())
+    LazyRow(modifier = Modifier.fillMaxSize())
     {
         item()
         {
