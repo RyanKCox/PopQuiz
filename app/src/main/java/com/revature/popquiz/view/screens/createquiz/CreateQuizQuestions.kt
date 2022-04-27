@@ -5,6 +5,9 @@ import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
@@ -370,22 +374,24 @@ fun questionAnswers(
 
     Spacer(Modifier.size(20.dp))
 
-    Column(
+    val state = rememberLazyListState()
+
+    LazyColumn(
+        state=state,
         modifier = Modifier
             .fillMaxWidth(.8f)
             .border(2.dp, Color.Gray)
             .height(200.dp),
     ) {
-
-        Spacer(Modifier.size(10.dp))
-
-        for (answer in answerList) {
+        items(answerList){ answer->
 
             var checkAnswer by remember { mutableStateOf(answer.bCorrect)}
 
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(end = 5.dp)) {
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(5.dp)) {
+
+                Spacer(Modifier.size(10.dp))
 
                 Checkbox(
                     checked = checkAnswer,
@@ -394,13 +400,44 @@ fun questionAnswers(
                         answer.bCorrect = checkAnswer
                     }
                 )
+
+                Spacer(Modifier.size(10.dp))
+
                 Text(
                     text = answer.sAnswer,
                     style = MaterialTheme.typography.body2,
-                    maxLines = 2
+                    maxLines = 2,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
             }
+
         }
+
+//        Spacer(Modifier.size(10.dp))
+//
+//        for (answer in answerList) {
+//
+//            var checkAnswer by remember { mutableStateOf(answer.bCorrect)}
+//
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                modifier = Modifier.padding(end = 5.dp)) {
+//
+//                Checkbox(
+//                    checked = checkAnswer,
+//                    onCheckedChange = {
+//                        checkAnswer = !checkAnswer
+//                        answer.bCorrect = checkAnswer
+//                    }
+//                )
+//                Text(
+//                    text = answer.sAnswer,
+//                    style = MaterialTheme.typography.body2,
+//                    maxLines = 2
+//                )
+//            }
+//        }
     }
     return answerList
 }

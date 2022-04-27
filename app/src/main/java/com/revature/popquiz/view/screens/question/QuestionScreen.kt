@@ -33,6 +33,7 @@ import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
 
 @Composable
 fun QuestionScreen(navController: NavController) {
@@ -232,7 +233,8 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
                     val score = calculateScore(quiz)
                     quiz.finalScore=score*100
                     questionVM.runningQuiz=quiz
-                    RoomDataManager.profile.value?.pastQuizzes?.add("${quiz.title}: ${quiz.finalScore.toString()}")
+                    var formatedScore = NumberFormat.getInstance().format(quiz.finalScore)
+                    RoomDataManager.profile.value?.pastQuizzes?.add("${quiz.title}: $formatedScore")
 
 
                     scope.launch(Dispatchers.IO) {
