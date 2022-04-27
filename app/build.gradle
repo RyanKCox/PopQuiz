@@ -15,6 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -98,7 +99,7 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-rc02'
 
 
-
+    androidTestImplementation "android.arch.core:core-testing:1.1.1"
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 //Mock
