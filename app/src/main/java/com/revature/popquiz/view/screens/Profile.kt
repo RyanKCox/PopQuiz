@@ -119,7 +119,9 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                                 shape = RoundedCornerShape(25.dp),
                                 backgroundColor = revOrange
                             ) {
-                                Column(modifier = Modifier.padding()) {
+                                Column(modifier = Modifier.padding(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Top) {
                                     Row(
                                         modifier = Modifier.padding(horizontal = 20.dp),
                                         verticalAlignment = Alignment.CenterVertically
@@ -129,7 +131,7 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.Medium,
                                             modifier = Modifier
-                                                .fillMaxWidth(0.95F)
+                                                .fillMaxWidth(0.40F)
                                                 .padding(horizontal = 0.dp)
                                         )
                                         Switch(
@@ -159,7 +161,11 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                             }
                         }
                         items(profile.value.pastQuizzes){runningQuiz ->
-                            Card() {
+                            Card(        modifier = Modifier.padding(10.dp),
+                                elevation = 50.dp,
+                                shape = RoundedCornerShape(25.dp),
+                                backgroundColor = revLightOrange)
+                            {
                                 Row(modifier = Modifier.padding(5.dp)){
                                     Text(text = runningQuiz )
                                 }
