@@ -28,6 +28,7 @@ import com.revature.popquiz.ui.theme.PopQuizTheme
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.EditQuizVM
+import com.revature.popquiz.viewmodel.SavedQuizVM
 
 @Composable
 fun EditQuizQuestionSelect(navController: NavController){
@@ -78,6 +79,7 @@ fun EditQuizQuestionBody(
     navController: NavController,
     editQuizVM: EditQuizVM){
 
+    val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false)}
     var removeIndex by remember { mutableStateOf(0) }
 
@@ -271,6 +273,10 @@ fun EditQuizQuestionBody(
 
                 //Save to Quiz and navigate
                 editQuizVM.updateQuizToRoom()
+
+
+                val savedVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
+                savedVM.update()
 
                 navController.popBackStack(NavScreens.EditQuizTitle.route,true)
             }

@@ -34,6 +34,7 @@ import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.view.shared.TextEnums
 import com.revature.popquiz.view.shared.TextLengthPrompt
 import com.revature.popquiz.viewmodel.CreateQuizVM
+import com.revature.popquiz.viewmodel.SavedQuizVM
 import com.revature.popquiz.viewmodels.QuizManager
 
 @Composable
@@ -130,6 +131,9 @@ fun CreateQuestQuestionsBody(navController: NavController){
                                 //Add to Room/API
                                 createQuizVM.saveQuiz()
                                 QuizManager.loadQuizzes()
+
+                                val savedVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
+                                savedVM.update()
 
 
                                 navController.popBackStack(NavScreens.CreateQuizTitle.route, true)

@@ -156,9 +156,20 @@ fun TopicView(context: Context, createQuizVM: CreateQuizVM){
                         }
                         //if topic isnt empty and we havnt reached max topics
                         else if (sTopic != "" && createQuizVM.newQuiz.tagList.size < 5) {
-                            createQuizVM.newQuiz.tagList.add(sTopic)
-                            //topicList.add(sTopic)
-                            sTopic = ""
+
+
+                            if (createQuizVM.newQuiz.tagList.contains(sTopic)){
+                                Toast.makeText(
+                                    context,
+                                    "Duplicate",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }else {
+                                createQuizVM.newQuiz.tagList.add(sTopic)
+                                //topicList.add(sTopic)
+                                sTopic = ""
+                            }
                         }
                         //If we reached max topics
                         else if (createQuizVM.newQuiz.tagList.size >= 5){
@@ -247,9 +258,19 @@ fun WebLinkView(context: Context, createQuizVM: CreateQuizVM){
                         //If link is not empty and max links hasnt been reached
                         if (sResource != "" && createQuizVM.newQuiz.resourceList.size < 5) {
 
-                            //Add to resource list and clear input
-                            createQuizVM.newQuiz.resourceList.add(sResource)
-                            sResource = ""
+                            if (createQuizVM.newQuiz.resourceList.contains(sResource)){
+                                Toast.makeText(
+                                    context,
+                                    "Duplicate",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }else {
+
+                                //Add to resource list and clear input
+                                createQuizVM.newQuiz.resourceList.add(sResource)
+                                sResource = ""
+                            }
                         }
                         //If we've reached max links
                         else if (createQuizVM.newQuiz.resourceList.size >= 5){

@@ -3,6 +3,7 @@ package com.revature.popquiz.view.shared
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -489,17 +490,30 @@ fun TextLengthPrompt(maxLength:Int){
     )
 }
 @Composable
-fun ResourceCard(sText : String, modifier: Modifier = Modifier){
+fun ResourceCard(
+    sText : String,
+    modifier: Modifier = Modifier,
+    bSelected:Boolean = false
+){
+    var color:Color = MaterialTheme.colors.secondary
+    if(bSelected)
+        color = Color.White
     Card(
-        backgroundColor = MaterialTheme.colors.secondary,
+        backgroundColor = color, //MaterialTheme.colors.secondary,
         elevation = 10.dp,
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.padding(horizontal =10.dp, vertical = 1.dp)
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 1.dp)
+            .border(
+                2.dp,
+                color = MaterialTheme.colors.secondary,
+                shape = RoundedCornerShape(10.dp)
+            )
     ) {
         Text(
             text = sText,
             style = MaterialTheme.typography.body1,
-            color = Color.White,
+            color = if (bSelected) Color.Black else Color.White ,//Color.White,
             modifier = modifier
                 .padding(horizontal = 5.dp),
             maxLines = 2
@@ -511,5 +525,6 @@ fun ResourceCard(sText : String, modifier: Modifier = Modifier){
 fun ResourceCardPreview(){
     PopQuizTheme() {
         ResourceCard(sText = "Test")
+        ResourceCard(sText = "Test", bSelected = true)
     }
 }

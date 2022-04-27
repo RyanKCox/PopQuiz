@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Room
 import com.revature.popquiz.model.dataobjects.Quiz
 import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.viewmodels.QuizManager
@@ -23,6 +24,10 @@ class SavedQuizVM: ViewModel() {
 
     //Initialize the quiz list from the room
     var sortedList = RoomDataManager.quizRepository.fetchAllQuiz
+
+    fun update(){
+        sortedList = RoomDataManager.quizRepository.fetchAllQuiz
+    }
 
     //Sort list by search value
     fun sortBySearch()

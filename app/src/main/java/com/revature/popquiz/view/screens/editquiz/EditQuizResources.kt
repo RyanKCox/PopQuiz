@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.screens.editquiz
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -147,13 +148,23 @@ fun EditTopic(context: Context, editQuizVM: EditQuizVM){
                         //if topic isnt empty and we havnt reached max topics
                         if (sTopic != "" || editQuizVM.editQuiz.tagList.size <= 5) {
 
-                            if(editQuizVM.editQuiz.tagList.isEmpty())
-                                editQuizVM.editQuiz.tagList.add(sTopic)
-                            else
-                                editQuizVM.editQuiz.tagList[nSelected] = sTopic
+                            if (editQuizVM.editQuiz.tagList.contains(sTopic)){
+                                Toast.makeText(
+                                    context,
+                                    "Duplicate",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
-                            topicList = mutableListOf()
-                            topicList.addAll(editQuizVM.editQuiz.tagList)
+                            }else {
+
+                                if (editQuizVM.editQuiz.tagList.isEmpty())
+                                    editQuizVM.editQuiz.tagList.add(sTopic)
+                                else
+                                    editQuizVM.editQuiz.tagList[nSelected] = sTopic
+
+                                topicList = mutableListOf()
+                                topicList.addAll(editQuizVM.editQuiz.tagList)
+                            }
                         }
                         //If we reached max topics
                         else if (editQuizVM.editQuiz.tagList.size > 5){
@@ -194,6 +205,7 @@ fun EditTopic(context: Context, editQuizVM: EditQuizVM){
         }
         items(topicList/*editQuizVM.editQuiz.tagList*/){
             ResourceCard(sText = it,
+                bSelected = nSelected == topicList.indexOf(it),
                 modifier = Modifier.clickable {
                     nSelected = editQuizVM.editQuiz.tagList.indexOf(it)
                     if(nSelected < 0 || nSelected >= editQuizVM.editQuiz.tagList.size)
@@ -265,13 +277,23 @@ fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
                         //If link is not empty and max links hasnt been reached
                         if (sResource != "" || editQuizVM.editQuiz.resourceList.size <= 5) {
 
-                            if (editQuizVM.editQuiz.resourceList.isEmpty())
-                                editQuizVM.editQuiz.resourceList.add(sResource)
-                            else
-                                editQuizVM.editQuiz.resourceList[nSelected] = sResource
+                            if (editQuizVM.editQuiz.resourceList.contains(sResource)){
+                                Toast.makeText(
+                                    context,
+                                    "Duplicate",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
-                            resourceList = mutableListOf()
-                            resourceList.addAll(editQuizVM.editQuiz.resourceList)
+                            }else {
+
+                                if (editQuizVM.editQuiz.resourceList.isEmpty())
+                                    editQuizVM.editQuiz.resourceList.add(sResource)
+                                else
+                                    editQuizVM.editQuiz.resourceList[nSelected] = sResource
+
+                                resourceList = mutableListOf()
+                                resourceList.addAll(editQuizVM.editQuiz.resourceList)
+                            }
                         }
                         //If we've reached max links
                         else if (editQuizVM.editQuiz.resourceList.size > 5){
@@ -311,11 +333,15 @@ fun EditWebLink(context: Context, editQuizVM: EditQuizVM){
             Spacer(Modifier.size(10.dp))
         }
         items(/*editQuizVM.editQuiz.*/resourceList){
-            ResourceCard(sText = it,
+            ResourceCard(
+                sText = it,
+                bSelected = nSelected == resourceList.indexOf(it),
                 modifier = Modifier.clickable {
-                    nSelected = editQuizVM.editQuiz.tagList.indexOf(it)
-                    if(nSelected < 0 || nSelected >= editQuizVM.editQuiz.resourceList.size)
+                    nSelected = resourceList.indexOf(it)
+                    Log.d("EditQuiz","Selected index = $nSelected out of ${resourceList.size}")
+                    if(nSelected < 0 || nSelected >= resourceList.size)
                         nSelected = 0
+
                     sResource = editQuizVM.editQuiz.resourceList[nSelected]
                 })
         }
