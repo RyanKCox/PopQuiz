@@ -1,7 +1,7 @@
 package com.revature.popquiz.view.navigation
 
 
-//import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 
 import android.util.Log
@@ -23,12 +23,16 @@ import com.revature.popquiz.view.screens.popquiz.PopQuizActivity
 import com.revature.popquiz.view.screens.popquiz.PopQuizScreen
 import com.revature.popquiz.view.screens.popquizsettings.PopQuizSettingsScreen
 import com.revature.popquiz.view.screens.question.QuestionScreen
+import com.revature.popquiz.viewmodel.ProfileViewModel
+import com.revature.popquiz.viewmodel.QuizOverviewVM
 
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun StartNav(navController: NavHostController)
 {
+    val quizOverviewVM = hiltViewModel<QuizOverviewVM>()
+    val profileViewModel = hiltViewModel<ProfileViewModel>()
 
     Log.d("Start Nav", "Start Nav Started")
 
@@ -83,8 +87,9 @@ fun StartNav(navController: NavHostController)
         // Saved Quizzes Screen
         composable(NavScreens.SavedQuizzesScreen.route)
         {
+
             SavedQuizzesScreen(
-                navController = navController)
+                navController = navController,quizOverviewVM)
         }
 
         // Search Quizzes Screen
@@ -116,7 +121,7 @@ fun StartNav(navController: NavHostController)
 
         //Profile Screen
         composable(NavScreens.ProfileScreen.route){
-            profile(navController = navController)
+            profile(navController = navController,profileViewModel)
         }
 
         //Settings Screen
@@ -126,7 +131,8 @@ fun StartNav(navController: NavHostController)
 
         //Quiz Overview
         composable(NavScreens.QuizOverviewScreen.route){
-            quizOverView(navController = navController)
+
+            quizOverView(navController = navController,quizOverviewVM)
         }
 
         //Create Flashcard Screen

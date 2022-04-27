@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -35,14 +36,11 @@ import com.revature.popquiz.viewmodel.QuizOverviewVM
 
 
 @Composable
-fun quizOverView(navController: NavController)
+fun quizOverView(navController: NavController,quizOverviewVM: QuizOverviewVM = hiltViewModel())
 {
     val context= LocalContext.current
-    val quizOverviewVM =
-        ViewModelProvider(context as MainActivity)
-            .get(QuizOverviewVM::class.java)
     val questionVM =
-        ViewModelProvider(context)
+        ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
     val quiz=quizOverviewVM.quiz
 
