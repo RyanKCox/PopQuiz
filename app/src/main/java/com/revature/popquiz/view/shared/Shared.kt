@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.shared
 
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -40,6 +41,7 @@ import com.revature.popquiz.R
 
 import com.revature.popquiz.model.QuizEditor
 import com.revature.popquiz.model.datastore.LoginDataStore
+import com.revature.popquiz.ui.theme.revBlue
 
 import com.revature.popquiz.ui.theme.revDarkGrey
 import com.revature.popquiz.ui.theme.revLightOrange
@@ -242,11 +244,13 @@ fun QuizCardForLazyColumn(
             }
             .height(150.dp)
             .fillMaxWidth()
-            .absolutePadding(bottom = 10.dp)
-            .padding(horizontal = 5.dp),
+            .absolutePadding(bottom = 20.dp)
+            .padding(horizontal = 10.dp),
 
         shape = RoundedCornerShape(25.dp),
-        elevation = 10.dp
+        elevation = 10.dp,
+        backgroundColor = revBlue
+//        border = BorderStroke(width = 2.dp, color = revDarkGrey)
     )
     {
         Column(
@@ -254,12 +258,16 @@ fun QuizCardForLazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.absolutePadding(top = 10.dp)
         )
+
         {
+            Spacer(modifier = Modifier.height(10.dp))
             //Quiz Title Text
             Text(
                 text = quizTitleText,
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp,
+                color = Color.White
             )
         }
 
@@ -268,10 +276,13 @@ fun QuizCardForLazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
+            Spacer(modifier = Modifier.height(35.dp))
             //Quiz short Description text
             Text(
                 text = shortQuizDescriptionText,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                color = Color.White
             )
         }
 
