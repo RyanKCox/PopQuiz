@@ -195,13 +195,13 @@ fun QuizPreviewDownloadScreenBody(navController: NavController)
                         },
                         enabled = !loaded.value,
                         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-                        shape = RoundedCornerShape(25.dp)
+                        shape = RoundedCornerShape(10.dp)
                     )
                     {
                         Text(
                             text = "Download",
                             textAlign = TextAlign.Center,
-                            color = Color.Black,
+                            color = Color.White,
                             fontSize = 25.sp
                         )
                     }
