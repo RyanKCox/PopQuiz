@@ -18,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +37,7 @@ import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
 
 @Composable
 fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewModel())
@@ -54,6 +56,7 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
     Log.d("jcstn", subscribed.value?:"null")
     var boolForSwitch= subscribed.value== "TRUE"
     Log.d("jcstn", "bool for switch${boolForSwitch.toString()}")
+
 
 
     val scope= rememberCoroutineScope()
@@ -104,12 +107,70 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                         item{
 
 
-                            Text(
-                                text = profile.value.name.uppercase(),
-                                fontSize = 40.sp,
-                                fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(20.dp)
-                            )
+                                Column(modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(20.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+
+                                    Text(
+                                        text = profile.value.name,
+                                        fontSize = 40.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.padding(20.dp)
+                                    )
+
+                                    Row {
+                                        Column() {
+
+                                            Text(
+                                                text = "Quizzes taken:",
+                                                style = MaterialTheme.typography.body1
+                                            )
+                                            Text(
+                                                text = "Most Taken Quiz:",
+                                                style = MaterialTheme.typography.body1
+                                            )
+                                            Text(
+                                                text = "Average Score:",
+                                                style = MaterialTheme.typography.body1
+                                            )
+                                        }
+
+                                        Spacer(Modifier.size(30.dp))
+
+                                        Column() {
+
+                                            val quizNames = mutableListOf<String>()
+                                            val scores = mutableListOf<Float>()
+                                            profile.value.pastQuizzes.forEach { quiz ->
+                                                quizNames.add(quiz.substringBefore(':'))
+                                                scores.add(quiz.substringAfter(":").toFloat())
+                                            }
+                                            var mostTakenQuiz =
+                                                profileVM.getMostTakenQuiz(quizNames)
+                                            var averageScore = "0"
+
+                                            if (scores.isNotEmpty()) {
+                                                averageScore = profileVM.getAverageScore(scores)
+                                            }
+
+                                            Text(
+                                                text = "${profile.value.pastQuizzes.size}",
+                                                style = MaterialTheme.typography.body1
+                                            )
+                                            Text(
+                                                text = mostTakenQuiz,
+                                                style = MaterialTheme.typography.body1
+                                            )
+                                            Text(
+                                                text = averageScore,
+                                                style = MaterialTheme.typography.body1
+                                            )
+                                        }
+                                    }
+                                }
+
                             Spacer(modifier = Modifier.height(20.dp))
 
                             Card(
@@ -151,7 +212,8 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
 
                                             },
                                             colors = SwitchDefaults.colors(
-                                                revOrange
+                                                Color.Green
+                                                //revOrange
                                             )
                                         )
 
@@ -162,16 +224,34 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                             }
                         }
                         items(profile.value.pastQuizzes){runningQuiz ->
-                            Card(        modifier = Modifier.padding(10.dp)
+                            var title = runningQuiz.substringBefore(':')
+                            var score = runningQuiz.substringAfter(':')
+                            Card(        modifier = Modifier
+                                .padding(10.dp)
                                 .fillMaxWidth(0.8F),
                                 elevation = 50.dp,
                                 shape = RoundedCornerShape(25.dp),
                                 backgroundColor = revLightOrange)
 
                             {
-                                Row(modifier = Modifier.padding(5.dp)){
-                                    Text(text = runningQuiz,
-                                        fontSize = 20.sp,)
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = title,
+                                        textAlign = TextAlign.Center,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 30.sp,
+                                    )
+                                    Row(modifier = Modifier.padding(5.dp)) {
+
+                                        Text(
+                                            text = "Score: $score%",
+                                            textAlign = TextAlign.Center,
+                                            fontSize = 20.sp,
+                                        )
+                                    }
                                 }
                             }
                         }

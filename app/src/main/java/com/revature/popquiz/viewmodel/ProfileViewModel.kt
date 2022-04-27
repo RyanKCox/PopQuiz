@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
@@ -12,10 +13,25 @@ import com.revature.popquiz.service.AlarmReceiver
 import com.revature.popquiz.service.INTENT_COMMAND
 import com.revature.popquiz.service.INTENT_COMMAND_POPQUIZ
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.text.NumberFormat
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor():ViewModel(), LifecycleObserver {
+
+
+    fun getAverageScore(list: MutableList<Float>):String{
+        return NumberFormat.getInstance().format(list.average())
+    }
+
+    fun getMostTakenQuiz(list:MutableList<String>):String{
+        var templist = list.groupingBy { it }.eachCount().filterValues { it>1 }.keys
+        return if(templist.isEmpty()){
+            "None"
+        }else
+            templist.first()
+
+    }
 
 
     fun setupAlarm(context: Context){
