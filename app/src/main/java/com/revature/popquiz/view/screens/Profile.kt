@@ -1,6 +1,7 @@
 package com.revature.popquiz.view.screens
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -223,6 +224,7 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                                 }
                             }
                         }
+
                         items(profile.value.pastQuizzes){runningQuiz ->
                             var title = runningQuiz.substringBefore(':')
                             var score = runningQuiz.substringAfter(':')
@@ -231,7 +233,8 @@ fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewMod
                                 .fillMaxWidth(0.8F),
                                 elevation = 50.dp,
                                 shape = RoundedCornerShape(25.dp),
-                                backgroundColor = revLightOrange)
+                                border = BorderStroke(width = 2.dp, color = revOrange)
+                            )
 
                             {
                                 Column(

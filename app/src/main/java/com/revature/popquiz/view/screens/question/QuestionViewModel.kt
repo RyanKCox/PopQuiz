@@ -13,6 +13,13 @@ class QuestionViewModel: ViewModel() {
  var quiz= Quiz()
  var runningQuiz=RunningQuiz()
  var questionAnswer = mutableStateMapOf<Question,SnapshotStateList<Answer>>()
+
+ fun clear()
+ {
+   runningQuiz=RunningQuiz()
+   questionAnswer = mutableStateMapOf<Question,SnapshotStateList<Answer>>()
+
+ }
 }
 
 class RunningQuiz

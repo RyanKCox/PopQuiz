@@ -161,6 +161,7 @@ fun quizOverView(navController: NavController,quizOverviewVM: QuizOverviewVM = h
                                                 .height(50.dp), onclick = {
 
                                                     questionVM.quiz=quiz?:Quiz()
+                                                    questionVM.clear()
                                                     navController.navigate(NavScreens.QuestionScreen.route)
                                             })
                                             quizViewButton(text = "Cards", modifier = Modifier
