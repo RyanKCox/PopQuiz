@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.room.Room
@@ -33,9 +35,10 @@ import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.shared.QuizScaffold
 import com.revature.popquiz.viewmodel.ProfileViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun profile(navController: NavController)
+fun profile(navController: NavController,profileVM:ProfileViewModel= hiltViewModel())
 {
 
     val lazyState = rememberLazyListState()
@@ -46,8 +49,14 @@ fun profile(navController: NavController)
 
     )
 
-    val checkedState=remember{ mutableStateOf(false)}
-    val profileVM = ViewModelProvider(context as MainActivity).get(ProfileViewModel::class.java)
+    val dataStore = LoginDataStore(context)
+    var subscribed = dataStore.getSubsribed.collectAsState(initial = "FALSE")
+    Log.d("jcstn", subscribed.value?:"null")
+    var boolForSwitch= subscribed.value== "TRUE"
+    Log.d("jcstn", "bool for switch${boolForSwitch.toString()}")
+
+
+    val scope= rememberCoroutineScope()
 
     QuizScaffold(
         sTitle = "",
@@ -110,7 +119,9 @@ fun profile(navController: NavController)
                                 shape = RoundedCornerShape(25.dp),
                                 backgroundColor = revOrange
                             ) {
-                                Column(modifier = Modifier.padding()) {
+                                Column(modifier = Modifier.padding(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Top) {
                                     Row(
                                         modifier = Modifier.padding(horizontal = 20.dp),
                                         verticalAlignment = Alignment.CenterVertically
@@ -120,20 +131,22 @@ fun profile(navController: NavController)
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.Medium,
                                             modifier = Modifier
-                                                .fillMaxWidth(0.95F)
+                                                .fillMaxWidth(0.40F)
                                                 .padding(horizontal = 0.dp)
                                         )
                                         Switch(
-                                            checked = checkedState.value,
+                                            checked = boolForSwitch,
                                             onCheckedChange = {
-                                                checkedState.value = it
-                                                //Create if else for on /off
-
-                                                if(checkedState.value){
-                                                    profileVM.setupAlarm(context)
-                                                } else{
+                                                if(boolForSwitch){
                                                     profileVM.stopAlarm(context)
+                                                    scope.launch { dataStore.saveSubscribed("FALSE") }
+
+
+                                                } else{
+                                                    profileVM.setupAlarm(context)
+                                                    scope.launch { dataStore.saveSubscribed("TRUE") }
                                                 }
+
 
                                             },
                                             colors = SwitchDefaults.colors(
@@ -148,7 +161,11 @@ fun profile(navController: NavController)
                             }
                         }
                         items(profile.value.pastQuizzes){runningQuiz ->
-                            Card() {
+                            Card(        modifier = Modifier.padding(10.dp),
+                                elevation = 50.dp,
+                                shape = RoundedCornerShape(25.dp),
+                                backgroundColor = revLightOrange)
+                            {
                                 Row(modifier = Modifier.padding(5.dp)){
                                     Text(text = runningQuiz )
                                 }

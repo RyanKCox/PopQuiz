@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.example.androiddevchallenge.presentation.searchbarcomponents.searchbar.quizBarSearch
@@ -43,7 +44,7 @@ import com.revature.popquiz.viewmodel.SavedQuizVM
 
 @ExperimentalAnimationApi
 @Composable
-fun SavedQuizzesScreen(navController: NavController)
+fun SavedQuizzesScreen(navController: NavController,quizOverviewVM:QuizOverviewVM= hiltViewModel())
 {
     RoomDataManager.SetProfile()
 
@@ -52,7 +53,7 @@ fun SavedQuizzesScreen(navController: NavController)
         navController = navController
     )
     {
-        SavedQuizzesBody(navController)
+        SavedQuizzesBody(navController,quizOverviewVM)
     }
 
 }
@@ -60,13 +61,12 @@ fun SavedQuizzesScreen(navController: NavController)
 
 @ExperimentalAnimationApi
 @Composable
-fun SavedQuizzesBody(navController: NavController)
+fun SavedQuizzesBody(navController: NavController,quizOverviewVM: QuizOverviewVM)
 {
     var context = LocalContext.current
 
     //ViewModels for screen
     var savedQuizVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
-    var quizOverviewVM = ViewModelProvider(context as MainActivity).get(QuizOverviewVM::class.java)
 
     //Search functionality variables
     var x = savedQuizVM.sSearchValue
