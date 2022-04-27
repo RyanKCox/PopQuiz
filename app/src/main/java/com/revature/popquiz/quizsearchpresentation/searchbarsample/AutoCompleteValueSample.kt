@@ -70,12 +70,10 @@ fun AutoCompleteValueSample(autoCompleteItems: List<String>)
     AutoCompleteBox(
         autoCompleteItems = autoCompleteEntities,
         autoCompleteItemContent =
-        { item ->
-            ValueAutoCompleteItem(item.value)
-        }
+        {item -> ValueAutoCompleteItem(item.value)}
     )
     {
-        var value by remember { mutableStateOf("") }
+        var value by remember {mutableStateOf("")}
         val view = LocalView.current
 
         onItemSelected()
@@ -91,7 +89,7 @@ fun AutoCompleteValueSample(autoCompleteItems: List<String>)
         TextSearchBar(
             modifier = Modifier.testTag(AutoCompleteSearchBarTag),
             value = value,
-            label = "Search Quizzes",
+            label = "Search",
             onDoneActionClick =
             {
                 view.clearFocus()
