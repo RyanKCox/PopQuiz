@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.revature.popquiz.model.room.quizroom.QuizDao
 import kotlinx.coroutines.runBlocking
 import org.junit.After
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,12 +42,12 @@ class AppDataBaseTest {
         quizDB.close()
     }
 
-    @Test
-    fun testIfEmpty(){
+//    @Test
+//    fun testIfEmpty(){
 //        val livedata = quizDao.fetchAllQuiz()
 //        val items = LiveDataTestUtil.getValue(livedata)
 //        assertTrue(items.isEmpty())
-    }
+//    }
 
     @Test
     fun readWriteTest() = runBlocking{

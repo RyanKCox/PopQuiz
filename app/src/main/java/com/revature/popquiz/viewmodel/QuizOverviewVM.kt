@@ -27,7 +27,7 @@ class QuizOverviewVM @Inject constructor():ViewModel(), LifecycleObserver {
             context.startActivity(intent)
 
         } catch (e:Exception){
-            Log.d("Resource","Intent launch failed")
+            Log.d("Resource","Intent launch failed: ${e.message}")
         }
 
     }

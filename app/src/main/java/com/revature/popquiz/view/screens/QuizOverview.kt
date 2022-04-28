@@ -1,5 +1,6 @@
 package com.revature.popquiz.view.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -216,15 +218,32 @@ fun quizOverView(navController: NavController,quizOverviewVM: QuizOverviewVM = h
                                     Spacer(modifier = Modifier.height(50.dp))
 
                                     quiz?.resourceList!!.forEach { resource ->
-                                        Text(
-                                            text = resource,
-                                            maxLines = 2,
-                                            style = MaterialTheme.typography.body1,
-                                            color = Color.Blue,
-                                            modifier = Modifier.clickable {
-                                                quizOverviewVM.loadWebpage(context, resource)
+
+                                        Card(        modifier = Modifier
+                                            .padding(10.dp)
+                                            .fillMaxWidth(0.9F),
+                                            elevation = 50.dp,
+                                            shape = RoundedCornerShape(25.dp),
+                                            border = BorderStroke(width = 2.dp, color = revOrange)
+                                        ) {
+                                            Column(horizontalAlignment = CenterHorizontally) {
+
+
+
+                                                Text(
+                                                    text = resource,
+                                                    maxLines = 2,
+                                                    style = MaterialTheme.typography.h6,
+                                                    color = Color.Blue,
+                                                    modifier = Modifier.clickable {
+                                                        quizOverviewVM.loadWebpage(
+                                                            context,
+                                                            resource
+                                                        )
+                                                    }.padding(10.dp)
+                                                )
                                             }
-                                        )
+                                        }
 
                                         Spacer(modifier = Modifier.height(20.dp))
 
@@ -277,3 +296,4 @@ fun quizPreview()
     val navController= rememberNavController()
     quizOverView(navController)
 }
+
