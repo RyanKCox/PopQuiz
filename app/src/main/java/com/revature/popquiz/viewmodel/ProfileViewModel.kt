@@ -29,7 +29,7 @@ class ProfileViewModel @Inject constructor():ViewModel(), LifecycleObserver {
         return if(templist.isEmpty()){
             "None"
         }else
-            templist.first()
+            templist.last()
 
     }
 
