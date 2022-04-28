@@ -134,7 +134,8 @@ fun UniversalButton(
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
         shape = RoundedCornerShape(25.dp)
-    ) {
+    )
+    {
         Text(
             text = text,
             textAlign = TextAlign.Center,
@@ -318,23 +319,30 @@ fun QuizCardForLazyColumn(
 
 
 @Composable
-fun basicCard(title: String, info: String) {
+fun basicCard(title: String, info: String)
+{
     Card(
         modifier = Modifier.padding(10.dp),
         elevation = 50.dp,
         shape = RoundedCornerShape(25.dp),
         backgroundColor = revLightOrange
-    ) {
-        Column(modifier = Modifier.padding(10.dp)) {
+    )
+    {
+        Column(modifier = Modifier.padding(10.dp))
+        {
             Text(
-                text = title, fontSize = 20.sp,
-                fontWeight = FontWeight.Medium, modifier = Modifier
+                text = title,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
                     .fillMaxWidth(0.95F)
                     .padding(horizontal = 5.dp)
             )
             Text(
-                text = info, fontSize = 15.sp,
-                fontWeight = FontWeight.Normal, modifier = Modifier
+                text = info,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier
                     .padding(10.dp)
                     .fillMaxWidth(0.95F)
             )
