@@ -25,11 +25,25 @@ class ProfileViewModel @Inject constructor():ViewModel(), LifecycleObserver {
     }
 
     fun getMostTakenQuiz(list:MutableList<String>):String{
-        var templist = list.groupingBy { it }.eachCount().filterValues { it>0 }.keys
+        var templist = list.groupingBy { it }.eachCount().filterValues { it>0 }
         return if(templist.isEmpty()){
             "None"
-        }else
-            templist.last()
+        }else {
+            var mostUsed = templist.keys.first()
+            var count = templist.values.first()
+
+            templist.forEach { entry->
+                if (entry.value > count){
+                    mostUsed = entry.key
+                    count = entry.value
+                }
+
+            }
+
+            return mostUsed
+
+//            templist.last()
+        }
 
     }
 
