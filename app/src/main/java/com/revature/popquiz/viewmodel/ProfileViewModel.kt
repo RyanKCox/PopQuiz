@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.getSystemService
@@ -58,8 +59,14 @@ class ProfileViewModel @Inject constructor():ViewModel(), LifecycleObserver {
 
         val popIntent = Intent(context, AlarmReceiver::class.java)
         popIntent.putExtra(INTENT_COMMAND, INTENT_COMMAND_POPQUIZ)
+
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        } else { PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
         val pendingPop =
-            PendingIntent.getBroadcast(context,0,popIntent,0)
+            PendingIntent.getBroadcast(context,0,popIntent, flag)
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -74,8 +81,14 @@ class ProfileViewModel @Inject constructor():ViewModel(), LifecycleObserver {
 
         val popIntent = Intent(context, AlarmReceiver::class.java)
         popIntent.putExtra(INTENT_COMMAND, INTENT_COMMAND_POPQUIZ)
+
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        } else { PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
         val pendingPop =
-            PendingIntent.getBroadcast(context,0,popIntent,0)
+            PendingIntent.getBroadcast(context,0,popIntent,flag)
         alarmManager.cancel(pendingPop)
     }
 }
