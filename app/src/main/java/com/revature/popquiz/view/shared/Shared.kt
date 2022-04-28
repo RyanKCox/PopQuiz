@@ -6,6 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -385,108 +387,139 @@ fun inDrawer(
 {
 
     val context = LocalContext.current
+    val state = rememberLazyListState()
 
-    Column(
+    LazyColumn(
+        state = state,
         modifier = Modifier
             .fillMaxSize(0.9F)
             .padding(10.dp),
         horizontalAlignment = Alignment.Start
     )
     {
-        Text(text = "Menu", fontSize = 40.sp, fontWeight = FontWeight.Bold,modifier = Modifier
-            .clickable {
-                scope.launch { scaffoldState.drawerState.close() }
-            }
-            .fillMaxWidth(0.9f)
-            .padding(10.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Card(backgroundColor = revLightOrange, modifier = Modifier
-            .fillMaxWidth(0.9F)
-            .padding(10.dp)
-            .clickable {
-                scope.launch {
-                    navController.navigate(NavScreens.SearchQuizzesScreen.route)
-                    scaffoldState.drawerState.close()
+        item() {
+            Text(text = "Menu", fontSize = 40.sp, fontWeight = FontWeight.Bold, modifier = Modifier
+                .clickable {
+                    scope.launch { scaffoldState.drawerState.close() }
                 }
-            }) {
-            Row() {
-                Text(text = "Search Quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(10.dp))
+                .fillMaxWidth(0.9f)
+                .padding(10.dp))
 
-            }
-
+            Spacer(modifier = Modifier.height(20.dp))
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        Card(backgroundColor = revLightOrange, modifier = Modifier
-            .fillMaxWidth(0.9F)
-            .padding(10.dp)
-            .clickable {
-                scope.launch {
-                    navController.navigate(NavScreens.SavedQuizzesScreen.route)
-                    scaffoldState.drawerState.close()
+
+        item() {
+            Card(backgroundColor = revLightOrange, modifier = Modifier
+                .fillMaxWidth(0.9F)
+                .padding(10.dp)
+                .clickable {
+                    scope.launch {
+                        navController.navigate(NavScreens.SearchQuizzesScreen.route)
+                        scaffoldState.drawerState.close()
+                    }
+                }) {
+                Row() {
+                    Text(
+                        text = "Search Quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(10.dp)
+                    )
+
                 }
-            }) {
-            Row() {
-                Text(text = "Saved Quizzes", fontSize = 20.sp, fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(10.dp))
 
             }
-
+            Spacer(modifier = Modifier.height(20.dp))
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        Card(backgroundColor = revLightOrange, modifier = Modifier
-            .fillMaxWidth(0.9F)
-            .padding(10.dp)
-            .clickable {
-                scope.launch {
 
-                    //Setup for Create Quiz Screen
-                    //QuizEditor.createNewQuiz()
+        item() {
+            Card(backgroundColor = revLightOrange, modifier = Modifier
+                .fillMaxWidth(0.9F)
+                .padding(10.dp)
+                .clickable {
+                    scope.launch {
+                        navController.navigate(NavScreens.SavedQuizzesScreen.route)
+                        scaffoldState.drawerState.close()
+                    }
+                }) {
+                Row() {
+                    Text(
+                        text = "Saved Quizzes", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(10.dp)
+                    )
 
-                    var createQuizVM =
-                        ViewModelProvider(context as MainActivity).get(CreateQuizVM::class.java)
-
-                    createQuizVM.createNewQuiz()
-
-                    navController.navigate(NavScreens.CreateQuizTitle.route)
-                    scaffoldState.drawerState.close()
                 }
-            }) {
-            Row() {
-                Text(text = "Create a quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(10.dp))
 
             }
-
+            Spacer(modifier = Modifier.height(20.dp))
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        Card(backgroundColor = revLightOrange, modifier = Modifier
-            .fillMaxWidth(0.9F)
-            .padding(10.dp)
-            .clickable {
-                scope.launch {
 
-                    navController.navigate(NavScreens.ProfileScreen.route)
-                    scaffoldState.drawerState.close()
+        item() {
+            Card(backgroundColor = revLightOrange, modifier = Modifier
+                .fillMaxWidth(0.9F)
+                .padding(10.dp)
+                .clickable {
+                    scope.launch {
+
+                        //Setup for Create Quiz Screen
+                        //QuizEditor.createNewQuiz()
+
+                        var createQuizVM =
+                            ViewModelProvider(context as MainActivity).get(CreateQuizVM::class.java)
+
+                        createQuizVM.createNewQuiz()
+
+                        navController.navigate(NavScreens.CreateQuizTitle.route)
+                        scaffoldState.drawerState.close()
+                    }
+                }) {
+                Row() {
+                    Text(
+                        text = "Create a quiz", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(10.dp)
+                    )
+
                 }
-            }) {
-            Row() {
-                Text(text = "Profile", fontSize = 20.sp, fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(10.dp))
 
             }
-
+            Spacer(modifier = Modifier.height(20.dp))
         }
-        Spacer(modifier = Modifier.height(50.dp))
-        Text(text = "Log out", fontSize = 20.sp, fontStyle = FontStyle.Italic, modifier = Modifier.clickable {
 
-            val dataStore= LoginDataStore(context)
-            scope.launch {dataStore.saveLoggedIn("FALSE")  }
-            scope.launch { navController.navigate(NavScreens.LoginScreen.route) }
+        item() {
+            Card(backgroundColor = revLightOrange, modifier = Modifier
+                .fillMaxWidth(0.9F)
+                .padding(10.dp)
+                .clickable {
+                    scope.launch {
 
-        })
+                        navController.navigate(NavScreens.ProfileScreen.route)
+                        scaffoldState.drawerState.close()
+                    }
+                }) {
+                Row() {
+                    Text(
+                        text = "Profile", fontSize = 20.sp, fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(10.dp)
+                    )
+
+                }
+
+            }
+            Spacer(modifier = Modifier.height(50.dp))
+        }
+
+        item() {
+            Text(
+                text = "Log out",
+                fontSize = 20.sp,
+                fontStyle = FontStyle.Italic,
+                modifier = Modifier.clickable {
+
+                    val dataStore = LoginDataStore(context)
+                    scope.launch { dataStore.saveLoggedIn("FALSE") }
+                    scope.launch { navController.navigate(NavScreens.LoginScreen.route) }
+
+                })
+        }
     }
 }
 @Composable
