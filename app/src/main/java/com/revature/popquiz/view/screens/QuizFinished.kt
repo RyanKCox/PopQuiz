@@ -32,6 +32,7 @@ import com.revature.popquiz.ui.theme.revOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.screens.question.QuestionViewModel
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodel.QuizFinishedVM
 
 
 @Composable
@@ -41,7 +42,11 @@ fun quizComplete(navController: NavController) {
     val questionVM =
         ViewModelProvider(context as MainActivity)
             .get(QuestionViewModel::class.java)
-    val quiz=questionVM.runningQuiz
+    val finishVM =
+        ViewModelProvider(context).get(QuizFinishedVM::class.java)
+
+//    finishVM.quiz = questionVM.runningQuiz
+//    val quiz=questionVM.runningQuiz
 
     QuizScaffold(
         sTitle = "QUIZ COMPLETE",
@@ -73,6 +78,9 @@ fun quizComplete(navController: NavController) {
                         verticalArrangement = Arrangement.Top
                     )
                     {
+
+                        Spacer(modifier = Modifier.height(50.dp))
+
                         Text(
                             text = questionVM.quiz.title.uppercase(),
                             fontSize = 30.sp,
@@ -81,26 +89,46 @@ fun quizComplete(navController: NavController) {
                         )
                         Spacer(modifier = Modifier.height(50.dp))
 
-                        Card(
-                            backgroundColor = revOrange,
-                            shape = RoundedCornerShape(25.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(15.dp)
-                                .clickable { },
-                            elevation = 10.dp
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text("Your Score is: ${quiz.finalScore}%")
+                        Text(
+                            "Your Score is: ${finishVM.quiz.finalScore}%",
+                            style = MaterialTheme.typography.subtitle1
+                        )
+                        Spacer(modifier = Modifier.height(30.dp))
 
-                            }
-                        }
+                        Text(
+                            text = finishVM.getResultText(),
+                            style = MaterialTheme.typography.subtitle1
+                        )
+
+//                        Card(
+//                            backgroundColor = revOrange,
+//                            shape = RoundedCornerShape(25.dp),
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(15.dp)
+//                                .clickable { },
+//                            elevation = 10.dp
+//                        ) {
+//                            Column(
+//                                verticalArrangement = Arrangement.Center,
+//                                horizontalAlignment = Alignment.CenterHorizontally
+//                            ) {
+//                                Text("Your Score is: ${quiz.finalScore}%")
+//
+//                            }
+//                        }
+
+                        Spacer(modifier = Modifier.height(30.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
 
                             reviewAnswersButton(navController)
                             exitButton(navController)
+                        }
 
                     }
 
@@ -124,7 +152,7 @@ fun reviewAnswersButton(navController: NavController) {
         })
     {
         Text(
-            text = "Review Answers",
+            text = "Review",
             fontSize = 15.sp,
             textAlign = TextAlign.Center
         )

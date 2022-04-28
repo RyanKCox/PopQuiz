@@ -31,6 +31,7 @@ import com.revature.popquiz.model.room.RoomDataManager
 import com.revature.popquiz.ui.theme.revLightOrange
 import com.revature.popquiz.view.navigation.NavScreens
 import com.revature.popquiz.view.shared.QuizScaffold
+import com.revature.popquiz.viewmodel.QuizFinishedVM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -242,6 +243,8 @@ fun SubmitButton(quiz: RunningQuiz, navController: NavController) {
                         RoomDataManager.profileRepository.insertProfile(profile = profile.value!!)
 
                     }
+                    val finishVM = ViewModelProvider(context).get(QuizFinishedVM::class.java)
+                    finishVM.quiz = questionVM.runningQuiz
                     navController.navigate(NavScreens.QuizFinishScreen.route)
                 }
 
