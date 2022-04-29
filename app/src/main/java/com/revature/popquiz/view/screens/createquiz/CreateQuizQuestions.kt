@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -58,8 +59,8 @@ fun CreateQuestQuestionsBody(navController: NavController){
     val createQuizVM = ViewModelProvider(context as MainActivity).get(CreateQuizVM::class.java)
 
 
-    var sQuestionTitle by remember { mutableStateOf("") }
-    var questionType by remember { mutableStateOf(0)}
+    var sQuestionTitle by rememberSaveable { mutableStateOf("") }
+    var questionType by rememberSaveable { mutableStateOf(0)}
     var answerList:MutableList<Answer> = mutableListOf()//by remember { mutableStateOf(listOf())}
 
     Column(
@@ -81,86 +82,95 @@ fun CreateQuestQuestionsBody(navController: NavController){
             ),
             elevation = 10.dp
         ) {
-            Column(
+            val state = rememberLazyListState()
+            LazyColumn(
+                state = state,
                 modifier = Modifier
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                Spacer(Modifier.size(10.dp))
-
-                questionType = questionTypeDropDown(questionType,answerList)
-
-                Spacer(Modifier.size(10.dp))
-
-                sQuestionTitle = getQuestionTitle(sQuestionTitle)
-
-                Spacer(Modifier.size(10.dp))
-
-                when(questionType){
-                    QuestionInterface.QUESTION_TYPE_TRUE_FALSE->{
-                        answerList = trueFalseQuestion(answerList)
-                    }
-                    QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER->{
-
-                        answerList = questionAnswers(context,answerList)
-                    }
-                    QuestionInterface.QUESTION_TYPE_MULTI_ANSWER->{
-
-                        answerList = questionAnswers(context,answerList)
-                    }
-                }
-
-                Row {
-
-                    //Button for Done
-                    Button(
-                        onClick = {
-
-                            if (questionCheck(
-                                    context = context,
-                                    sQuestionTitle = sQuestionTitle,
-                                    questionType = questionType,
-                                    answerList = answerList
-                                )) {
-
-                                //Save and navigate
-                                createQuizVM.newQuiz.questionList.add(
-                                    Question(
-                                        nType = questionType,
-                                        question = sQuestionTitle,
-                                        answers = answerList
-                                    )
-                                )
-                                //Add to Room/API
-                                createQuizVM.saveQuiz()
-                                QuizManager.loadQuizzes()
-
-                                val savedVM = ViewModelProvider(context as MainActivity).get(SavedQuizVM::class.java)
-                                savedVM.update()
-
-
-                                navController.popBackStack(NavScreens.CreateQuizTitle.route, true)
-
-                            }
-                        }
-                    ) {
-
-                        Text(text = "Finish", style = MaterialTheme.typography.body1)
-                    }
+                item {
 
                     Spacer(Modifier.size(10.dp))
 
-                    //Button for New Question
-                    Button(
-                        onClick = {
+                    questionType = questionTypeDropDown(questionType, answerList)
 
-                            if (questionCheck(
-                                    context = context,
-                                    sQuestionTitle = sQuestionTitle,
-                                    questionType = questionType,
-                                    answerList = answerList
-                                )) {
+                    Spacer(Modifier.size(10.dp))
+
+                    sQuestionTitle = getQuestionTitle(sQuestionTitle)
+
+                    Spacer(Modifier.size(10.dp))
+
+                    when (questionType) {
+                        QuestionInterface.QUESTION_TYPE_TRUE_FALSE -> {
+                            answerList = trueFalseQuestion(answerList)
+                        }
+                        QuestionInterface.QUESTION_TYPE_SINGLE_ANSWER -> {
+
+                            answerList = questionAnswers(context, answerList)
+                        }
+                        QuestionInterface.QUESTION_TYPE_MULTI_ANSWER -> {
+
+                            answerList = questionAnswers(context, answerList)
+                        }
+                    }
+
+                    Row {
+
+                        //Button for Done
+                        Button(
+                            onClick = {
+
+                                if (questionCheck(
+                                        context = context,
+                                        sQuestionTitle = sQuestionTitle,
+                                        questionType = questionType,
+                                        answerList = answerList
+                                    )
+                                ) {
+
+                                    //Save and navigate
+                                    createQuizVM.newQuiz.questionList.add(
+                                        Question(
+                                            nType = questionType,
+                                            question = sQuestionTitle,
+                                            answers = answerList
+                                        )
+                                    )
+                                    //Add to Room/API
+                                    createQuizVM.saveQuiz()
+                                    QuizManager.loadQuizzes()
+
+                                    val savedVM =
+                                        ViewModelProvider(context).get(SavedQuizVM::class.java)
+                                    savedVM.update()
+
+
+                                    navController.popBackStack(
+                                        NavScreens.CreateQuizTitle.route,
+                                        true
+                                    )
+
+                                }
+                            }
+                        ) {
+
+                            Text(text = "Finish", style = MaterialTheme.typography.body1)
+                        }
+
+                        Spacer(Modifier.size(10.dp))
+
+                        //Button for New Question
+                        Button(
+                            onClick = {
+
+                                if (questionCheck(
+                                        context = context,
+                                        sQuestionTitle = sQuestionTitle,
+                                        questionType = questionType,
+                                        answerList = answerList
+                                    )
+                                ) {
 
                                     //Save and navigate
                                     createQuizVM.newQuiz.questionList.add(
@@ -176,14 +186,16 @@ fun CreateQuestQuestionsBody(navController: NavController){
                                     navController.navigate(NavScreens.CreateQuizQuestions.route)
                                 }
                             }
-                    )
-                            {
+                        )
+                        {
 
-                        Text(text = "Add", style = MaterialTheme.typography.body1)
+                            Text(text = "Add", style = MaterialTheme.typography.body1)
+                        }
                     }
                 }
             }
         }
+
     }
 }
 fun questionCheck(
@@ -261,8 +273,8 @@ fun trueFalseQuestion(answers:MutableList<Answer>):MutableList<Answer> {
     val answerList:MutableList<Answer> = answers //by remember {mutableStateOf( answer)}
 
 
-    var trueCheck by remember { mutableStateOf(if(answerList.isNotEmpty()) answerList[0].bCorrect else true) }
-    var falseCheck by remember { mutableStateOf(if(answerList.isNotEmpty()) answerList[1].bCorrect else false) }
+    var trueCheck by rememberSaveable { mutableStateOf(if(answerList.isNotEmpty()) answerList[0].bCorrect else true) }
+    var falseCheck by rememberSaveable { mutableStateOf(if(answerList.isNotEmpty()) answerList[1].bCorrect else false) }
 
     if(answerList.isEmpty()) {
         answerList.add(Answer("True", trueCheck))
@@ -316,8 +328,10 @@ fun questionAnswers(
     answers:MutableList<Answer>
 ):MutableList<Answer>{
 
-    var sAnswer by remember { mutableStateOf("")}
-    val answerList:MutableList<Answer> = answers
+    var sAnswer by rememberSaveable { mutableStateOf("")}
+    val answerList:MutableList<Answer> by rememberSaveable { mutableStateOf(answers)
+
+    } //answers
 
 
     if(sAnswer.length > TextEnums.MAX_ANSWER_LENGTH) {
@@ -445,7 +459,7 @@ fun questionAnswers(
 @Composable
 fun getQuestionTitle(title:String):String{
 
-    var sTitle by remember { mutableStateOf(title) }
+    var sTitle by rememberSaveable { mutableStateOf(title) }
 
     //Text Field for Writing the question
 
@@ -469,9 +483,9 @@ fun getQuestionTitle(title:String):String{
 @Composable
 fun questionTypeDropDown(nSelected:Int, answers:MutableList<Answer>):Int{
 
-    var mExpanded by remember { mutableStateOf(false)}
+    var mExpanded by rememberSaveable { mutableStateOf(false)}
     val types = listOf("True/False","Single-Answer","Multi-Answer")
-    var selectedType by remember { mutableStateOf(nSelected)}
+    var selectedType by rememberSaveable { mutableStateOf(nSelected)}
     var textFieldSize by remember { mutableStateOf(Size.Zero)}
 
     //Icons for expanding

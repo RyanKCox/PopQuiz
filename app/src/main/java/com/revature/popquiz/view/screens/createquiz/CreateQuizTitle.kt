@@ -1,18 +1,20 @@
-package com.revature.popquiz.view.screens
+package com.revature.popquiz.view.screens.createquiz
 
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
-//import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.revature.popquiz.MainActivity
 import com.revature.popquiz.view.navigation.NavScreens
@@ -61,12 +63,13 @@ fun CreateQuizTitleBody(
     val context = LocalContext.current
 
     //Temp variables for the Quiz creation
-    var sQuizTitle by remember { mutableStateOf("")}
-    var sShortDesc by remember { mutableStateOf("")}
-    var sLongDesc by remember { mutableStateOf("")}
-    var bTitleTooLong by remember{ mutableStateOf(false)}
-    var bShortTooLong by remember{ mutableStateOf(false)}
-    var bLongTooLong by remember{ mutableStateOf(false)}
+    var sQuizTitle by rememberSaveable { mutableStateOf("")}
+    var sShortDesc by rememberSaveable { mutableStateOf("")}
+    var sLongDesc by rememberSaveable { mutableStateOf("")}
+    var bTitleTooLong by rememberSaveable{ mutableStateOf(false)}
+    var bShortTooLong by rememberSaveable{ mutableStateOf(false)}
+    var bLongTooLong by rememberSaveable{ mutableStateOf(false)}
+
 
     //Column for the screen
     Column(
@@ -76,127 +79,135 @@ fun CreateQuizTitleBody(
         verticalArrangement = Arrangement.Center
     )
     {
-        Spacer(Modifier.size(10.dp))
-        Card(
-            modifier = Modifier
-                .fillMaxSize()
-                .absolutePadding(
-                    top = 5.dp,
-                ),
-            shape = AbsoluteRoundedCornerShape(
-                topLeft = 20.dp,
-                topRight = 20.dp
-            ),
-            elevation = 10.dp
-        )
-        {
-
-            Column(
+            Spacer(Modifier.size(10.dp))
+            Card(
                 modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxSize()
+                    .absolutePadding(
+                        top = 5.dp,
+                    ),
+                shape = AbsoluteRoundedCornerShape(
+                    topLeft = 20.dp,
+                    topRight = 20.dp
+                ),
+                elevation = 10.dp
             )
             {
+                val state = rememberLazyListState()
 
-                Spacer(Modifier.size(40.dp))
-
-                //Text field for Quiz Title
-                if(sQuizTitle.length > TextEnums.MAX_TITLE_LENGTH) {
-                    bTitleTooLong = true
-                    TextLengthPrompt(maxLength = TextEnums.MAX_TITLE_LENGTH)
-                } else {bTitleTooLong = false}
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(.8f),
-                    value = sQuizTitle,
-                    onValueChange = {sQuizTitle = it},
-                    label = {Text("Quiz Title")},
-                    maxLines = 2
-                )
-
-                Spacer(Modifier.size(40.dp))
-
-                //Text Field for the short Description
-                if(sShortDesc.length > TextEnums.MAX_TITLE_LENGTH)
-                {
-                    bShortTooLong = true
-                    TextLengthPrompt(maxLength = TextEnums.MAX_TITLE_LENGTH)
-                }
-                else {bShortTooLong = false}
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(.8f),
-                    value = sShortDesc,
-                    onValueChange = {sShortDesc = it},
-                    label = {Text("Short Description")},
-                    maxLines = 2
-                )
-
-                Spacer(Modifier.size(40.dp))
-
-                //Text field for the Full Description
-                if(sLongDesc.length > TextEnums.MAX_DESCRIPTION_LENGTH)
-                {
-                    bLongTooLong = true
-                    TextLengthPrompt(maxLength = TextEnums.MAX_DESCRIPTION_LENGTH)
-                }
-                else { bLongTooLong = false}
-                OutlinedTextField(
+                LazyColumn(
+                    state = state,
                     modifier = Modifier
-                        .fillMaxWidth(.8f)
-                        .height(100.dp),
-                    value = sLongDesc,
-                    onValueChange = {sLongDesc = it},
-                    label = {Text("Full Description")},
-                    maxLines = 3
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 )
-                
-                Spacer(Modifier.size(40.dp))
+                {
+                    item{
 
-                //Next Screen Button
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth(.6f),
-                    onClick = {
+                        Spacer(Modifier.size(40.dp))
 
-                        //Save variables and navigate
-                        if(bTitleTooLong || bShortTooLong || bLongTooLong){
-                            Toast.makeText(
-                                context,
-                                "Too many characters!",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        //if all 3 fields have text
-                        else if (sQuizTitle != "" &&
-                            sShortDesc != "" &&
-                            sLongDesc != ""){ //Set the values in the new quiz
-                                createQuizVM.newQuiz.title = sQuizTitle
-                                createQuizVM.newQuiz.shortDescription = sShortDesc
-                                createQuizVM.newQuiz.longDescription = sLongDesc
-
-                          //Navigate to next screen
-                          navController.navigate(NavScreens.CreateQuizResources.route)
+                        //Text field for Quiz Title
+                        if (sQuizTitle.length > TextEnums.MAX_TITLE_LENGTH) {
+                            bTitleTooLong = true
+                            TextLengthPrompt(maxLength = TextEnums.MAX_TITLE_LENGTH)
                         } else {
-
-                            //If everything isnt filled out
-                            Toast.makeText(
-                            context,
-                            "Please fill out all fields",
-                            Toast.LENGTH_SHORT
-                            ).show()
+                            bTitleTooLong = false
                         }
 
-                    },
-                ) {
-                    
-                    Text(text = "Next")
-                    
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(.8f),
+                            value = sQuizTitle,
+                            onValueChange = { sQuizTitle = it },
+                            label = { Text("Quiz Title") },
+                            maxLines = 2
+                        )
+
+                        Spacer(Modifier.size(40.dp))
+
+                        //Text Field for the short Description
+                        if (sShortDesc.length > TextEnums.MAX_TITLE_LENGTH) {
+                            bShortTooLong = true
+                            TextLengthPrompt(maxLength = TextEnums.MAX_TITLE_LENGTH)
+                        } else {
+                            bShortTooLong = false
+                        }
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(.8f),
+                            value = sShortDesc,
+                            onValueChange = { sShortDesc = it },
+                            label = { Text("Short Description") },
+                            maxLines = 2
+                        )
+
+                        Spacer(Modifier.size(40.dp))
+
+                        //Text field for the Full Description
+                        if (sLongDesc.length > TextEnums.MAX_DESCRIPTION_LENGTH) {
+                            bLongTooLong = true
+                            TextLengthPrompt(maxLength = TextEnums.MAX_DESCRIPTION_LENGTH)
+                        } else {
+                            bLongTooLong = false
+                        }
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .fillMaxWidth(.8f)
+                                .height(100.dp),
+                            value = sLongDesc,
+                            onValueChange = { sLongDesc = it },
+                            label = { Text("Full Description") },
+                            maxLines = 3
+                        )
+
+                        Spacer(Modifier.size(40.dp))
+
+                        //Next Screen Button
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth(.6f),
+                            onClick = {
+
+                                //Save variables and navigate
+                                if (bTitleTooLong || bShortTooLong || bLongTooLong) {
+                                    Toast.makeText(
+                                        context,
+                                        "Too many characters!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                                //if all 3 fields have text
+                                else if (sQuizTitle != "" &&
+                                    sShortDesc != "" &&
+                                    sLongDesc != ""
+                                ) { //Set the values in the new quiz
+                                    createQuizVM.newQuiz.title = sQuizTitle
+                                    createQuizVM.newQuiz.shortDescription = sShortDesc
+                                    createQuizVM.newQuiz.longDescription = sLongDesc
+
+                                    //Navigate to next screen
+                                    navController.navigate(NavScreens.CreateQuizResources.route)
+                                } else {
+
+                                    //If everything isnt filled out
+                                    Toast.makeText(
+                                        context,
+                                        "Please fill out all fields",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                            },
+                        ) {
+
+                            Text(text = "Next")
+
+                        }
+                        Spacer(Modifier.size(40.dp))
+
+                    }
                 }
-                
+
+
             }
-
-
-        }
 
     }
 
@@ -204,6 +215,6 @@ fun CreateQuizTitleBody(
 
 @Preview
 @Composable
-fun previewCQT(){
+fun PreviewCQT(){
     //CreateQuizTitleBody()
 }

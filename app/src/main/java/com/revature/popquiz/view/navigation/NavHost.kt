@@ -14,6 +14,8 @@ import com.revature.popquiz.Register
 import com.revature.popquiz.view.screens.*
 import com.revature.popquiz.view.screens.createflashcard.CreateFlashcardScreen
 import com.revature.popquiz.view.screens.createquiz.CreateQuizQuestions
+import com.revature.popquiz.view.screens.createquiz.CreateQuizResources
+import com.revature.popquiz.view.screens.createquiz.CreateQuizTitle
 import com.revature.popquiz.view.screens.editquiz.EditQuestion
 import com.revature.popquiz.view.screens.editquiz.EditQuizQuestionSelect
 import com.revature.popquiz.view.screens.editquiz.EditQuizResources
